@@ -1,13 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  
+
 <!DOCTYPE html>
-
-
-
 <html>
-
-
 <head>
 	
 	<!-- start: Meta -->
@@ -188,8 +184,9 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
 	    colors: ['black', 'black', 'black'],
 	    wordtree: {
 	      format: 'explicit',
-	      type: 'suffix'
-	    }
+	      type: 'suffix',
+	    },
+	      fontName: 'Dotum'
     };
     
  
@@ -260,7 +257,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
                     drawSimpleNodeChart(p_name, t_list, m_list);
                     memberForKey(p_name, t_list, m_list); 
                     
-                    whoIsBest(t_list);
+                    // whoIsBest(t_list);
 				} // success
 		});
 	}
@@ -303,15 +300,15 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
       	   }
        }
       			   
-       alert(objArray[0].m_no); // 3
-       alert(objArray[0].rate); // 300
-       alert(objArray[0].count); // 5
+     //  alert(objArray[0].m_no); // 3
+     //  alert(objArray[0].rate); // 300
+     //  alert(objArray[0].count); // 5
        
        var avgArray = [];
        for(var i=0; i<objArray.length; i++){
     	   avgArray.push(objArray[i].rate/objArray[i].count);
        }
-       alert(avgArray[0]); // 60
+     //  alert(avgArray[0]); // 60
        
           
 	   
@@ -481,9 +478,10 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 		     		          + "<i class='halflings-icon white zoom-in' onclick='taskForm()''></i></a>"
 		     		          + "<a class='btn btn-info' href='#'>"
 		     		          + "<i class='halflings-icon white edit' onclick='editTask()'></i></a>"
+		     		          + "<a class='btn btn-primary' href='#'>"
+		     		          + "<i class='icon-save' onclick='updateTask()'></i></a>"
 		     		          + "<a class='btn btn-danger' href='#'>"
 		     		          + "<i class='halflings-icon white trash' onclick='deleteTask()'></i></a>"
-		     		          + "<button class='btn btn-small btn-primary' onclick='updateTask()'>SAVE</button>"
 		     		          + "</td></tr>"
 		     		          + "<input type='hidden' id ='taskNo' value=" + item.taskNo + ">");
 		}); 
@@ -511,9 +509,10 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 	     		          + "<i class='halflings-icon white zoom-in' onclick='taskForm()''></i></a>"
 	     		          + "<a class='btn btn-info' href='#'>"
 	     		          + "<i class='halflings-icon white edit' onclick='editTask()'></i></a>"
+	     		          + "<a class='btn btn-primary' href='#'>"
+	     		          + "<i class='icon-save' onclick='updateTask()'></i></a>"
 	     		          + "<a class='btn btn-danger' href='#'>"
 	     		          + "<i class='halflings-icon white trash' onclick='deleteTask()'></i></a>"
-	     		          + "<button class='btn btn-small btn-primary' onclick='updateTask()'>SAVE</button>"
 	     		          + "</td></tr>"
 	     		          + "<input type='hidden' id ='taskNo' value=" + selectTask.taskNo + ">");
 	     
@@ -683,10 +682,22 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 							  <c:forEach items="${p_list}" var="vo" varStatus="status">
 								<tr>
 									<td class="center">
-									<button class="btn btn-mini btn-success" onclick="getWbs(${vo.projectNo})">${vo.projectName}</button>
+								    <button class="btn btn-mini btn-primary" onclick="getWbs(${vo.projectNo})">${vo.projectName}</button> 
 									</td>                                       
 									<td class="center">${vo.projectContent}</td>
-									<td class="center">${vo.projectStatus}</td>
+								    <td class="center">
+									     <c:choose>
+							  			 <c:when test="${vo.projectStatus == 'Waiting'}">
+											 <span class="label label-warning">${vo.projectStatus}</span>
+							  			 </c:when>
+							  			 <c:when test="${vo.projectStatus == 'Progress'}">
+							  				 <span class="label label-success">${vo.projectStatus}</span>
+							  			 </c:when>
+							  			 <c:otherwise>
+							  				<span class="label label-important">${vo.projectStatus}</span>
+							  			 </c:otherwise>
+									     </c:choose>						  		
+									</td>
 									<td class="center">${vo.startDate}</td>
 									<td class="center">${vo.dueDate}</td>
 									<td class="center">${m_list[status.index].projectAuthority}</td>

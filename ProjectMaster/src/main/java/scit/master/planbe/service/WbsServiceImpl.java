@@ -23,12 +23,20 @@ public class WbsServiceImpl implements WbsService {
 
 	@Override
 	public ProjectVO getProjectInfo(int projectNo) {
-		return dao.getProjectInfo(projectNo);
+		ProjectVO pvo = dao.getProjectInfo(projectNo);
+		pvo.setStartDate(pvo.getStartDate().substring(0, 10));
+		pvo.setDueDate(pvo.getDueDate().substring(0, 10));
+		return pvo;
 	}
 
 	@Override
 	public ArrayList<TaskVO> getTaskList(int projectNo) {
-		return dao.getTaskList(projectNo);
+		ArrayList<TaskVO> t_list = dao.getTaskList(projectNo);
+		for(TaskVO vo : t_list){
+			vo.setStartDate(vo.getStartDate().substring(0, 10));
+			vo.setDueDate(vo.getDueDate().substring(0, 10));
+		}
+		return t_list;
 	}
 	
 	@Override
