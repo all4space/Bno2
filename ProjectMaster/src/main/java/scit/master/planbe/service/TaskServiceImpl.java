@@ -25,19 +25,24 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import scit.master.planbe.VO.MemberVO;
+import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.TaskVO;
+import scit.master.planbe.VO.UsersVO;
 import scit.master.planbe.dao.TaskDAOImpl;
+import scit.master.planbe.dao.UsersDAOImpl;
 
 @Service
 public class TaskServiceImpl implements TaskService{
 	
 	
 	@Autowired
-	TaskDAOImpl dao;
+	TaskDAOImpl taskDao;
 	
 	@Autowired
 	SqlSessionFactory sqlSessionFactory; 
 
+	@Autowired
+	UsersDAOImpl dao;
 
 	@Override
 	public ArrayList<TaskVO> Day(TaskVO task) {
@@ -59,8 +64,8 @@ public class TaskServiceImpl implements TaskService{
 
 	//업무 생성하기
 	@Override
-	public void Insert(TaskVO task) {
-		dao.Insert(task);				
+	public void Insert(TaskVO task,UsersVO user) {
+		taskDao.Insert(task,user);				
 	}
 
 	@Override
@@ -77,46 +82,47 @@ public class TaskServiceImpl implements TaskService{
 
 	//업무 리스트 출력하기
 	@Override
-	public ArrayList<TaskVO> getList(String searchtype, String searchword, int startRecord, int countPerPage) {
-		return dao.getList(searchtype,searchword,startRecord,countPerPage);
+	public ArrayList<TaskVO> getList(String searchtype, String searchword, String target,int userno, int startRecord, int countPerPage) {
+
+		return taskDao.getList(searchtype,searchword,target,userno,startRecord,countPerPage);
 	}
 
 	@Override
 	public TaskVO Search(TaskVO taskVo) {
-		return dao.findTask(taskVo);
+		return taskDao.findTask(taskVo);
 	}
 
 	
 	// 업무 수정하기
 	@Override
 	public void updateTask(TaskVO taskVo) {
-		dao.updateTask(taskVo);
+		taskDao.updateTask(taskVo);
 		
 	}
 
 	@Override
 	public void deleteTask(TaskVO taskVo) {
-		dao.deleteTask(taskVo);
+		taskDao.deleteTask(taskVo);
 		
 	}
 
+	// progress에서 task 검색
 	@Override
-	public ArrayList<TaskVO> searchTask(String a, String b) {
-		// TODO Auto-generated method stub
-		return null;
+	public TaskVO searchTask(String searchtype, String searchword,int userno,int taskNo) {
+		return taskDao.searchTask(searchtype,searchword,userno,taskNo);
 	}
 	
 	// 총 페이지 레코드 가져오기
 	@Override
-	public int getTotalCount(String searchtype, String searchword) {
-		return dao.getTotalCount(searchtype,searchword);
+	public int getTotalCount(String searchtype, String searchword,String target,int userno) {
+		return taskDao.getTotalCount(searchtype,searchword,target,userno);
 	}
 
 	// 엑셀 다운로드
 	
 	@Override
 	@Transactional
-	public void excelList(HttpServletResponse response,String searchtype, String searchword, int startRecord, int countPerPage) {
+	public void excelList(HttpServletResponse response, String searchtype, String searchword, int userno, String target, int startRecord, int countPerPage) {
 	
 		SqlSession sqlsession = sqlSessionFactory.openSession();
 		
@@ -124,9 +130,11 @@ public class TaskServiceImpl implements TaskService{
 		SXSSFSheet sheet = wb.createSheet();
 		
 		RowBounds rb = new RowBounds(startRecord,countPerPage);
-		Map<String, String>map=new HashMap<>();
+		Map<String, Object>map=new HashMap<>();
 		map.put("searchtype", searchtype);
-		map.put("searchword", searchword);	
+		map.put("searchword", searchword);
+		map.put("target", target);
+		map.put("userno", userno);
 		
 		try {
 		sqlsession.select("getList", map, new ResultHandler<TaskVO>(){
@@ -137,7 +145,8 @@ public class TaskServiceImpl implements TaskService{
 				TaskVO task = resultContext.getResultObject();
 				    Row row =  sheet.createRow(resultContext.getResultCount() - 1);
 			    	Cell cell = null;
-			    				   			    	
+			    	
+			    		        			    	
 			    	cell = row.createCell(0);
 			    	cell.setCellValue(task.getProjectNo());
 			        cell = row.createCell(1);
@@ -167,7 +176,7 @@ public class TaskServiceImpl implements TaskService{
 		});
 		
 		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
-		response.setHeader("Content-Disposition", String.format("attachment; filename=\"test.xlsx\""));
+		response.setHeader("Content-Disposition", String.format("attachment; filename=\"TaskList.xlsx\""));
 		wb.write(response.getOutputStream());
 		} catch (IOException e) {
 			response.setHeader("Set-Cookie", "fileDownload=false; path=/");
@@ -181,6 +190,27 @@ public class TaskServiceImpl implements TaskService{
 			
 		
 		
+	}
+
+	
+	// 프로젝트 넘버 가져오기
+	@Override
+	public ArrayList<ProjectVO> projectNoList(MemberVO memberVO) {
+		taskDao.projectNoList(memberVO);
+		return null;
+	}
+
+	// userno 가져오기
+	@Override
+	public UsersVO userInfo(String loginId) {
+		dao.idCheck(loginId);
+		return null;
+	}
+
+	// 전체 리스트 ( 페이지 수와 상관없이) 가져오기
+	@Override
+	public ArrayList<TaskVO> getTotalList(int userno) {		
+		return taskDao.getTotalList(userno);
 	}
 
 

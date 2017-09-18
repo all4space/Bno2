@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import scit.master.planbe.VO.MemberVO;
+import scit.master.planbe.VO.PlanVO;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.dao.PlanDAOImpl;
 
@@ -73,6 +74,14 @@ public class PlanServiceImpl implements PlanService{
 	public ArrayList<MemberVO> ContactInfo() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	
+	// 일정 생성하기
+	@Override
+	public void insertPlan(PlanVO planVO) {
+		dao.insertPlan(planVO);
+				
 	}
 	
 }

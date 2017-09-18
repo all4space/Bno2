@@ -3,9 +3,16 @@ package scit.master.planbe.service;
 import java.util.ArrayList;
 
 import scit.master.planbe.VO.MemberVO;
+import scit.master.planbe.VO.PlanVO;
 import scit.master.planbe.VO.TaskVO;
 
 public interface PlanService {
+	
+
+	public void insertPlan(PlanVO planVO); // 일정 생성하기
+	
+	
+	
 	
  public void getPlan(); // 일정 달력 표시.
  

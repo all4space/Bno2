@@ -14,10 +14,7 @@ $(function(){
 	});
 
 	
-	//$('input:checkbox[id="checkbox1"]').is(":checked") == true){
-	
-	
-	 $(".chbox").change(function(){
+	/* $(".chbox").change(function(){
 						 
 	        if($(".chbox").is(":checked")){
 	        	
@@ -26,7 +23,7 @@ $(function(){
 	        }else{
 	        	$(".title").removeClass("selected"); 
 	        }
-	    });
+	    });*/
 	 
 	 $("#excel").on("click", function () {
 		 		
@@ -45,8 +42,9 @@ $(function(){
 	        // 버튼의 원래 클릭 이벤트를 중지 시키기 위해 필요합니다.
 	        return false;
 	    });
-
+	 
 	
+	 
 		
 	
 });

@@ -42,6 +42,27 @@
 	<link rel="shortcut icon" href="/planbe/resources/bootstrap/img/favicon.ico">
 	<!-- end: Favicon -->
 	
+<!-- select box 선택 값 가져오기 -->
+<script>
+function change(number){
+	
+	var value=number.value;
+	
+	if (number.value == "allTask") {
+		
+	
+	location.href="/planbe/task/selectTask?value="+0+"&taskValue="+number.value;
+	
+	}else{
+	
+	location.href="/planbe/task/selectTask?value="+value;		
+	}
+	
+}
+
+</script>
+	<!-- select box 선택 값 가져오기 -->
+	
 </head>
 
 <body>
@@ -77,102 +98,237 @@
 				<li><a href="#">Task</a></li>
 			</ul>
 
-		<!-- admin이 아닌 경우 -->
+		<!-- member인 경우  시작-->
        
-      <c:if test="${not empty loginId}">
+      <c:if test="${authority =='member'}">
       <div class="userId">
-      <h1>${loginId}님의 Progress</h1>
-      </div>	
-      </c:if>
+      <h1>${authority} ${loginId}님의 Progress</h1>
+     </div>
+      
+      <!-- 검색 창 만들기 -->
+      
+     	 <div class="searchProgress">
+                	<ul>                		
+                		<li>	
+                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
+                				<option value="Task" selected="selected">Task이름</option>
+                				 <option value="Task" selected="selected">--AllTask--</option> 
+                					<c:forEach items="${allList}" var="allList">
+                				<option value="${allList.taskNo}">${allList.taskName}</option>
+                				    </c:forEach>
+                				 <option value="allTask">--AllTask--</option>                   				                   			              				
+   	            			</select>
+  	                      	
+   	                     </li> 	 	
+                	</ul>
+         </div>
+         
       
       
+      <c:if test="${searchProgress != null }">
+        		 
+         		<!-- 그래프 시작 -->
+   
+         		
+    
+    </c:if>
       
-   	
-	 	 <!-- progress 시작 -->
-	 
-	 
- 	<script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script> <!-- progress jquery 링크 -->
-  	 <div id="chart_div" align="center" ></div>	
-  	 
-  	
-	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>	 
-	<script>
-	 
-	 google.charts.load('current', {packages: ['corechart', 'bar']});
-	 google.charts.setOnLoadCallback(taskmain);
-
-		
+    
+      
+ 
+	 	
 	
-
-	 function drawBarColors(list){
-
-	
-		  var data = google.visualization.arrayToDataTable([		 		 			 
-			     ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
-		         'Western', 'Literature', { role: 'annotation' } ],
-		         	['abcdefg',10,20,30,40,50,60,70]
-		      ]);
-					
-				
-	  
-		    
-	        $(list).each(function(index, item) { 
-	             data.addRow([item.taskName, 10, 20, 30, 40, 50, 60, 70]);
-		    });// for each 
-		 
-	      var options = {
-			        width: 1200,
-			        height: 800,
-			        legend: { position: 'top', maxLines: 3 },
-			        bar: { groupWidth: '75%' },
-			        isStacked: 'percent',
-			          height: 600,
-			          legend: {position: 'top', maxLines: 3},
-			          hAxis: {
-			            minValue: 0,
-			            ticks: [0, .3, .6, .9, 1]
-			          }
-			      };
-	       var chart = new google.visualization.BarChart(document.getElementById('chart_div'));
-	       chart.draw(data, options);
-		       
-			       
-	     }
-	 
-	 function taskmain(){
-		 $.ajax({			 
-			 url:"/planbe/task/getChart",
-			 method :"POST", 
-			 datatype:"JSON",
-			 success:function(result){
-				 drawBarColors(result);				
-			 }, 
-			 error : function(e){
-				 alert(JSON.stringify(e))
-			 }
-			 
-		 });
-		 
-	 }
-	 
-	 
-
-	 
-	 
-	 </script>
-	 
-	<!-- progress 끝 -->
-	
-
+	 <!-- 검색 창 만들기 -->
 	 
 		
-</div>
+ 	
+</c:if>
+<!-- member인 경우  끝-->
 
-<!-- admin이 아닌 경우 끝 -->	
-			
-		
-			
+
+
+		<!-- member가 아닌 경우  시작-->
        
+      <c:if test="${authority !='member'}">
+      <div class="userId">
+      <h1>${authority} ${loginId}님의 Progress</h1>
+    	</div>
+      
+      
+      <!-- 검색 창 만들기 -->
+      
+   <div class="searchProgress">
+                	<ul>                		
+                		<li>	
+                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
+                				<option value="Task" selected="selected">Task이름</option>               			 
+                					<c:forEach items="${allList}" var="allList">
+                				<option value="${allList.taskNo}">${allList.taskName}</option>
+                				    </c:forEach>
+                				 <option value="allTask">--AllTask--</option>                   				                   			              				
+   	            			</select>
+  	                      	
+   	                     </li> 	 	
+                	</ul>
+                	
+        
+         </div>
+        
+      
+        
+  		
+         
+         <!-- getChart 만들기 시작 -->
+      
+      
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+      
+       
+       	<c:if test="${searchProgress != null}">
+  		<div id="chart_div1"></div>
+    	</c:if>
+    	
+    	
+    		<c:if test="${totalList != null}">    		
+    	<div id="chart_div2" style="width: 800px; height: 600px;"></div>
+    		</c:if>
+    		
+    		
+  		
+         
+      <script>
+      
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.load('current', {packages:['corechart', 'scatter']});
+      google.charts.setOnLoadCallback(drawMultSeries);
+      google.charts.setOnLoadCallback(drawStuff);
+ 
+         
+      function drawMultSeries() {
+    
+  	   	  
+    	   var data = google.visualization.arrayToDataTable([
+    	        ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
+    	         'Western', 'Literature', { role: 'annotation' } ],   	       
+    	        ['${searchProgress.taskName}', 28, 19, 29, 30, 12, 13, '']
+    	      ]);
+
+    	   var options_fullStacked = {
+    		          isStacked: 'percent',
+    		          height: 550
+    		          ,
+    		          legend: {position: 'top', maxLines: 3},
+    		          vAxis: {
+    		            minValue: 0,
+    		            ticks: [0, .3, .6, .9, 1]
+    		          }
+    		        };
+    		    
+
+            var chart = new google.visualization.ColumnChart(
+              document.getElementById('chart_div1'));
+
+            chart.draw(data, options_fullStacked);
+             
+      };     
+
+    
+ 
+      function drawStuff() {
+		
+ 	  
+        var chartDiv = document.getElementById('chart_div2');
+
+        var data = new google.visualization.DataTable();
+        data.addColumn('number', 'Student ID');
+        data.addColumn('number', 'Hours Studied');
+        data.addColumn('number', 'Final');
+
+        data.addRows([
+          [0, 0, 67],  [1, 1, 88],   [2, 2, 77],
+          [3, 3, 93],  [4, 4, 85],   [5, 5, 91],
+          [6, 6, 71],  [7, 7, 78],   [8, 8, 93],
+          [9, 9, 80],  [10, 10, 82], [11, 0, 75],
+          [12, 5, 80], [13, 3, 90],  [14, 1, 72],
+          [15, 5, 75], [16, 6, 68],  [17, 7, 98],
+          [18, 3, 82], [19, 9, 94],  [20, 2, 79],
+          [21, 2, 95], [22, 2, 86],  [23, 3, 67],
+          [24, 4, 60], [25, 2, 80],  [26, 6, 92],
+          [27, 2, 81], [28, 8, 79],  [29, 9, 83]
+        ]);
+
+        var materialOptions = {
+          chart: {
+            title: 'Students\' Final Grades',
+            subtitle: 'based on hours studied'
+          },
+          width: 1200,
+          height: 600,
+          series: {
+            0: {axis: 'hours studied'},
+            1: {axis: 'final grade'}
+          },
+          axes: {
+            y: {
+              'hours studied': {label: 'Hours Studied'},
+              'final grade': {label: 'Final Exam Grade'}
+            }
+          }
+        };
+
+        var classicOptions = {
+          width: 1200,
+          series: {
+            0: {targetAxisIndex: 0},
+            1: {targetAxisIndex: 1}
+          },
+          title: 'Students\' Final Grades - based on hours studied',
+
+          vAxes: {
+            // Adds titles to each axis.
+            0: {title: 'Hours Studied'},
+            1: {title: 'Final Exam Grade'}
+          }
+          
+          
+          
+        };
+        
+        drawMaterialChart();
+        
+        function drawMaterialChart() {
+            var materialChart = new google.charts.Scatter(chartDiv);
+            materialChart.draw(data, google.charts.Scatter.convertOptions(materialOptions));
+            
+          }
+        
+
+    
+        
+    	
+        
+      };
+       
+
+        </script>
+    	 
+    	 
+    	 
+    	 <!-- 전체 업무 차트 가져오기 끝 -->
+    
+    
+    
+  
+      
+ 
+
+<!-- member가 아닌 경우  끝-->
+
+	</c:if>
+
+
+		    
 
 	</div><!--/.fluid-container-->
 	
@@ -261,6 +417,8 @@
 		<script src="/planbe/resources/bootstrap/js/retina.js"></script>
 
 		<script src="/planbe/resources/bootstrap/js/custom.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/progress.js"></script>
 		
 	<!-- end: JavaScript-->
 	

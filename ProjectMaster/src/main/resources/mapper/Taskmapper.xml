@@ -5,19 +5,19 @@
 
 <mapper namespace="scit.master.planbe.dao.Taskmapper">
 <!-- 업무 생성하기 -->
-<insert id="Insert" parameterType="TaskVO">
+<insert id="Insert" parameterType="map">
     insert into task values(
-   	 (select p.projectno from project p join users u on p.userno=u.userno)
-    ,(select m.memberno from member m join project p on m.projectno=p.projectno)
+   	 #{projectno}
+    ,(select distinct m.memberno from project p join member m on p.projectno=m.projectno join users u on m.userno=u.userno where m.projectno =#{projectno} and m.userno=#{userno})
     ,TASK_SEQ.nextval
-    ,#{taskName}
-    ,#{taskContent}
-    ,#{taskPriority}
-    ,#{taskStatus}
-    ,#{startDate}
-    ,#{dueDate}
-    ,#{totalTime}
-    ,#{doneTime})
+    ,#{taskname}
+    ,#{taskcontent}
+    ,#{taskpriority}
+    ,#{taskstatus}
+    ,#{taskstartdate}
+    ,#{taskduedate}
+    ,#{totaltime}
+    ,#{donetime})
 </insert>
 
 <!-- 업무 리스트 출력하기 -->
@@ -25,15 +25,60 @@
 
 	select * from task	
 	
-	   <if test="searchtype == 'title'">
-       WHERE taskname LIKE '%'||#{searchword}||'%'
-     </if>
-     <if test="searchtype == 'startdate'">
-       WHERE startdate LIKE '%'||#{searchword}||'%'
-     </if>
-     <if test="searchtype == 'deudate'">
-       WHERE duedate LIKE '%'||#{searchword}||'%'
-     </if>
+	<choose>
+		 
+	 <when test="searchtype == 'title'">
+	 
+	 	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+							and taskname LIKE '%'||#{searchword}||'%'
+	 
+	 </when>
+	  <when test="searchtype == 'startdate'">
+	  
+	  	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+	  						and startdate LIKE '%'||#{searchword}||'%'
+	 </when>
+	  <when test="searchtype == 'deudate'">
+	  	
+	  	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+	  						 duedate LIKE '%'||#{searchword}||'%'
+	 </when>
+	   <when test="target == 'good'">
+	   
+	   	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+	 						and taskpriority LIKE '%'||#{target}||'%'
+	 </when>
+	   <when test="target == 'urgent'">
+	   
+	   	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+	   						and taskpriority LIKE '%'||#{target}||'%'
+	 </when>
+	   <when test="target == 'disaster'">
+	   
+	   	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno} 
+	   						and taskpriority LIKE '%'||#{target}||'%'
+	 </when>
+	  <when test="userno != null">
+	 	 t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+	 </when>
+	 
+		 
+	</choose>
+   	
    	
 	order by taskno asc
 	
@@ -73,18 +118,82 @@
 	select count(*) from task
 		<choose>
 			<when test="searchtype=='title'">
-				where taskname like '%'||#{searchword}||'%'
+			
+				t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+							and taskname like '%'||#{searchword}||'%'
 			</when>
 			<when test="searchtype=='startdate'">
-				where taskdate like '%'||#{searchword}||'%'
+			
+				t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+							and taskstartdate == #{searchword}
 			</when>
 			<when test="searchtype=='duedate'">
-				where duedate like '%'||#{searchword}||'%'
+			
+				t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+							and duedate like '%'||#{searchword}||'%'
 			</when>
+			 <when test="target == 'good'">
+			 
+			 	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+			 				and taskpriority LIKE '%'||#{target}||'%'
+	 		</when>
+	  		 <when test="target == 'urgent'">
+	  		 
+	  		 	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+	  		 				and taskpriority LIKE '%'||#{target}||'%'
+	 		</when>
+	   		 <when test="target == 'disaster'">
+	   		 
+	   		 	t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+	   		 				and taskpriority LIKE '%'||#{target}||'%'
+	 		</when>
+	 		 <when test="userno != null">
+	 	 		t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+	 		</when>
 		</choose>	
 </select>
 
-<!-- 엑셀 리스트 가져오기 -->
+<!-- 진행상태에서 업무 검색하기 -->
+<select id="searchTask" parameterType="map" resultType="TaskVO">
+	select * from task
+				
+				t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+						 and t.taskNo=#{taskno}
+		
+		
+		order by taskno asc
+
+</select>
+
+<!-- 전체 리스트(페이지 수와 상관없이) 가져오기 -->
+
+<select id="getTotalList" parameterType="map" resultType="TaskVO">
+
+	select * from task t join member m on t.memberno=m.memberno 
+			      join users u on m.userno = u.userno
+					and u.userno=#{userno}
+					  order by t.taskno asc
+
+</select>
+
+
+
 
 
 	

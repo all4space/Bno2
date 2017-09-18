@@ -113,15 +113,7 @@ body {
     /* Had to use this style to force the div to expand (wasn't necessary with my bootstrap version 3.3.6) */
 }
 
-.table-filter .media .title.selected{
-	
-	color: red;
-	font-size: 14px;
-	font-weight: bold;
-	line-height: normal;
-	margin: 0; 
-	
-}
+
 
 
 .table-filter .media-meta .media-metas{

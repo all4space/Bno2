@@ -24,6 +24,10 @@
 	<link id="base-style" href="/planbe/resources/bootstrap/css/style.css" rel="stylesheet">
 	<link id="base-style-responsive" href="/planbe/resources/bootstrap/css/style-responsive.css" rel="stylesheet">
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
+	<link id="base-style" href="/planbe/resources/bootstrap/css/calendarSchedule.css" rel="stylesheet">
+	<link id="base-style" href="/planbe/resources/bootstrap/css/jquery.timepicker.css" rel="stylesheet">
+	<link id="base-style" href="/planbe/resources/bootstrap/css/jquery.timepicker.min.css" rel="stylesheet">
+		<link id="base-style" href="/planbe/resources/bootstrap/css/wickedpickercss" rel="stylesheet">
 	<!-- end: CSS -->
 	
 
@@ -41,9 +45,19 @@
 	<link rel="shortcut icon" href="/planbe/resources/bootstrap/img/favicon.ico">
 	<!-- end: Favicon -->
 	
-		
-		
-		
+	<!-- pdf 파일 보여줄 때, 형식 -->
+	
+	<!-- pdf 파일 보여줄 때, 형식 -->
+	
+	
+	<script type="text/javascript">
+	 
+    $("#startTime").timepicker();
+    $("#endTime").timepicker();
+	</script>
+	
+
+	
 </head>
 
 <body>
@@ -81,32 +95,92 @@
 				</li>
 				<li><a href="#">Plan</a></li>
 			</ul>
+			
+			<div>
+				<a href="/planbe/plan/pdfForm"><input type="button" id="excel" class="pull-right" value="PDF"/></a>
+			</div>
 
 			<div class="row-fluid sortable">
 				<div class="box span12">
 				  <div class="box-header" data-original-title>
 					  <h2><i class="halflings-icon white calendar"></i><span class="break"></span>Calendar</h2>
 				  </div>
-				  <div class="box-content">
-					<div id="external-events" class="span3 hidden-phone hidden-tablet">
-						<h4>Draggable Events</h4>
-						<div class="external-event badge">Default</div>
-						<div class="external-event badge badge-success">Completed</div>
-						<div class="external-event badge badge-warning">Warning</div>
-						<div class="external-event badge badge-important">Important</div>
-						<div class="external-event badge badge-info">Info</div>
-						<div class="external-event badge badge-inverse">Other</div>
-						<p>
-						<label for="drop-remove"><input type="checkbox" id="drop-remove" /> remove after drop</label>
-						</p>
-						</div>
+				 
+				
 
 						<div id="calendar" class="span9"></div>
 
 						<div class="clearfix"></div>
-					</div>
+					
+			
+					
+					<!-- 일정 생성 modal -->
+	<div class="modal fade" id="schduleForm" role="dialog">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<button type="button" class="close" data-dismiss="modal">close</button>
+					<h4 class="modal-title">일정등록</h4>
+				</div>
+				
+				
+				<div class="modal-body">
+					<form class='form-margin40' action="/planbe/plan/insertPlan" method="POST"
+						id='frmSchdule' name="form">
+						
+						<input type="hidden" name="userNo" id="userNo" value="${userNo}">				
+						<div class='form-group'>
+							<label>제목</label> <input type='text' class='form-control'
+								id='summary' name='title'
+								placeholder="예: 오후 6시에 팀 회식">
+						</div>
+						<div class='form-group'>
+							<label>시작시간</label> <input class='form-control' type="time"
+								id='startTime' name='startTime' readonly="readonly">
+						</div>
+						<div class='form-group'>
+							<label>시작날짜</label> <input class='form-control startDate'
+								type="date" id='startDate' name='startDate'  readonly="readonly">
+						</div>
+						<div class='form-group'>
+							<label>종료시간</label> <input class='form-control' type="time"
+								id='endTime' name='endTime'>
+						</div>
+						<div class='form-group'>
+							<label>종료날짜</label> <input class='form-control startDate'
+								type="date" id='endDate' name='endDate'>
+								
+						</div>
+						<div class='form-group'>
+							<label>내용</label>
+							<textarea rows="7" class='form-control' id="description"
+								name='content'></textarea>
+						</div>
+						<div class='modal-footer'>
+							<input type="submit" class='btn btn-sm btn-warning' value="확인" /> 
+							<input type="reset" class='btn btn-sm btn-warning' value="초기화"/> 
+							<input type='button' class='btn btn-sm btn-warning'data-dismiss='modal' value="취소"/>
+						</div>
+					</form>
+				</div>
+				
+				
+			</div>
+		</div>
+	</div>
+					
 				</div>
 			</div><!--/row-->
+			
+			<!-- pdf 파일 -->
+			
+			<div id="results" class="hidden"></div>
+    		<div id="pdf"></div>
+
+
+
+			
+			<!-- pdf 파일 -->
 		
 
 	</div><!--/.fluid-container-->
@@ -163,7 +237,9 @@
 	
 		<script src="/planbe/resources/bootstrap/js/jquery.cookie.js"></script>
 	
-		<script src='/planbe/resources/bootstrap/js/fullcalendar.min.js'></script>
+		<script src='/planbe/resources/bootstrap/js/fullcalendar.js'></script>
+		
+		<script src='/planbe/resources/bootstrap/js/fullcalendar.init.js?version=10'></script>
 	
 		<script src='/planbe/resources/bootstrap/js/jquery.dataTables.min.js'></script>
 
@@ -204,6 +280,16 @@
 		<script src="/planbe/resources/bootstrap/js/retina.js"></script>
 
 		<script src="/planbe/resources/bootstrap/js/custom.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/pdfobject.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/pdfobject.min.js"></script>
+			
+		<script src="/planbe/resources/bootstrap/js/moment.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/wickedpicker.js"></script>
+		
+		
 	<!-- end: JavaScript-->
 	
 </body>
