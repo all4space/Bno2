@@ -47,6 +47,7 @@ public class UsersServiceImpl implements UsersService{
 		if(dao.login(vo) != null){
 			session.setAttribute("loginId", loginVO.getUserId());
 			session.setAttribute("userName", loginVO.getUserName());
+			session.setAttribute("userno", loginVO.getUserNo());
 		}
 	}
 
