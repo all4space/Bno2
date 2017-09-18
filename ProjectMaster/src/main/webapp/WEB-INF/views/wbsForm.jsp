@@ -43,6 +43,8 @@
 		
 <script src="/planbe/resources/js/jquery-3.2.1.min.js"></script>	
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>		
+<script src="/planbe/resources/js/xepOnline.jqPlugin.js"></script>
+
 </head>
 
 
@@ -737,7 +739,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
                </div>
 							    <button class="btn btn-small btn-danger" onclick="deleteWbs()">Delete WBS</button>
 							    <button class="btn btn-small btn-warning" onclick="showGantt()">Show Gantt</button>
-							<!--     <button class="btn btn-small btn-info" onclick="downloadWbs()">Download</button> -->
+							    <button class="btn btn-small btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg'})">Download</button>
 					
 						  </div> <!-- content -->
 			      </div>
