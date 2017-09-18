@@ -6,13 +6,12 @@ import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
 
-public interface ProjectService { //생성
+public interface ProjectService { //�깮�꽦
 	
 	public int projectAdd(ProjectVO projectVo);
 	public boolean projectModify(UsersVO vo);
-	public ProjectVO getProject(int projectNo);// projectNo와 일치하는 project 정보 가져오기
+	public ProjectVO getProject(int projectNo);// projectNo�� �씪移섑븯�뒗 project �젙蹂� 媛��졇�삤湲�
 	public ArrayList<ProjectVO> getProjectList(int userNo);
-	public int projectDelete(int projectNo); // 프로젝트 삭제
+	public int projectDelete(int projectNo); // �봽濡쒖젥�듃 �궘�젣
 	public void projectUpdate(ProjectVO projectList);
-	public int addHistory(HistoryVO history);
 }

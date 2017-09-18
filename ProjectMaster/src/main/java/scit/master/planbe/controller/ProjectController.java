@@ -45,8 +45,24 @@ public class ProjectController {
 	
 	//프로젝트 삭제
 	@RequestMapping(value = "projectDelete", method = RequestMethod.GET)
-	public String projectDelete(int projectNo) {
-		service.projectDelete(projectNo);
+	public String projectDelete(ProjectVO projectList, HttpSession session) {
+		String code = "c";
+		
+		HistoryVO history = new HistoryVO();
+		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		history.setCdSelect(code);//create update delete 직접줌
+		history.setCodeNo(CODENO);//project task login 직접줌
+		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		System.out.println(history.toString()); // 히스토리 객체 확인
+		String content = session.getAttribute("loginId")  + "님이"; 
+		content += projectList.getProjectNo() + "방";
+		content += historyService.getCodeContent(CODENO) + "을/를";
+		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+		System.out.println(content); // CONTENT 값 확인 
+		history.setLogContent(content); //CONTENT값 VO에 세팅
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
+		
+		service.projectDelete(projectList.getProjectNo());
 		return "redirect:projectList";	
 	}
 	
@@ -101,12 +117,12 @@ public class ProjectController {
 	
 	@RequestMapping(value = "projectAdd", method = RequestMethod.POST)
 	public ModelAndView projectAdd(HttpSession session, UsersVO userVo, 
-			ProjectVO projectVo, MemberVO memberVo, String memberList, String managerId) throws ParseException {
+			ProjectVO projectList, MemberVO memberVo, String memberList, String managerId) throws ParseException {
 		
 		String code = "a";
 		
 		String userId = (String) session.getAttribute("loginId");
-		projectVo.setUserNo(usersService.getUserNo(userId));
+		projectList.setUserNo(usersService.getUserNo(userId));
 
 		/*String[] startDate = new String[3];
 		String[] dueDate = new String[3];
@@ -126,12 +142,12 @@ public class ProjectController {
 	
 		System.out.println(userVo.toString());
 		System.out.println(memberVo.toString());
-		System.out.println(projectVo.toString());
+		System.out.println(projectList.toString());
 		
 		
 		System.out.println(managerId);
 		System.out.println(memberList);
-		service.projectAdd(projectVo); // 여기까지 프로젝트 생성
+		service.projectAdd(projectList); // 여기까지 프로젝트 생성
 		
 		
 		// 지금부터 매니저에 떄려박을거양
@@ -145,8 +161,8 @@ public class ProjectController {
 		SimpleDateFormat stringFormat = new SimpleDateFormat("yyyy-MM-dd");
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 		
-		Date start = stringFormat.parse(projectVo.getStartDate());
-		Date due = dateFormat.parse(projectVo.getDueDate());
+		Date start = stringFormat.parse(projectList.getStartDate());
+		Date due = dateFormat.parse(projectList.getDueDate());
 		
 		long work = due.getTime() - start.getTime();
         long workDays = 8*(work / (24 * 60 * 60 * 1000));
@@ -170,36 +186,30 @@ public class ProjectController {
         	memberService.MemberAdd(memberVo);
 		}
         
-        HistoryVO history = new HistoryVO();
-        
-        
-        history.setProjectNo(memberVo.getProjectNo());
-        
         //String content = "a프로젝트가 새성되었습니다 를셀렉트로불러봐";
         
-        history.setCdSelect(code);
-        history.setCodeNo(CODENO);//생성이닊[
-        history.setUserNo(memberVo.getUserNo());
+        HistoryVO history = new HistoryVO();
         
-        System.out.println(history.toString());
-
+        System.out.println(projectList.getProjectNo());
         
-        String content = session.getAttribute("loginId")  + "님이";
+        history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+        history.setCdSelect(code);//create update delete 직접줌
+        history.setCodeNo(CODENO);//project task login 직접줌
+        history.setUserNo(memberVo.getUserNo()); // 유저넘버 히스토리 VO에 저장
+        System.out.println(history.toString()); // 히스토리 객체 확인
+        String content = session.getAttribute("loginId")  + "님이"; 
+        content += memberVo.getUserNo() + "방";
         content += historyService.getCodeContent(CODENO) + "을/를";
-        content += historyService.getCdContent(history) + "햇엉";
+        content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+        System.out.println(content); // CONTENT 값 확인 
+        history.setLogContent(content); //CONTENT값 VO에 세팅
+        historyService.addHistory(history); //history 디비에 히스토리정보 저장
         
-        System.out.println(content);
-        
-        history.setLogContent(content);
-        
-        historyService.addHistory(history);
-        
-        System.out.println(projectVo.toString());
+        System.out.println(projectList.toString());
         
         ModelAndView mov = new ModelAndView("/newTaskForm");
 		mov.addObject("MemberList", memberService.getMemberList(memberVo.getProjectNo()));
 		System.out.println("mov? " + mov.toString());
-		
 		
 		return mov;
 	}
@@ -217,13 +227,32 @@ public class ProjectController {
 	}
 	
 	@RequestMapping(value = "projectUpdate", method = RequestMethod.POST)
-	public String projectUpdate(ProjectVO projectList) {
+	public String projectUpdate(ProjectVO projectList, HttpSession session) {
+
+		String code = "b";
+		
+        
 		System.out.println("ProjectUpdate : " + projectList.toString());
 		//날짜 짜르고
 		projectList.setStartDate(projectList.getStartDate().substring(0, 10));
 		projectList.setDueDate(projectList.getDueDate().substring(0, 10));
 
+
 		service.projectUpdate(projectList);
+		
+		HistoryVO history = new HistoryVO();
+		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		history.setCdSelect(code);//create updat 직접줌
+		history.setCodeNo(CODENO);//project task login 직접줌
+		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		System.out.println(history.toString()); // 히스토리 객체 확인
+		String content = session.getAttribute("loginId")  + "님이"; 
+		content += projectList.getProjectNo() + "방";
+		content += historyService.getCodeContent(CODENO) + "을/를";
+		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+		System.out.println(content); // CONTENT 값 확인 
+		history.setLogContent(content); //CONTENT값 VO에 세팅
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
 		
 		return "redirect:projectList";	
 		

@@ -201,6 +201,9 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 					</div>
 					<div class="box-content">
 						<form action = "/planbe/project/projectAdd" method = "post" class="form-horizontal">
+						
+						<button class="btn btn-primary noty" data-noty-options='{"text":"${loginId}","layout":"top","type":"information"}'></button>
+						
 						  <fieldset>
 							<div class="control-group">
 							  <label class="control-label" for="typeahead">Project Name </label>
