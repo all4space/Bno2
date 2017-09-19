@@ -22,5 +22,6 @@
 			<mapper resource="mapper/Staticmapper.xml" />
 			<mapper resource="mapper/Historymapper.xml" />
 			<mapper resource="mapper/Planmapper.xml" />
+			<mapper resource="mapper/Mailmapper.xml" />
 		</mappers>
 </configuration>

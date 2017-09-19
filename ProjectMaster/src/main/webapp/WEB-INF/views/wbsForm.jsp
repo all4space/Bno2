@@ -41,8 +41,9 @@
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>		
 <script src="/planbe/resources/js/xepOnline.jqPlugin.js"></script>
 
-</head>
+<style type="text/css">@import url(// fonts.googleapis.com/earlyaccess/nanumgothic.css);</style>
 
+</head>
 
 <script>
 
@@ -67,8 +68,6 @@ function AddNamespace(){
   svg.attr("xmlns", "http://www.w3.org/2000/svg");
   svg.css('overflow','visible');
 }
-
-
 
  var tree_div; 
  var wordtree;
@@ -186,7 +185,7 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
 	      format: 'explicit',
 	      type: 'suffix',
 	    },
-	      fontName: 'Dotum'
+	      fontName: 'nanumgothic'
     };
     
  
@@ -197,11 +196,7 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
     
     
 	wordtree.draw(nodeListData, options);  // draw 
-
-   
-    // tree_div.innerHTML = '<img src="' + wordtree.getImageURI() + '">';
     
-    // google.visualization.events.addListener(wordtree, 'ready', downloadWbs);   
 	google.visualization.events.addListener(wordtree, 'select', getWbsInfo);
 	google.visualization.events.addListener(wordtree, 'ready', deleteWbs);
 } 
@@ -750,7 +745,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
                </div>
 							    <button class="btn btn-small btn-danger" onclick="deleteWbs()">Delete WBS</button>
 							    <button class="btn btn-small btn-warning" onclick="showGantt()">Show Gantt</button>
-							    <button class="btn btn-small btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg'})">Download</button>
+							    <button class="btn btn-small btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg', filename:'WBS'})">Download</button>
 					
 						  </div> <!-- content -->
 			      </div>
