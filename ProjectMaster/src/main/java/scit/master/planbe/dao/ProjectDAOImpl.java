@@ -96,4 +96,9 @@ public class ProjectDAOImpl implements ProjectDAO{
 			ProjectMapper mapper = sqlSession.getMapper(ProjectMapper.class);
 			mapper.projectUpdate(projectList);
 		}
+		@Override
+		public String getProjectName(int projectNo) {
+			ProjectMapper mapper = sqlSession.getMapper(ProjectMapper.class);
+			return mapper.getProjectName(projectNo);
+		}
 }

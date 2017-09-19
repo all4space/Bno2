@@ -21,6 +21,7 @@ public interface ProjectDAO {
 	public ArrayList<ProjectVO> getProjectList(int userNo);
 	public int projectDelete(int projectNo);
 	public void projectUpdate(ProjectVO projectList);
+	public String getProjectName(int projectNo);
 	
 	
 	

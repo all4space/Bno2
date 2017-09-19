@@ -83,4 +83,9 @@
 	select * from member where projectno=#{projectNo}
 </select>
 
+<!-- 프젝넘버 프젝네임 -->
+<select id = "getProjectName" parameterType = "int" resultType = "string">
+	select projectName from project where projectNo=#{projectNo}
+</select>
+
 </mapper>

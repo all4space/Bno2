@@ -196,7 +196,9 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							 <div class="control-group hidden-phone">
 							  <label class="control-label" for="textarea1">Project Content</label>
 							  <div class="controls">
-								<textarea value = "${projectList.projectContent}"class="cleditor" id="textarea1" name = "projectContent" rows="3"></textarea>
+								<textarea class="cleditor" id="textarea1" name = "projectContent" rows="3">
+								${projectList.projectContent}
+								</textarea>
 							  </div>
 							</div> <!-- 컨텐츠 - > 글꼴 설정 필요한지 -->
 							

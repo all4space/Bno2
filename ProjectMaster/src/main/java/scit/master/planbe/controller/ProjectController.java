@@ -30,6 +30,7 @@ public class ProjectController {
 	
 	
 	private int CODENO = 1;
+	HistoryVO history = new HistoryVO();
 	
 	@Autowired
 	ProjectServiceImpl service;
@@ -48,46 +49,26 @@ public class ProjectController {
 	public String projectDelete(ProjectVO projectList, HttpSession session) {
 		String code = "c";
 		
-		HistoryVO history = new HistoryVO();
-		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		String userName =(String)session.getAttribute("loginId");
 		history.setCdSelect(code);//create update delete 직접줌
-		history.setCodeNo(CODENO);//project task login 직접줌
+		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
 		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
-		System.out.println(history.toString()); // 히스토리 객체 확인
-		String content = session.getAttribute("loginId")  + "님이"; 
-		content += projectList.getProjectNo() + "방";
-		content += historyService.getCodeContent(CODENO) + "을/를";
-		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
-		System.out.println(content); // CONTENT 값 확인 
-		history.setLogContent(content); //CONTENT값 VO에 세팅
-		historyService.addHistory(history); //history 디비에 히스토리정보 저장
+		
+		projectHistory(history, userName);
 		
 		service.projectDelete(projectList.getProjectNo());
-		return "redirect:projectList";	
+		
+		return "redirect:projectList";
 	}
-	
 	@RequestMapping(value = "groupMemberList", method = RequestMethod.POST)
-	@ResponseBody
-	public ArrayList<UsersVO> groupMemberList(String userId) {
-		UsersVO uvo = new UsersVO();
-		String groupname = service.getGroupName(userId);
-		uvo.setGroupName(groupname);
-		uvo.setUserId(userId);
-		return service.groupMemberList(uvo);
-	}
-	
-	// group MemberList
-	@RequestMapping(value = "projectForm", method = RequestMethod.GET)
-	public ModelAndView projectForm(HttpSession session) {
-		
-		String groupname = service.getGroupName((String)session.getAttribute("loginId"));
-		
-		ModelAndView mov = new ModelAndView("/projectForm");
-		mov.addObject("groupManagerList", service.groupManagerList(groupname));
-		System.out.println("mov? " + mov.toString());
-		
-		return mov;
-	}
+	   @ResponseBody
+	   public ArrayList<UsersVO> groupMemberList(String userId) {
+	      UsersVO uvo = new UsersVO();
+	      String groupname = service.getGroupName(userId);
+	      uvo.setGroupName(groupname);
+	      uvo.setUserId(userId);
+	      return service.groupMemberList(uvo);
+	   }
 	
 	// PorjectList화면가기 전에 List 불러와야해
 	@RequestMapping(value = "projectList", method = RequestMethod.GET)
@@ -105,7 +86,18 @@ public class ProjectController {
 		return mov;
 	}
 	
-	
+	   // group MemberList
+	   @RequestMapping(value = "projectForm", method = RequestMethod.GET)
+	   public ModelAndView projectForm(HttpSession session) {
+	      
+	      String groupname = service.getGroupName((String)session.getAttribute("loginId"));
+	      
+	      ModelAndView mov = new ModelAndView("/projectForm");
+	      mov.addObject("groupManagerList", service.groupManagerList(groupname));
+	      System.out.println("mov? " + mov.toString());
+	      
+	      return mov;
+	   }
 	
 	// group Member List 불러오기 ajax;
 	/*@RequestMapping(value = "groupManagerList", method = RequestMethod.POST)
@@ -123,7 +115,6 @@ public class ProjectController {
 		
 		String userId = (String) session.getAttribute("loginId");
 		projectList.setUserNo(usersService.getUserNo(userId));
-
 		/*String[] startDate = new String[3];
 		String[] dueDate = new String[3];
 		
@@ -142,7 +133,7 @@ public class ProjectController {
 	
 		System.out.println(userVo.toString());
 		System.out.println(memberVo.toString());
-		System.out.println(projectList.toString());
+		System.out.println("부모가없다" + projectList.toString());
 		
 		
 		System.out.println(managerId);
@@ -188,25 +179,15 @@ public class ProjectController {
         
         //String content = "a프로젝트가 새성되었습니다 를셀렉트로불러봐";
         
-        HistoryVO history = new HistoryVO();
-        
-        System.out.println(projectList.getProjectNo());
-        
-        history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
-        history.setCdSelect(code);//create update delete 직접줌
-        history.setCodeNo(CODENO);//project task login 직접줌
-        history.setUserNo(memberVo.getUserNo()); // 유저넘버 히스토리 VO에 저장
-        System.out.println(history.toString()); // 히스토리 객체 확인
-        String content = session.getAttribute("loginId")  + "님이"; 
-        content += memberVo.getUserNo() + "방";
-        content += historyService.getCodeContent(CODENO) + "을/를";
-        content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
-        System.out.println(content); // CONTENT 값 확인 
-        history.setLogContent(content); //CONTENT값 VO에 세팅
-        historyService.addHistory(history); //history 디비에 히스토리정보 저장
-        
-        System.out.println(projectList.toString());
-        
+        projectList.setProjectNo(service.getProjectSeq());
+        String userName =(String)session.getAttribute("loginId");
+		history.setCdSelect(code);//create update delete 직접줌
+		
+		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		
+		projectHistory(history, userName);
+		
         ModelAndView mov = new ModelAndView("/newTaskForm");
 		mov.addObject("MemberList", memberService.getMemberList(memberVo.getProjectNo()));
 		System.out.println("mov? " + mov.toString());
@@ -231,29 +212,62 @@ public class ProjectController {
 
 		String code = "b";
 		
-        
 		System.out.println("ProjectUpdate : " + projectList.toString());
 		//날짜 짜르고
 		projectList.setStartDate(projectList.getStartDate().substring(0, 10));
 		projectList.setDueDate(projectList.getDueDate().substring(0, 10));
 
-
-		service.projectUpdate(projectList);
 		
-		HistoryVO history = new HistoryVO();
+		
+		
+		String userName =(String)session.getAttribute("loginId");
+		history.setCodeNo(CODENO);//project task 직접줌
+		history.setCdSelect(code);//create update delete 직접줌
 		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
-		history.setCdSelect(code);//create updat 직접줌
-		history.setCodeNo(CODENO);//project task login 직접줌
 		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
-		System.out.println(history.toString()); // 히스토리 객체 확인
-		String content = session.getAttribute("loginId")  + "님이"; 
-		content += projectList.getProjectNo() + "방";
+		
+		
+		
+		String content = userName  + "님이"; 
+		content += service.getprojectName(history.getProjectNo()) + "프로젝트를";
 		content += historyService.getCodeContent(CODENO) + "을/를";
 		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+
+		content += "변경사항 : ";
+	
+		
+		System.out.println("1111111" + projectList.getProjectName());
+		System.out.println("2222222" + service.getProjectInfo(projectList.getProjectNo()).getProjectName());
+		
+		
+		if(!(projectList.getProjectName().equals(service.getProjectInfo(projectList.getProjectNo()).getProjectName())))
+		{
+			content += "ProjectName 변경 : " + service.getProjectInfo(projectList.getProjectNo()).getProjectName() + " = > " + projectList.getProjectName();
+		}
+
+		if(!(projectList.getProjectContent().equals(service.getProjectInfo(projectList.getProjectNo()).getProjectContent())))
+		{
+			content += "ProjectContent 변경 : " + service.getProjectInfo(projectList.getProjectNo()).getProjectContent() + " = > " + projectList.getProjectContent();
+		}
+		
+		if(!(projectList.getStartDate().equals(service.getProjectInfo(projectList.getProjectNo()).getStartDate().substring(0, 10))))
+		{
+			content += "startDate 변경 :" + service.getProjectInfo(projectList.getProjectNo()).getStartDate().substring(0, 10) + " = > " + projectList.getStartDate(); 
+		}
+		
+		if(!(projectList.getDueDate().equals(service.getProjectInfo(projectList.getProjectNo()).getDueDate().substring(0, 10))))
+		{
+			content += "DueDate 변경 :" + service.getProjectInfo(projectList.getProjectNo()).getDueDate().substring(0, 10) + " = > " + projectList.getDueDate(); 
+		}
+		
 		System.out.println(content); // CONTENT 값 확인 
+		
 		history.setLogContent(content); //CONTENT값 VO에 세팅
 		historyService.addHistory(history); //history 디비에 히스토리정보 저장
-		
+
+	
+		service.projectUpdate(projectList);
+
 		return "redirect:projectList";	
 		
 	}
@@ -270,6 +284,21 @@ public class ProjectController {
 	
 	
 		return "projectInfo";	
+	}
+	
+	public void projectHistory(HistoryVO history, String userName)
+	{
+		history.setCodeNo(CODENO);
+		
+		String content = userName  + "님이"; 
+		content += service.getprojectName(history.getProjectNo()) + "방";
+		content += historyService.getCodeContent(CODENO) + "을/를";
+		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+		
+		System.out.println(content); // CONTENT 값 확인 
+		
+		history.setLogContent(content); //CONTENT값 VO에 세팅
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
 	}
 }
 	

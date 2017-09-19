@@ -14,4 +14,5 @@ public interface ProjectService { //�깮�꽦
 	public ArrayList<ProjectVO> getProjectList(int userNo);
 	public int projectDelete(int projectNo); // �봽濡쒖젥�듃 �궘�젣
 	public void projectUpdate(ProjectVO projectList);
+	public String getprojectName(int projectNo);
 }
