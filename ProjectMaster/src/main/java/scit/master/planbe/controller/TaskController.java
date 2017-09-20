@@ -13,16 +13,27 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.PageNavigator;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
+import scit.master.planbe.dao.ProjectDAOImpl;
 import scit.master.planbe.dao.UsersDAOImpl;
+import scit.master.planbe.service.HistoryServiceImpl;
 import scit.master.planbe.service.MemberServiceImpl;
+import scit.master.planbe.service.ProjectService;
 import scit.master.planbe.service.TaskService;
+import scit.master.planbe.service.UsersService;
 
 @RequestMapping("/task")
 @Controller
 public class TaskController {
+	
+	private int CODENO = 2; // 히스토리시 테스크값은 2번
+	HistoryVO history = new HistoryVO(); //히스토리 개체
+	
+	@Autowired
+	HistoryServiceImpl historyService;
 	
 	@Autowired
 	TaskService task;
@@ -44,8 +55,6 @@ public class TaskController {
 		int userno = (int) session.getAttribute("userno");
 		int totalRecordCount=task.getTotalCount(searchtype, searchword,target,userno);
 		PageNavigator navi = new PageNavigator(currentPage, totalRecordCount, 5);
-		System.out.println("1 : " + navi.getStartRecord());
-		System.out.println("2 : " + navi.getCountPerPage());
 		model.addAttribute("taskList",task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage())); 
 		model.addAttribute("result", navi);
 		return "taskForm";				
@@ -82,11 +91,26 @@ public class TaskController {
 	@RequestMapping(value = "newTask", method = RequestMethod.POST)
 	public String newTask(TaskVO taskVo,Model model,HttpSession session) {
 		
+		String code = "a";
+		
 		UsersVO userVO=dao.idCheck((String)session.getAttribute("loginId"));
-		task.Insert(taskVo,userVO);	
+		task.Insert(taskVo,userVO);
+		
+		System.out.println("new TaksVo : "+taskVo.toString());
+		System.out.println("nnew userVo : " + userVO.toString());
+		
+		String userName =(String)session.getAttribute("loginId");
+		history.setCdSelect(code);//create update delete 직접줌
+		history.setProjectNo(taskVo.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		history.setUserNo(userVO.getUserNo()); // 유저넘버 히스토리 VO에 저장
+		
+		TaskHistory(history, userName, taskVo.getTaskName());
+		
+		
 		return "redirect:taskForm";
 	}
 	
+
 	//updateTask.jsp로 이동
 		@RequestMapping(value = "updateTaskForm", method = RequestMethod.GET)
 		public String updateTaskForm(TaskVO taskVo,Model model) {		
@@ -98,15 +122,98 @@ public class TaskController {
 		
 		//업무 수정하기
 		@RequestMapping(value = "updateTask", method = RequestMethod.POST)
-		public String updateTask(TaskVO taskVo,Model model) {
-				task.updateTask(taskVo);
+		public String updateTask(TaskVO taskVo,Model model, HttpSession session) {
+			String code = "b";
+			ProjectDAOImpl projectDao = new ProjectDAOImpl();
+			
+			System.out.println("taskUpdate : " + taskVo.toString());
+			
+				
+			String userName =(String)session.getAttribute("loginId");
+			history.setCodeNo(CODENO);//project task 직접줌
+			history.setCdSelect(code);//create update delete 직접줌
+			history.setProjectNo(taskVo.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+			history.setUserNo(dao.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		
+			
+			System.out.println("왜 널이야" + history.getProjectNo());
+			//System.out.println(projectDao.getProjectName(history.getProjectNo()));
+			
+			
+			String content = userName  + "님이"; 
+			content += taskVo.getProjectNo() + "방 프로젝트의 ";
+			
+			//content += projectDao.getProjectName(history.getProjectNo()) + "프로젝트의";
+			TaskVO vo = task.Search(taskVo);
+			
+			content += vo.getTaskName() + " Task 를";
+			content += historyService.getCdContent(history) + "햇엉 "; // 저장될 문자열 작성 CONTENT
+			content += "변경사항 : ";
+		
+			
+			System.out.println("1111111" + taskVo.getTaskName());
+			System.out.println("2222222" + vo.getTaskName());
+			
+			if(!(taskVo.getTaskName().equals(vo.getTaskName())))
+			{
+				content += "TaskName 변경 : " + vo.getTaskName() + " = >" + taskVo.getTaskName();
+			}
+			if(!(taskVo.getTaskContent().equals(vo.getTaskContent())))
+			{
+				content += "TaskContent 변경 : " + vo.getTaskContent() + " = > " + taskVo.getTaskContent();
+			}
+			if(!(taskVo.getTaskPriority().equals(vo.getTaskPriority())))
+			{
+				content += "TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
+			}
+			if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+			{
+				content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+			}
+			if(!(taskVo.getStartDate().equals(vo.getStartDate())))
+			{
+				content += "TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
+			}
+			if(!(taskVo.getTotalTime() == vo.getTotalTime()))
+			{
+				content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
+			}
+			if(!(taskVo.getDoneTime() == vo.getDoneTime()))
+			{
+				content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
+			}
+			
+	
+			System.out.println(content); // CONTENT 값 확인 
+			
+			history.setLogContent(content); //CONTENT값 VO에 세팅
+			historyService.addHistory(history); //history 디비에 히스토리정보 저장
+		
+				
+			task.updateTask(taskVo);
+				
 			return "redirect:taskForm";
 		}
 		
 		//업무 삭제하기
 		@RequestMapping(value = "deleteTask", method = RequestMethod.POST)
-		public String deleteTask(TaskVO taskVo,Model model) {			
-				task.deleteTask(taskVo);
+		public String deleteTask(TaskVO taskVo,Model model, HttpSession session) {			
+			
+			String code = "c";
+			
+			task.deleteTask(taskVo);
+				
+			System.out.println("new TaksVo : "+taskVo.toString());
+			
+			String userName =(String)session.getAttribute("loginId");
+			
+			
+			history.setCdSelect(code);//create update delete 직접줌
+			history.setProjectNo(taskVo.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+			history.setUserNo(dao.getUserNo(userName)); // 유저넘버 히스토리 VO에 저장
+			
+			TaskHistory(history, userName, taskVo.getTaskName());
+				
 			return "redirect:taskForm";
 		}
 		
@@ -154,7 +261,21 @@ public class TaskController {
 		}
 		
 		
-		
+		private void TaskHistory(HistoryVO history, String userName, String taskName) {
+			
+			history.setCodeNo(CODENO);
+			
+			String content = userName  + "님이"; 
+			content += history.getProjectNo() + "방의";
+			content += taskName + "TASK를";
+			content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
+			
+			System.out.println(content); // CONTENT 값 확인 
+			
+			history.setLogContent(content); //CONTENT값 VO에 세팅
+			historyService.addHistory(history); //history 디비에 히스토리정보 저장
+		}
+
 	
 }
 
