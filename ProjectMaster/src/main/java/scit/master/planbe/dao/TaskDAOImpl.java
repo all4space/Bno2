@@ -57,6 +57,7 @@ public class TaskDAOImpl implements TaskDAO{
 		map.put("searchword", searchword);
 		map.put("target", target);
 		map.put("userno", userno);
+		
 		return mapper.getList(map,rb);		
 	}
 
@@ -125,6 +126,12 @@ public class TaskDAOImpl implements TaskDAO{
 		Map<String,Object>map=new HashMap<>();	
 		map.put("userno", userno);
 		return mapper.getTotalList(map);	
+	}
+
+	@Override
+	public int getTaskCount(int userNo) {
+		Taskmapper mapper =Sqlsession.getMapper(Taskmapper.class);
+		return mapper.getTaskCount(userNo);
 	}
 		
 

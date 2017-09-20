@@ -68,12 +68,38 @@ $(function(){
 	 function setEfficiency(projectList, percent){
 		listUp(projectList, percent);
 		var color = ['circleStatsItemBox yellow','circleStatsItemBox green','circleStatsItemBox red','circleStatsItemBox pink','circleStatsItemBox blue','circleStatsItemBox green'];
+		
 		$(projectList).each(function(index1,item1){ // user가 속한 project들의 VO정보들 name,content,status...
-			$(percent).each(function(index2,item2){ //percent 계산 하기 위해가져온 taskVO time들
+			$(percent).each(function(index2,item2){ //percent 계산 하기 위해가져온 taskVO time들 (task 시간 싹다 합쳐온것)
+				if(index1 >= 5){index1 = index1 % 5;}//색 설정
 				if(item1.projectNo == item2.projectNo){
 					var percen = (item2.doneTime / item2.totalTime) * 100;
 					var percent = Math.round(percen); // 퍼센트 계산 했고, data 는 한번만 찍어야해. 
-					
+						console.log(index2 +" : "+ percent)
+						var day = howlong(item1.dueDate);
+						
+						var data  = '<div class = "span2" onTablet="span4" onDesktop="span2">';
+							data	 += '<div class = "'+color[index1]+'">';
+							data	 += '<div class = "header">'+projectList[index1].projectName+'</div>';
+							data	 += '<span class="percent">percent</span>';
+							data	 += '<div class="circleStat">';
+							data	 += '<input type = "text" value = "'+percent+'" class = "whiteCircle" />';
+							data	 += '</div>';
+							data	 += '<div class = "footer">';
+							data	 +=	'<span class = "count">';
+							data	 += '<span class = "numbers">D</span>';
+							data	 += '<span class = "unit"></span>';
+							data	 += '</span>';
+							data	 += '<span class = "sep"> </span>';
+							data	 += '<span class = "value">';
+							data	 += '<span class = "number"></span>';
+							data	 += '<span class = "units">'+day+' Day</span>';
+							data	 += '</span>';
+							data	 += '</div>'; // footer
+							data	 += '</div>'; // color
+							data	 += '</div>'; // span
+						$("#allchart").append(data);
+				}else{
 					var day = howlong(item1.dueDate);
 					
 					var data  = '<div class = "span2" onTablet="span4" onDesktop="span2">';
@@ -81,7 +107,7 @@ $(function(){
 						data	 += '<div class = "header">'+projectList[index1].projectName+'</div>';
 						data	 += '<span class="percent">percent</span>';
 						data	 += '<div class="circleStat">';
-						data	 += '<input type = "text" value = "'+percent+'" class = "whiteCircle" />';
+						data	 += '<input type = "text" value = "0" class = "whiteCircle" />';
 						data	 += '</div>';
 						data	 += '<div class = "footer">';
 						data	 +=	'<span class = "count">';
@@ -97,7 +123,7 @@ $(function(){
 						data	 += '</div>'; // color
 						data	 += '</div>'; // span
 					$("#allchart").append(data);
-				}//if 문				
+				}//if - else 문				
 			})//taskVO 포이치(= projectNo 같은 놈 탐색)
 		})//ProjectVO 포이치(= 프로젝트별로 나타내기 위해...)
 	}//setEfficiency 함수 끗.
@@ -125,7 +151,7 @@ $(function(){
 						 + item.projectName
 						 +'</option>';
 						 
-			 $("#selectError").html(addRow);
+			 $("#selectError").append(addRow);
 			})
 			$("#selectError").trigger("liszt:updated");
 	}

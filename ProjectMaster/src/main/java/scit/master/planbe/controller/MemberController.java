@@ -27,12 +27,15 @@ public class MemberController {
 	}
 	
 	@RequestMapping(value = "getProjectList", method = RequestMethod.GET) //로그인 유저의 멤버넘버를 가져온다.
-	public ModelAndView getProjectList(HttpSession session, Model model) {
+	public ModelAndView getProjectList(HttpSession session, Model model,String projectNo) {
 		String userId = (String) session.getAttribute("loginId");
 		HashMap<String,Object> map = service.getProjectList(userId);
 		ModelAndView mav = new ModelAndView("/ganttForm");
 		mav.addObject("member", map.get("member"));
 		mav.addObject("project", map.get("project"));
+		if(projectNo != null){
+			mav.addObject("projectNo",projectNo);
+		}
 		return mav;
 	}
 	

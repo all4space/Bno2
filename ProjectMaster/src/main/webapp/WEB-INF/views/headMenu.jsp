@@ -2,11 +2,87 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 
+<script src = "/planbe/resources/js/jquery-3.2.1.min.js"></script>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Head Menu</title>
 </head>
+<script>
+
+$(function(){
+	if('${sessionScope.loginId}' != ''){
+		task();
+	}
+})
+/* TASK 불러오기 */	
+	function task(){
+		$.ajax({
+		  		url: "/planbe/head/getTask",
+		  		type: "post",
+		  		datatype: "json",
+		  		success: function(result) {
+		  			var taskList = result.taskList;
+		  			var taskCount = result.taskCount;
+		  			
+		  			newMessage(taskList);
+		  			$("#taskprogress_title").append("<span>You have "+taskCount+" tasks in progress</span>");
+		  			 YouhavetoDoTasks(taskList);
+		  			 progress();
+		  		
+				}, // success,
+		  		error: function() {	alert("통신 에------라!");	}
+		})
+	}
+
+function newMessage(taskList){
+	var count = 0;
+	$(taskList).each(function(index,item){
+		if(item.taskStatus == 'new'){
+			count += 1;
+		}
+	})
+	$("#taskprogress_badge").append("<span class='badge red'>"+count+"</span>");	
+}
+
+ 	function YouhavetoDoTasks(taskList){
+ 	 var color = ["taskProgress progressSlim red","taskProgress progressSlim green",
+				"taskProgress progressSlim yellow",
+				"taskProgress progressSlim greenLight",
+				"taskProgress progressSlim orange"]
+		$(taskList).each(function(index,item){
+		var	addTask = '<li>'
+			addTask += '<a href="#"><span class="header">';
+			addTask += '<span class="title">'+item.taskName+'</span>';
+			addTask += '<span class="percent"></span>';
+			addTask += '</span>';
+			addTask += '<div class = "'+color[index]+'">'+item.doneTime+'</div>';
+    		addTask += '</a></li>';
+    		
+		$(".taskList").append(addTask); 
+		
+		if(index== 4){return false}
+		})
+	} 
+ 	
+ 	function progress(){
+ 		if($(".taskProgress")) {
+				
+				$(".taskProgress").each(function(){
+					
+					var endValue = parseInt($(this).html());
+													
+					$(this).progressbar({
+						value: endValue
+					});
+					
+					$(this).parent().find(".percent").html(endValue + "%");
+					
+				});
+			
+			}
+ 	}
+</script>
 <body>
 
 <!-- start: Header -->
@@ -113,63 +189,19 @@
 						</li>
 						<!-- start: Notifications Dropdown -->
 						<li class="dropdown hidden-phone">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<a class="btn dropdown-toggle" id = "taskprogress_badge" data-toggle="dropdown" href="#">
 								<i class="icon-calendar"></i>
-								<span class="badge red">
-								5 </span>								<!-- 뉴 알람 5개  -->
+								
+<!-- 뉴 알람 5개   -->												
 							</a>
 							<ul class="dropdown-menu tasks">
-								<li class="dropdown-menu-title">
- 									<span>You have 17 tasks in progress</span> <!-- 진행 프로젝트 Count  -->
+								<li class="dropdown-menu-title" id = "taskprogress_title">
+ <!-- 진행 프로젝트 Count  -->		<!-- <span>You have 5 tasks in progress</span> -->
 									<a href="#refresh"><i class="icon-repeat"></i></a>
 								</li>
+								<div class="taskList"></div>
 								<li>
-                                    <a href="#">
-										<span class="header">
-											<span class="title">iOS Development</span>
-											<span class="percent"></span>
-										</span>
-                                        <div class="taskProgress progressSlim red">80</div> 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="header">
-											<span class="title">Android Development</span>
-											<span class="percent"></span>
-										</span>
-                                        <div class="taskProgress progressSlim green">47</div> 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="header">
-											<span class="title">ARM Development</span>
-											<span class="percent"></span>
-										</span>
-                                        <div class="taskProgress progressSlim yellow">32</div> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="header">
-											<span class="title">ARM Development</span>
-											<span class="percent"></span>
-										</span>
-                                        <div class="taskProgress progressSlim greenLight">63</div> 
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="header">
-											<span class="title">ARM Development</span>
-											<span class="percent"></span>
-										</span>
-                                        <div class="taskProgress progressSlim orange">80</div> 
-                                    </a>
-                                </li>
-								<li>
-                            		<a class="dropdown-menu-sub-footer">View all tasks</a>
+                            		<a class="dropdown-menu-sub-footer" href="/planbe/task/taskForm">View all tasks</a>
 								</li>	
 							</ul>
 						</li>
@@ -301,6 +333,5 @@
 
 <!-- end: Header -->
 	
-
 </body>
 </html>

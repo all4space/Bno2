@@ -55,7 +55,7 @@
 			<div class="row-fluid">
 				<div class="login-box">
 					<div class="icons">
-						<a href="index.jsp"><i class="halflings-icon home"></i></a>
+						<a href="/planbe/"><i class="halflings-icon home"></i></a>
 						<a href="#"><i class="halflings-icon cog"></i></a>
 					</div>
 					<h2>Login to your account</h2>

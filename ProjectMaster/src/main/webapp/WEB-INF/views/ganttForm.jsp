@@ -50,10 +50,14 @@
 
 
 	$(function(){
-		/* var projectNo = ${projectNo}
-		if(projectNo != null){ Gantt(); } */
-		google.charts.load('current', {'packages':['gantt']});
-		google.charts.setOnLoadCallback(drawChart); 
+		if('${projectNo}' != ''){ 
+			Gantt('${projectNo}',"hi");
+			google.charts.load('current', {'packages':['gantt']});
+			google.charts.setOnLoadCallback(drawChart); 
+			}else{
+			google.charts.load('current', {'packages':['gantt']});
+			google.charts.setOnLoadCallback(drawChart); 
+			}
 	})
 	
 function drawChart(GanttList, date) {

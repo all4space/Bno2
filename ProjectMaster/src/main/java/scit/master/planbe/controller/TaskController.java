@@ -44,6 +44,8 @@ public class TaskController {
 		int userno = (int) session.getAttribute("userno");
 		int totalRecordCount=task.getTotalCount(searchtype, searchword,target,userno);
 		PageNavigator navi = new PageNavigator(currentPage, totalRecordCount, 5);
+		System.out.println("1 : " + navi.getStartRecord());
+		System.out.println("2 : " + navi.getCountPerPage());
 		model.addAttribute("taskList",task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage())); 
 		model.addAttribute("result", navi);
 		return "taskForm";				

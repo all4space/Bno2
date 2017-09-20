@@ -21,6 +21,7 @@ public interface Taskmapper {
 	public ProjectVO projectNoList(MemberVO memberVO); // 프로젝트 넘버 가져오기
 	public TaskVO searchTask(Map<String, Object> map); // progress 에서 task 가져오기
 	public ArrayList<TaskVO>getTotalList(Map<String,Object>map); // 전체 리스트(페이지 수와 상관없이) 가져오기
+	public int getTaskCount(int userNo);//task 갯수세기
 
 }
 

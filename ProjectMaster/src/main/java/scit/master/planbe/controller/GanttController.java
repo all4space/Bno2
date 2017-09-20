@@ -2,7 +2,6 @@ package scit.master.planbe.controller;
 
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,7 +26,7 @@ public class GanttController {
 	public String ganttForm(String projectNo, Model model) {
 		String address = "redirect:/member/getProjectList";
 			if(projectNo != null){
-				address = "ganttForm";
+				address = "forward:/member/getProjectList";
 				model.addAttribute("projectNo", projectNo);
 			}
 		return address;

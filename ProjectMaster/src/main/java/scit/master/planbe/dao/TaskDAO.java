@@ -16,6 +16,7 @@ public interface TaskDAO {
 	public ArrayList<ProjectVO>projectNoList(MemberVO memberVO); // 프로젝트 넘버 가져오기
 	public TaskVO searchTask(String searchtype, String searchword,int userno,int taskNo); // progress 에서 task 가져오기
 	public ArrayList<TaskVO> getTotalList(int userno); // 전체 리스트 수 (페이지 수와 상관없이) 가져오기
+	public int getTaskCount(int userNo);//task 갯수세기
 	
 }
 

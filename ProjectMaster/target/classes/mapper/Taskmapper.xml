@@ -20,6 +20,7 @@
     ,#{donetime})
 </insert>
 
+
 <!-- 업무 리스트 출력하기 -->
 <select id="getList" parameterType="map" resultType="TaskVO">
 
@@ -71,9 +72,9 @@
 	   						and taskpriority LIKE '%'||#{target}||'%'
 	 </when>
 	  <when test="userno != null">
-	 	 t join member m on t.memberno=m.memberno 
-					join users u on m.userno = u.userno
-						and u.userno=#{userno}
+ 	 	 t join member m on t.memberno=m.memberno
+			join users u on m.userno = u.userno
+					and u.userno=#{userno}
 	 </when>
 	 
 		 
@@ -192,10 +193,11 @@
 
 </select>
 
-
-
-
-
+<select id="getTaskCount" parameterType="int" resultType="int">
+	SELECT count(taskNo) FROM TASK t join member m on t.memberno=m.memberno 
+					join users u on m.userno = u.userno
+						and u.userno=#{userno}
+</select>
 	
 </mapper>
 
