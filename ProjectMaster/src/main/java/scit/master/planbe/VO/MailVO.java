@@ -1,22 +1,20 @@
 package scit.master.planbe.VO;
 
-import java.util.ArrayList;
-
 public class MailVO {
 
 	private int mailNo;
 	private int userNo;
 	private String mailTitle;
 	private String mailContent;
-	private ArrayList<Integer> receiveProject;
-	private ArrayList<Integer> receiveMember;
+	private String receiveProject;
+	private String receiveMember;
 	private String mailPriority;
 	private String sendDate; 
 	
 	public MailVO(){}
 
-	public MailVO(int mailNo, int userNo, String mailTitle, String mailContent, ArrayList<Integer> receiveProject,
-			ArrayList<Integer> receiveMember, String mailPriority, String sendDate) {
+	public MailVO(int mailNo, int userNo, String mailTitle, String mailContent, String receiveProject,
+			String receiveMember, String mailPriority, String sendDate) {
 		super();
 		this.mailNo = mailNo;
 		this.userNo = userNo;
@@ -60,19 +58,19 @@ public class MailVO {
 		this.mailContent = mailContent;
 	}
 
-	public ArrayList<Integer> getReceiveProject() {
+	public String getReceiveProject() {
 		return receiveProject;
 	}
 
-	public void setReceiveProject(ArrayList<Integer> receiveProject) {
+	public void setReceiveProject(String receiveProject) {
 		this.receiveProject = receiveProject;
 	}
 
-	public ArrayList<Integer> getReceiveMember() {
+	public String getReceiveMember() {
 		return receiveMember;
 	}
 
-	public void setReceiveMember(ArrayList<Integer> receiveMember) {
+	public void setReceiveMember(String receiveMember) {
 		this.receiveMember = receiveMember;
 	}
 
@@ -100,6 +98,8 @@ public class MailVO {
 	}
 
 }
+	
+
     
 	 
 

@@ -48,6 +48,7 @@ public class UsersServiceImpl implements UsersService{
 			session.setAttribute("loginId", loginVO.getUserId());
 			session.setAttribute("userName", loginVO.getUserName());
 			session.setAttribute("userno", loginVO.getUserNo());
+			session.setAttribute("authority", loginVO.getAuthority());
 		}
 	}
 

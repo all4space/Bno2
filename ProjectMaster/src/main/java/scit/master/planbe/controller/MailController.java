@@ -1,7 +1,7 @@
 package scit.master.planbe.controller;
 
+
 import java.util.ArrayList;
-import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,11 +10,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.ResponseBody;
 
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
-import scit.master.planbe.VO.TaskVO;
+import scit.master.planbe.VO.UsersVO;
 import scit.master.planbe.service.MailServiceImpl;
 
 @RequestMapping("/mail")
@@ -24,72 +23,56 @@ public class MailController {
 	@Autowired
     MailServiceImpl service;
 	
-	// Gantt와 연동 : Gantt 페이지에서 클릭한 프로젝트의 WBS 트리를 보여줌  
-	@RequestMapping(value = "fromGantt", method = RequestMethod.GET)
-	public String fromGantt(Model model, int projectNo) {
-		model.addAttribute("fromG", projectNo);
-		return "wbsForm";
-	}
-	
-	// WBS 페이지 불러오기 
-	@RequestMapping(value = "wbsForm", method = RequestMethod.GET)
-	public String wbsForm(HttpSession session, Model model) {
-		String userId = (String) session.getAttribute("loginId");
-		// MemberList 가져오기 (projectNo, authoriry 가져오기 위해)
-		ArrayList<MemberVO> m_list = service.getMemberList(userId);
-		
-		// ProjectList 가져오기 
-		ArrayList<ProjectVO> p_list = new ArrayList<>();
-		for(MemberVO mvo : m_list){
-			int projectNo = mvo.getProjectNo();
-			p_list.add(service.getProjectInfo(projectNo));
-		}
-		
-	    model.addAttribute("m_list", m_list);
-		model.addAttribute("p_list", p_list);
-		
-		return "wbsForm";
-	}
-	
-	// WBS 데이터 불러오기  
-	@RequestMapping(value = "getWbs", method = RequestMethod.POST)
-	@ResponseBody
-	public HashMap<String, Object> getWbs(int projectNo) {
-		// projectName 가져오기   
-		ProjectVO vo = service.getProjectInfo(projectNo);
+	// MailForm 불러오기 
+	@RequestMapping(value = "mailForm", method = RequestMethod.GET)
+	public String mailForm(HttpSession session, Model model) {
+	    String userId = (String)session.getAttribute("loginId");
 
-		// 프로젝트에 속한 TaskList 가져오기 
-	    ArrayList<TaskVO> taskList = service.getTaskList(projectNo);
-        
-	    // TaskList의 각 Task 담당자(Member) 가져오기 
-        ArrayList<String> memberList = new ArrayList<>();
-        for(TaskVO t_vo : taskList){
-        	int memberNo = t_vo.getMemberNo();
-        	memberList.add(service.getMember(memberNo));
-        }
-        
-	    HashMap<String, Object> map = new HashMap<String, Object>();
-	    map.put("projectName", vo.getProjectName()); 
-	    map.put("taskList", taskList);
-	    map.put("memberList", memberList);
-	    
-	    return map;
+	    UsersVO uvo = service.getUserInfo(userId);
+	    	/* CTO 권한의 경우 */
+           if("cto".equals(uvo.getAuthority())){
+	        	// CTO 그룹의 전체 프로젝트 가져오기
+	        	ArrayList<ProjectVO> all_p_list = service.getAllProjectList(uvo.getGroupName());
+
+	        	// CTO 그룹의 전체 멤버(user) 가져오기 
+	        	ArrayList<UsersVO> all_u_list = service.getAllMemberList(uvo.getGroupName());
+	        	//System.out.println("p리스트" + all_p_list.toString() + "멤바" + all_u_list);
+	        	
+	        	model.addAttribute("all_p_list", all_p_list); // 그룹의 전체 프로젝트 리스트 
+	        	model.addAttribute("all_u_list", all_u_list); // 그룹의 전체 멤버(user) 리스트
+	        	
+	        } else { 
+	        /* Manager or Member 권한의 경우 */
+	        	// Manager or Member가 속한 프로젝트 가져오기 
+	        	ArrayList<ProjectVO> my_p_list = service.getMyProjectList(uvo.getUserNo());
+	        	
+	        	// Manager or Member가 속한 프로젝트에 속한 멤버 가져오기
+	        	ArrayList<Integer> my_m_userNo = new ArrayList<>();
+	        	for(ProjectVO pvo : my_p_list){
+	        		ArrayList<MemberVO> m_info_list = service.getMyMemberInfo(pvo.getProjectNo());
+	        		for(MemberVO mvo : m_info_list){
+	        			my_m_userNo.add(mvo.getUserNo());
+	        		}
+	        	}
+                
+	        	ArrayList<UsersVO> my_u_list = new ArrayList<>(); 
+	        	for(int userNo : my_m_userNo){
+	        		UsersVO muvo = service.getUserInfo(userNo);
+	        		if(!my_u_list.contains(muvo)){
+	        			my_u_list.add(muvo);
+	        		}
+	        	}
+	        	// System.out.println("my프젝리스트" + my_p_list + "my멤바리스트" + my_u_list);	
+	            model.addAttribute("my_p_list", my_p_list); // 소속된 프로젝트 리스트 
+	            model.addAttribute("my_u_list", my_u_list); // 소속된 프로젝트의 멤버 리스트 
+	        }//else
+	        return "mailForm";
 	}
-	    
-	// WBS Update 1 : TaskInfo 수정 
-	@RequestMapping(value = "updateTask")
-	@ResponseBody
-	public boolean updateTask(TaskVO vo) {
-		if(service.updateTask(vo)) return true; 
-		return false;
-	}	
-	    
-	// WBS Update 2:  Task 삭제   
-	@RequestMapping(value = "deleteTask", method = RequestMethod.POST)
-	@ResponseBody
-	public boolean deleteTask(int taskNo) {
-		if(service.deleteTask(taskNo)) return true;
-		return false;
-	}
+	        		
 	
+	// MailList 불러오기 
+	@RequestMapping(value = "mailList", method = RequestMethod.GET)
+	public String mailList() {
+		return "mailList";
+	}
 }

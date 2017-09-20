@@ -381,7 +381,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
              
              /* 전체 Task 보기(original) */
              if("origin" == key){
-            	 alert("오리진"); // 아니 왜 안 들어와...
+            	 alert("오리진"); 
             	 drawSimpleNodeChart(p_name, t_list, m_list); 
             	 
              } else {
@@ -419,9 +419,12 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
              
 	
 /* WBS 노드 정보 불러오기 */ 
-   // var p_list = "<c:out value='${p_list}'/>";
-   // alert(p_list);
  
+
+  /*  var p_list = "<c:out value='${p_list}'/>"; */
+  /* alert(p_list); */
+  
+  
 	function getWbsInfo() {
 
 		var selectedNode = wordtree.getSelection();
@@ -488,7 +491,6 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 /* 개별 TaskInfo 가져오기 */
 	function getTaskInfo(selectTask, selectMember){
 	   		
-	   //  $("#ttt").attr("class" , "table table-striped table-bordered bootstrap-datatable datatable");
 	     
 	     $(".T_INFO").empty();
 	     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse'>" + selectMember + "</button>"
@@ -600,6 +602,14 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
  // alert(nodeListData.getRowProperties(0));      //  
  // alert(nodeListData.getValue(0, 0));           // 0
  // alert(nodeListData.getNumberOfColumns());     // 5 
+ 
+ 
+/* Send Mail 테스트 */
+   function sendMail(){
+	   location.href="/planbe/mail/mailForm";  
+   }
+
+ 
 	
 </script>
 
@@ -746,7 +756,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 							    <button class="btn btn-small btn-danger" onclick="deleteWbs()">Delete WBS</button>
 							    <button class="btn btn-small btn-warning" onclick="showGantt()">Show Gantt</button>
 							    <button class="btn btn-small btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg', filename:'WBS'})">Download</button>
-					
+					            <button class="btn btn-small btn-warning" onclick="sendMail()">Mail Test btn</button>
 						  </div> <!-- content -->
 			      </div>
 			  </div>

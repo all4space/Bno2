@@ -10,6 +10,7 @@
 		<typeAlias type="scit.master.planbe.VO.TaskVO" alias="TaskVO"></typeAlias>
 		<typeAlias type="scit.master.planbe.VO.HistoryVO" alias="HistoryVO"></typeAlias>
 		<typeAlias type="scit.master.planbe.VO.PlanVO" alias="PlanVO"></typeAlias>
+		<typeAlias type="scit.master.planbe.VO.MailVO" alias="MailVO"></typeAlias>
 	</typeAliases>
 		<mappers>
 			<mapper resource="mapper/Usersmapper.xml" />
@@ -21,7 +22,6 @@
 			<mapper resource="mapper/Membermapper.xml" />
 			<mapper resource="mapper/Staticmapper.xml" />
 			<mapper resource="mapper/Historymapper.xml" />
-			<mapper resource="mapper/Planmapper.xml" />
 			<mapper resource="mapper/Mailmapper.xml" />
 		</mappers>
 </configuration>

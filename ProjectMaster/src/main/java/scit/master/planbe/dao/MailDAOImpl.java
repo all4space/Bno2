@@ -1,5 +1,6 @@
 package scit.master.planbe.dao;
 
+
 import java.util.ArrayList;
 
 import org.apache.ibatis.session.SqlSession;
@@ -8,51 +9,62 @@ import org.springframework.stereotype.Repository;
 
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
-import scit.master.planbe.VO.TaskVO;
+import scit.master.planbe.VO.UsersVO;
+
 
 @Repository
 public class MailDAOImpl implements MailDAO {
 
 	@Autowired
-	SqlSession Sqlsession;  
-	
+	SqlSession Sqlsession;
+
 	@Override
-	public ArrayList<MemberVO> getMemberList(String userId) {
+	public UsersVO getUserInfo(String userId) {
 		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
-		return mapper.getMemberList(userId);
+		return mapper.getUserInfo(userId);
 	}
 
 	@Override
-	public ProjectVO getProjectInfo(int projectNo) {
-		WbsMapper mapper = Sqlsession.getMapper(WbsMapper.class);
-		return mapper.getProjectInfo(projectNo);
-	}
-	
-	@Override
-	public ArrayList<TaskVO> getTaskList(int projectNo) {
-		WbsMapper mapper = Sqlsession.getMapper(WbsMapper.class);
-		return mapper.getTaskList(projectNo);
+	public ArrayList<ProjectVO> getAllProjectList(String groupName) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getAllProjectList(groupName);
 	}
 
 	@Override
-	public String getMember(int memberNo) {
-		WbsMapper mapper = Sqlsession.getMapper(WbsMapper.class);
-		return mapper.getMember(memberNo);
+	public ArrayList<UsersVO> getAllMemberList(String groupName) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getAllMemberList(groupName);
 	}
 
 	@Override
-	public int updateTask(TaskVO vo) {
-		WbsMapper mapper = Sqlsession.getMapper(WbsMapper.class);
-		return mapper.updateTask(vo);
+	public ArrayList<ProjectVO> getMyProjectList(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getMyProjectList(userNo);
 	}
 
 	@Override
-	public int deleteTask(int taskNo) {
-		WbsMapper mapper = Sqlsession.getMapper(WbsMapper.class);
-		return mapper.deleteTask(taskNo);
+	public ArrayList<MemberVO> getMyMemberInfo(int projectNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getMyMemberInfo(projectNo);
 	}
-	
+
+	@Override
+	public UsersVO getUserInfo(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getUserInfo(userNo);
+	}
+
 }
+
+
+
+
+
+
+	
+	
+	
+	
 
 
 
