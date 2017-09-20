@@ -40,45 +40,90 @@
 	<!-- start: Favicon -->
 	<link rel="shortcut icon" href="/planbe/resources/bootstrap/img/favicon.ico">
 	<!-- end: Favicon -->
-	<script>
 	
-/* 
-	function groupSelect(obj) //그룹이름에 따른 멤버 리스트 select ver
-	{
+<script src="/planbe/resources/js/jquery-3.2.1.min.js"></script>	
+	
+<script>
+	
+
+	/* 
+	var my_p_list = "<c:out value='${my_p_list}'/>";
+	var my_u_list = "<c:out value='${my_u_list}'/>";
+	var all_p_list = "<c:out value='${all_p_list}'/>";
+	var all_u_list = "<c:out value='${all_u_list}'/>";
+	 */
+	
+	
+/* receiver groupSelect */ 
+function groupSelect(obj){
  
-	//그룹 매니저 리스트
-	alert("groupManagerList function In" + obj.value);
-	$.ajax
-	({
-		url: "/planbe/project/groupManagerList",
+	// ProjectList or MemberList 가져오기 
+	//alert("function In" + obj.value);
+	
+	$.ajax({
+		url: "/planbe/mail/getSelectList",
 		type: "post",
-		data: {"groupName":obj.value},
+		data: {"group" : obj.value},
 		dataType: "json",
-		success: function(result)
-		{
+		success: function(result){
 			
-			$("#groupManagerList").empty();
-			var addRow = '<option>Manager Select</option>';
-			
-			$(result).each(function(index, item){
-			addRow += '<option>'
-						+ item.userId
-						+ '</option>';
+			alert("success in");
+
+  			var all_p_list = result.all_p_list;
+  			var my_p_list = result.my_p_list;
+  			var all_u_list = result.all_u_list;
+  			var my_u_list = result.my_u_list;
+  			
+  			var addRow = "";
+  			
+		    $("#selectedList").empty();
+
+		    if(all_p_list != undefined) {
+	  			$(all_p_list).each(function(index, item) {
+					addRow += '<option>' + item.projectName + '</option>';
+				});
+  			} 
+  				
+  			if(all_u_list != undefined) {
+	  			$(all_u_list).each(function(index, item) {
+					addRow += '<option>' + item.userName + '</option>';
+				});
+  			} 
+  			
+  			if(my_p_list != undefined) {
+	  			$(my_p_list).each(function(index, item) {
+					addRow += '<option>' + item.projectName + '</option>';
+				});
+  			} 
+  			
+  			if(my_u_list != undefined) {
+	  			$(my_u_list).each(function(index, item) {
+					addRow += '<option>' + item.userName + '</option>';
+				});
+  			} 
+
+			$("#selectedList").append(addRow);
+		    $("#selectedList").trigger("liszt:updated");
 						
-			
-			
-			})
-			$("#groupManagerList").append(addRow);
-			$("#groupManagerList").trigger("liszt:updated");
-			
 		},
-		error : function()
-		{
+		error : function(){
 			alert("에러뭐든");
 		}
-	})
-} */
+	}); 
+}//groupSelect  
+			
 
+/* send Mail */
+function sendMail(){
+	alert("insert는 내일해야지~~~");
+	
+}
+
+function mailList(){
+	location.href="/planbe/mail/mailList";
+}
+			
+/*============================================================================================*/
 /* //그룹 멤버리스트
  */
  function managerSelect(manager)
@@ -147,10 +192,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 })
 } */
 
-function mailList(){
-	location.href="/planbe/mail/mailList";
-}
-
+/*=============================================================================================================  */
  
 </script>
 		
@@ -240,11 +282,20 @@ function mailList(){
 								  </select>
 								</div>
 							  </div>
+							  <%-- 
+							    <select id="groupManagerList" name = "managerId" data-rel="chosen" onchange="javascrpipt:managerSelect(this)">
+								  	<option>Manager Select</option>
+								  	<c:forEach items="${groupManagerList}" var="groupManagerList" >
+									<option>${groupManagerList.userId}</option>
+								  </c:forEach>
+								  </select>
+							  
+							   --%>
 							  
 							  <div class="control-group">
 								<label class="control-label" for="selectError">Receiver Group</label>
 								<div class="controls">
-								  <select id="selectError" data-rel="chosen">
+								  <select id="groupSelectList" name="" data-rel="chosen" onchange="javascript:groupSelect(this)">
 									<option value="all">ALL</option>
 									<option value="project">PROJECT</option>
 									<option value="member">MEMBER</option>
@@ -255,12 +306,7 @@ function mailList(){
 							  <div class="control-group">
 								<label class="control-label" for="selectError1">Receiver</label>
 								<div class="controls">
-								  <select id="selectError1" multiple data-rel="chosen">
-									<option>Option 1</option>
-									<option selected>Option 2</option>
-									<option>Option 3</option>
-									<option>Option 4</option>
-									<option>Option 5</option>
+								  <select id="selectedList" multiple data-rel="chosen">
 								  </select>
 								</div>
 							  </div>
@@ -273,7 +319,7 @@ function mailList(){
 							  </div>
 							</div>
 							<div class="form-actions">
-							  <button type="submit" class="btn btn-primary">Send Mail</button>
+							  <button type="submit" class="btn btn-primary" onclick="sendMail()">Send Mail</button>
 							  <button type="reset" class="btn">Cancel</button>
 							  <button type="reset" class="btn" onclick="mailList()">MailList Test btn</button>
 							</div>

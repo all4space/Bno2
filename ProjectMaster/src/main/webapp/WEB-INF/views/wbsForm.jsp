@@ -105,13 +105,13 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
 
 /* [3] Task 키워드 : 2단계 child 노드 */    
 
-	var x = t_list.length; ///
+	var x = t_list.length; 
     var keyword = ['Member', 'Content', 'Priority', 'Status', 'Start Date', 'Due Date', 'Total Time', 'Done Time'];
 	var y = keyword.length; // 8
     /* 3단계 child 노드의 parent id를 담을 배열 선언 */
 	var xx = [];
     /* 3단계 child 노드의 id 선언 및 초기화 */
-    var j = x+(x*y); // 80 
+    var j = x+(x*y); 
      
     var init = x;
     
@@ -421,8 +421,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 /* WBS 노드 정보 불러오기 */ 
  
 
-  /*  var p_list = "<c:out value='${p_list}'/>"; */
-  /* alert(p_list); */
+
   
   
 	function getWbsInfo() {
@@ -816,7 +815,7 @@ Task 삭제			    <i class="halflings-icon white trash" onclick="deleteTask()"><
 	
 				
 				
-				<!-- 키워드 리스트 -->			
+				<!-- 키워드 리스트 : 라벨 필요할까봐 남겨둠 -->			
 				<div class="box span2">
 					<div class="box-header">
 						<h2><i class="halflings-icon white eye-open"></i><span class="break"></span>Labels</h2>
