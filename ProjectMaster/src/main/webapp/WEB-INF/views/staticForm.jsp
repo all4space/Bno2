@@ -36,6 +36,20 @@
 		<script type = "text/javascript" src="/planbe/resources/js/jquery-3.2.1.min.js"></script>
 </head>
 <script>
+
+/* contains 메소드 추가 */
+	Array.prototype.contains = function(element) {
+		for (var i = 0; i < this.length; i++) {
+			if (this[i] == element) {
+				return true;
+			}
+		}
+		return false;
+		
+		
+
+	}
+	
 $(function(){
 	projectIng();
 	circle_progess();
@@ -67,19 +81,21 @@ $(function(){
 	/*업무 효율 그래프  */
 	 function setEfficiency(projectList, percent){
 		listUp(projectList, percent);
+		var noArr = [];
 		var color = ['circleStatsItemBox yellow','circleStatsItemBox green','circleStatsItemBox red','circleStatsItemBox pink','circleStatsItemBox blue','circleStatsItemBox green'];
 		
 		$(projectList).each(function(index1,item1){ // user가 속한 project들의 VO정보들 name,content,status...
+				var color_index = 0;
 			$(percent).each(function(index2,item2){ //percent 계산 하기 위해가져온 taskVO time들 (task 시간 싹다 합쳐온것)
-				if(index1 >= 5){index1 = index1 % 5;}//색 설정
+				if(index1 >= 5){color_index = index1 % 5;}else{color_index = index1}//색 설정
 				if(item1.projectNo == item2.projectNo){
 					var percen = (item2.doneTime / item2.totalTime) * 100;
 					var percent = Math.round(percen); // 퍼센트 계산 했고, data 는 한번만 찍어야해. 
-						console.log(index2 +" : "+ percent)
+						console.log(item2.projectNo +" : "+ percent)
 						var day = howlong(item1.dueDate);
 						
 						var data  = '<div class = "span2" onTablet="span4" onDesktop="span2">';
-							data	 += '<div class = "'+color[index1]+'">';
+							data	 += '<div class = "'+color[color_index]+'">';
 							data	 += '<div class = "header">'+projectList[index1].projectName+'</div>';
 							data	 += '<span class="percent">percent</span>';
 							data	 += '<div class="circleStat">';
@@ -98,12 +114,17 @@ $(function(){
 							data	 += '</div>'; // footer
 							data	 += '</div>'; // color
 							data	 += '</div>'; // span
+							noArr[index2] = item2.projectNo;
 						$("#allchart").append(data);
-				}else{
+				}//if
+			})//taskVO 포이치(= projectNo 같은 놈 탐색)
+			 if(!noArr.contains(item1.projectNo)){
+				 console.log("noARR + " + noArr)
+				 console.log("item1.no  " + item1.projectNo )
 					var day = howlong(item1.dueDate);
 					
 					var data  = '<div class = "span2" onTablet="span4" onDesktop="span2">';
-						data	 += '<div class = "'+color[index1]+'">';
+						data	 += '<div class = "'+color[color_index]+'">';
 						data	 += '<div class = "header">'+projectList[index1].projectName+'</div>';
 						data	 += '<span class="percent">percent</span>';
 						data	 += '<div class="circleStat">';
@@ -123,8 +144,7 @@ $(function(){
 						data	 += '</div>'; // color
 						data	 += '</div>'; // span
 					$("#allchart").append(data);
-				}//if - else 문				
-			})//taskVO 포이치(= projectNo 같은 놈 탐색)
+			 }
 		})//ProjectVO 포이치(= 프로젝트별로 나타내기 위해...)
 	}//setEfficiency 함수 끗.
 	
@@ -323,19 +343,7 @@ $(function(){
 	})	
 	
     }//function 
-	 
-/* contains 메소드 추가 */
-	Array.prototype.contains = function(element) {
-		for (var i = 0; i < this.length; i++) {
-			if (this[i] == element) {
-				return true;
-			}
-		}
-		return false;
-		
-		
 
-	}
 	
 </script>
 <body>

@@ -27,7 +27,8 @@ public class StaticServiceImpl implements StaticService{
 	@Override
 	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList) {
 		ArrayList<TaskVO> task = dao.efficiency(pnoList);
-		int totaltime = 0;
+		System.out.println("group?" + task);
+/*		int totaltime = 0;
 		int donetime = 0;
 		int count = 0; // 프로젝트 별로 저장하기 위해 index 따로 생성
 
@@ -51,7 +52,7 @@ public class StaticServiceImpl implements StaticService{
 			}//for
 		}//foreach
 		System.out.println(totaltime +"과"+donetime);
-		System.out.println(task);
+		System.out.println(task);*/
 		return task;
 	}
 

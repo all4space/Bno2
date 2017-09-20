@@ -37,12 +37,14 @@ $(function(){
 
 function newMessage(taskList){
 	var count = 0;
+	var addRow = null;
 	$(taskList).each(function(index,item){
 		if(item.taskStatus == 'new'){
 			count += 1;
+			addRow = "<span class='badge red'>"+count+"</span>";
 		}
 	})
-	$("#taskprogress_badge").append("<span class='badge red'>"+count+"</span>");	
+	$("#taskprogress_badge").append(addRow);	
 }
 
  	function YouhavetoDoTasks(taskList){
