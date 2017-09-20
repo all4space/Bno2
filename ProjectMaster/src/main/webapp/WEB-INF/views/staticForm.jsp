@@ -208,6 +208,9 @@ $(function(){
 				if(projectNo.value == item.projectNo){
 					/*doneper = 퍼센트 구하기  */
 					var	 done = ( item.doneTime / item.totalTime ) * 100;
+					if(item.doneTime > item.totalTime){
+						done = 100;
+					}
 					var doneper = Math.round(done);
 					
 					if(doneper > 50){ // 그래프가 1:1 이라서...
