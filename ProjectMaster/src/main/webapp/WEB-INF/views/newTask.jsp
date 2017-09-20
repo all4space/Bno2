@@ -26,6 +26,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
 	<link href="/planbe/resources/bootstrap/css/EasyTable.css" rel="stylesheet">
 	<link href="/planbe/resources/bootstrap/css/search.css" rel="stylesheet">
+	<link href="/planbe/resources/bootstrap/css/newTask.css" rel="stylesheet">
 	<!-- end: CSS -->
 	
 
@@ -44,6 +45,16 @@
 	<!-- end: Favicon -->
 	
 </head>
+<!-- select box 선택 값 가져오기 -->
+<script>
+function change(number){
+
+	$("#projectNo").attr("value",number.value);		
+}
+
+
+</script>
+<!-- select box 선택 값 가져오기 -->
 
 <body>
 <!-- Head Menu -->
@@ -81,14 +92,37 @@
 
 			
 	<!-- admin이 아닌 경우 -->
+	
+	
+	<!-- projectNo script -->
+	
+
+	
+	<!-- projectNo script -->
+	
+	
+	<!-- Member 인 경우 -->
        
-      <c:if test="${loginId !='admin'}">
+      <c:if test="${authority == 'member'}">
       
    <form action="/planbe/task/newTask" method="POST">	     
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${loginId}님의 NewTask</h1></legend>
+            <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
+            
+         <span class="pull-right" id="projectNoList">
+         	<label>ProjectNo</label>
+         		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
+ 							<option selected="selected">프로젝트 선택</option>
+ 					<c:forEach items="${projectList}"	 var="projectNo" >
+ 							<option value="${projectNo}">${projectNo}</option>
+ 					</c:forEach>
+					        		
+         		</select>
+         	      		
+         </span>   
+            
         </div>
         <!-- panel preview -->
       
@@ -97,7 +131,17 @@
             <div class="panel panel-default">
                 <div class="panel-body form-horizontal payment-form">
                 	
-                  <table>                
+                  <table>
+                                   		
+                  	<tr>
+                  		<th>ProjectNo</th>
+                  		<td>
+                    <div>
+                  		 <input type="text" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
+                    </div>  
+                    	<td>         
+                  	</tr>                
+                
                                                        
                   <tr>
                     	<th>TaskName</th>
@@ -190,7 +234,148 @@
    </div>
     </form>      
   </c:if>
-<!-- admin이 아닌 경우 끝 -->
+<!--member인 경우 끝 -->
+
+
+<!-- member가 아닌 경우 시작 -->
+
+	      <c:if test="${authority != 'member'}">
+      
+   <form action="/planbe/task/newTask" method="POST">	     
+     <div class="container">
+	<div class="row">
+        <div class="col-sm-12">
+            <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
+            
+      <span class="pull-right" id="projectNoList">
+         	<label>ProjectNo</label>
+         		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
+ 							<option selected="selected">프로젝트 선택</option>
+ 					<c:forEach items="${projectList}"	 var="projectNo" >
+ 							<option value="${projectNo}">${projectNo}</option>
+ 					</c:forEach>
+					        		
+         		</select>
+         	      		
+         </span>   
+            
+        </div>
+        <!-- panel preview -->
+      
+        <div class="col-sm-5">
+            <h4>Add Task:</h4>
+            <div class="panel panel-default">
+                <div class="panel-body form-horizontal payment-form">
+                	
+                  <table>
+                                   		
+                  	<tr>
+                  		<th>ProjectNo</th>
+                  		<td>
+                    <div>
+                  		 <input type="text" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
+                    </div>  
+                    	<td>         
+                  	</tr>                
+                
+                                                       
+                  <tr>
+                    	<th>TaskName</th>
+                     <td>
+                         <input type="text" class="name" id="taskName" name="taskName">
+                     </td> 
+                    </tr>
+                    
+                    <tr>
+                       <th>Content</th>
+                     	<td>                                             
+                       		<textarea class="form-control" id="taskContent" name="taskContent"></textarea>
+                      </td> 
+                    </tr> 
+                                    
+                    <tr>
+                     <th>Priority</th>
+                     <td>
+                         <select class="form-control" id="taskPriority" name="taskPriority">
+                         		<option>--선택--</option>
+                                <option>urgent</option>
+                                <option>good</option>
+                                <option>disaster</option>
+                            </select>   
+                       </td>                         
+                    </tr>
+                    
+                     <tr>
+                     <th>Status</th>
+                     <td>
+                         <select class="form-control" id="taskStatus" name="taskStatus">
+                         		<option>--선택--</option>
+                                <option>new</option>
+                                <option>ongoing</option>
+                                <option>done</option>
+                            </select>   
+                       </td>                         
+                    </tr>
+                                   
+                    <tr>
+                     <th>StarDate</th>
+                      <td>                    
+                         <input type="date" class="form-control" id="startDate" name="startDate">
+                      </td>      
+                    </tr> 
+                    
+                    <tr>
+                     <th>DueDate</th>
+                     <td>
+                        <input type="date" class="form-control" id="dueDate" name="dueDate">
+                      <td>      
+                    </tr> 
+                    
+                    <tr>
+                     <th>TotalTime</th>
+                      <td>                    
+                         <input type="text" class="form-control" id="totaltime" name="totalTime" style="width:20px">시간
+                      </td>      
+                    </tr>
+                    
+                     <tr>
+                     <th>DoneTime</th>
+                      <td>                    
+                         <input type="text" class="form-control" id="donetime" name="doneTime" style="width:20px">시간
+                      </td>      
+                    </tr>
+                    
+                    
+                    
+                  </table> 
+ 
+                    <div class="form-group">                   
+                        <div class="col-sm-12 text-right">
+                            <input type="submit" class="btn btn-default preview-add-button" value="add">
+                                <span class="glyphicon glyphicon-plus"></span> 
+                                                        
+                            <a href="/planbe/task/taskForm/"><button type="button" class="btn btn-default preview-cancel-button">
+                                <span class="glyphicon glyphicon-plus"></span> cancel
+                            </button></a>
+                            
+                        </div>
+                    </div>
+                                          
+                                 
+                </div>
+            </div>            
+        </div> <!-- / panel preview -->
+  
+      </div>
+   </div>
+    </form>      
+  </c:if>
+
+
+
+
+<!-- member가 아닌 경우 끝 -->
+
 				
 			
        
