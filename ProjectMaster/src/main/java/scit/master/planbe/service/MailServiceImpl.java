@@ -46,8 +46,8 @@ public class MailServiceImpl implements MailService {
 	}
 
 	@Override
-	public UsersVO getUserInfo(int userNo) {
-		return dao.getUserInfo(userNo);
+	public UsersVO getUserInfo2(int userNo) {
+		return dao.getUserInfo2(userNo);
 	}
 
 

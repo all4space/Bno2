@@ -18,7 +18,7 @@ public interface MailMapper {
 	// Manager or Member가 속한 프로젝트에 속한 멤버 정보 가져오기 
 	public ArrayList<MemberVO> getMyMemberInfo(int projectNo);
 	// Manager or Member가 속한 프로젝트에 속한 멤버의 userName 가져오기
-	public UsersVO getUserInfo(int userNo);
+	public UsersVO getUserInfo2(int userNo);
 	       
 }
 

@@ -49,9 +49,9 @@ public class MailDAOImpl implements MailDAO {
 	}
 
 	@Override
-	public UsersVO getUserInfo(int userNo) {
+	public UsersVO getUserInfo2(int userNo) {
 		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
-		return mapper.getUserInfo(userNo);
+		return mapper.getUserInfo2(userNo);
 	}
 
 }

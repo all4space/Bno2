@@ -57,7 +57,7 @@ public class MailController {
                 
 	        	ArrayList<UsersVO> my_u_list = new ArrayList<>(); 
 	        	for(int userNo : my_m_userNo){
-	        		UsersVO muvo = service.getUserInfo(userNo);
+	        		UsersVO muvo = service.getUserInfo2(userNo);
 	        		if(!my_u_list.contains(muvo)){
 	        			my_u_list.add(muvo);
 	        		}

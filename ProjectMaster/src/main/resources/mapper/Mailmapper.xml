@@ -31,7 +31,7 @@
 </select>
 
 <!-- UserName 가져오기  -->
-<select id="getUserInfo" parameterType="int" resultType="UsersVO">
+<select id="getUserInfo2" parameterType="int" resultType="UsersVO">
     SELECT * FROM USERS WHERE USERNO = #{userNo}
 </select>
 
