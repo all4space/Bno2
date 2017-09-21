@@ -27,7 +27,9 @@
 	<link id="base-style" href="/planbe/resources/bootstrap/css/calendarSchedule.css" rel="stylesheet">
 	<link id="base-style" href="/planbe/resources/bootstrap/css/jquery.timepicker.css" rel="stylesheet">
 	<link id="base-style" href="/planbe/resources/bootstrap/css/jquery.timepicker.min.css" rel="stylesheet">
-		<link id="base-style" href="/planbe/resources/bootstrap/css/wickedpickercss" rel="stylesheet">
+	
+		
+		
 	<!-- end: CSS -->
 	
 
@@ -51,9 +53,88 @@
 	
 	
 	<script type="text/javascript">
-	 
-    $("#startTime").timepicker();
-    $("#endTime").timepicker();
+	
+	var result = '${requestScope.getList}';
+  	function modifyEvent(){
+  		$("#schduleForm").modal('hide');
+  		$("#schduleFormModify").modal();
+  		
+  	};
+  	
+  	
+  	function deletePlan(){
+  		
+  		var calNo=$("#calNo").val();
+		
+  		var deleteDate = confirm("일정을 삭제하시겠습니까?");
+  		
+  		if (deleteDate == true) {
+  			location.href="/planbe/plan/deletePlan?calNo="+calNo;
+		}
+  		
+		return false;  
+  		
+  	}
+  	
+  	function updatePlan(){
+  		
+  		if (confirm("수정하시겠습니까?")) {
+			document.form.action="/planbe/plan/updatePlan"
+			document.form.submit();
+		}		
+  		
+  	}
+  	
+  	function insertPlan(){
+  		
+  		
+  		var userNo=$("#userNo").val();
+  		var title = $("#summary").val();
+  		var startTime = $("#startTime").val();
+  		var startDate = $("#startDate").val();
+  		var endTime =$("#endTime").val();
+  		var endDate = $("#endDate").val();
+  		var content = $("#description").val();
+  		
+  	
+  		
+  		
+  		
+	
+	 		
+  		if (title == "") {
+			alert("제목을 입력하세요");
+			return false;
+		}else if (startTime == "") {
+			alert("시작 시간 생성 오류");
+			return false;
+		}else if (startDate =="") {
+			alert("시작 날짜 생성 오류");
+			return false;
+		}else if (endTime == "") {
+			alert("종료 시간을 입력하세요");
+			return false;
+		}else if (endDate == "") {
+			alert("종료 날짜를 입력하세요");
+			return false;
+		}else if (content == "") {
+			alert("내용을 입력하세요");
+			return false;
+		}else{
+			
+	
+			document.gogo.submit();
+		
+		}
+  	}
+  	
+  	
+  	
+  	
+  	//$('#basicExample').timepicker();
+  	
+    
+    
 	</script>
 	
 
@@ -61,6 +142,7 @@
 </head>
 
 <body>
+
 	
 <!-- Head Menu -->
 	<div>
@@ -118,48 +200,61 @@
 	<div class="modal fade" id="schduleForm" role="dialog">
 		<div class="modal-dialog">
 			<div class="modal-content">
+
 				<div class="modal-header">
-					<button type="button" class="close" data-dismiss="modal">close</button>
-					<h4 class="modal-title">일정등록</h4>
+				<button type="button" class="close" data-dismiss="modal">close</button>
+					<h4 class="modal-title">일정</h4>
 				</div>
 				
 				
 				<div class="modal-body">
-					<form class='form-margin40' action="/planbe/plan/insertPlan" method="POST"
-						id='frmSchdule' name="form">
+					<form class='form-margin40'  method="POST" action="/planbe/plan/insertPlan"
+						id='frmSchdule' name="gogo">
 						
-						<input type="hidden" name="userNo" id="userNo" value="${userNo}">				
+						<input type="hidden" id="calNo" value="calNo">
+						
+						<input type="hidden" name="userNo" id="userNo" value="${userNo}">	
+									
 						<div class='form-group'>
 							<label>제목</label> <input type='text' class='form-control'
-								id='summary' name='title'
+								id='summary' name="title"
 								placeholder="예: 오후 6시에 팀 회식">
 						</div>
+						
 						<div class='form-group'>
-							<label>시작시간</label> <input class='form-control' type="time"
-								id='startTime' name='startTime' readonly="readonly">
+							<label>시작시간</label> <input class='form-control' type="text"
+								id='startTime' name="startTime" readonly="readonly" style="width:40px">
 						</div>
+						
 						<div class='form-group'>
 							<label>시작날짜</label> <input class='form-control startDate'
-								type="date" id='startDate' name='startDate'  readonly="readonly">
+								type="date" id='startDate' name="startDate" style="width:130px" readonly="readonly" text-align="center">							
 						</div>
+						
+					
 						<div class='form-group'>
-							<label>종료시간</label> <input class='form-control' type="time"
-								id='endTime' name='endTime'>
+							<label>종료시간</label> 
+						<input type="time"  id='endTime' name="endTime">
 						</div>
+						
 						<div class='form-group'>
 							<label>종료날짜</label> <input class='form-control startDate'
-								type="date" id='endDate' name='endDate'>
+								type="date" id='endDate' name="endDate">
 								
 						</div>
+						
 						<div class='form-group'>
 							<label>내용</label>
 							<textarea rows="7" class='form-control' id="description"
-								name='content'></textarea>
+								name="content"></textarea>
 						</div>
+						
 						<div class='modal-footer'>
-							<input type="submit" class='btn btn-sm btn-warning' value="확인" /> 
+						
+							<input type="button" class='btn btn-sm btn-warning' value="생성" onclick="insertPlan()"/> 
 							<input type="reset" class='btn btn-sm btn-warning' value="초기화"/> 
-							<input type='button' class='btn btn-sm btn-warning'data-dismiss='modal' value="취소"/>
+							<input type="button" class='btn btn-sm btn-warning' value="수정" onclick="updatePlan()"/>
+							<input type="button" class='btn btn-sm btn-warning' value="삭제" onclick="deletePlan()"/> 
 						</div>
 					</form>
 				</div>
@@ -168,6 +263,11 @@
 			</div>
 		</div>
 	</div>
+	
+	
+	
+	<!-- 조력자 KJY -->
+	
 					
 				</div>
 			</div><!--/row-->
@@ -239,7 +339,7 @@
 	
 		<script src='/planbe/resources/bootstrap/js/fullcalendar.js'></script>
 		
-		<script src='/planbe/resources/bootstrap/js/fullcalendar.init.js?version=10'></script>
+		<script src='/planbe/resources/bootstrap/js/fullcalendar.init.js?version=28'></script>
 	
 		<script src='/planbe/resources/bootstrap/js/jquery.dataTables.min.js'></script>
 
@@ -286,8 +386,10 @@
 		<script src="/planbe/resources/bootstrap/js/pdfobject.min.js"></script>
 			
 		<script src="/planbe/resources/bootstrap/js/moment.js"></script>
-		
-		<script src="/planbe/resources/bootstrap/js/wickedpicker.js"></script>
+		<script src="/planbe/resources/bootstrap/js/jquery.timepicker.min.js"></script>
+		<script src="/planbe/resources/bootstrap/js/jquery.timepicker.js"></script>
+		<script src="/planbe/resources/bootstrap/js/bootstrap-datepicker.js"></script>
+	<script src="/planbe/resources/bootstrap/js/site.js"></script>
 		
 		
 	<!-- end: JavaScript-->

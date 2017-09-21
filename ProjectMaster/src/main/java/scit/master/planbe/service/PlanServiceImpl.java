@@ -16,72 +16,43 @@ public class PlanServiceImpl implements PlanService{
 	@Autowired
 	PlanDAOImpl dao;
 
-	@Override
-	public void getPlan() {
-		// TODO Auto-generated method stub
-		
-	}
 
-	@Override
-	public void updatePlan() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public void deletePlan() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<TaskVO> Day(TaskVO Task) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TaskVO> Week(TaskVO Task) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TaskVO> Month(TaskVO Task) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TaskVO> Search(TaskVO Task) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public ArrayList<TaskVO> Insert(TaskVO Task) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	@Override
-	public void DownLoad(TaskVO Task) {
-		// TODO Auto-generated method stub
-		
-	}
-
-	@Override
-	public ArrayList<MemberVO> ContactInfo() {
-		// TODO Auto-generated method stub
-		return null;
-	}
-	
 	
 	// 일정 생성하기
 	@Override
 	public void insertPlan(PlanVO planVO) {
 		dao.insertPlan(planVO);
 				
+	}
+
+
+	// 일정 수정하기
+	@Override
+	public void updatePlan(PlanVO planVO) {
+		dao.updatePlan(planVO);
+		
+	}
+
+
+	// 일정 찾기
+	@Override
+	public PlanVO searchPlan(int calNo) {
+		return dao.searchPlan(calNo);
+	}
+
+
+	// 일정 삭제하기
+	@Override
+	public void deletePlan(int calNo) {
+		dao.deletePlan(calNo);
+		
+	}
+
+
+	// 일정 리스트 가져오기
+	@Override
+	public ArrayList<PlanVO> getList() {
+		return 	dao.getList();
 	}
 	
 }

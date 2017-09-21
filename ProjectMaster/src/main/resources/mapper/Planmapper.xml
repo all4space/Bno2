@@ -12,13 +12,60 @@
 	cal_seq.nextval
 	,#{userNo}	
 	,TO_DATE(#{startDate},'YYYY-MM-DD')
-	,#{startTime}
+	,to_date(concat(concat(to_char(sysdate,'yyyy-mm-dd'),' '),#{startTime}), 'yyyy-mm-dd hh24:mi')
 	,TO_DATE(#{endDate},'YYYY-MM-DD')
-	,#{endTime}
+	,to_date(concat(concat(to_char(sysdate,'yyyy-mm-dd'),' '),#{endTime}), 'yyyy-mm-dd hh24:mi')
 	,#{title}
 	,#{content}
 	)
 </insert>
+
+<!-- 일정 수정하기 -->
+<update id="updatePlan" parameterType="PlanVO">
+	update calendar set endDate=TO_DATE(#{endDate},'YYYY-MM-DD')
+	,endTime=to_date(concat(concat(to_char(sysdate,'yyyy-mm-dd'),' '),#{endTime}), 'yyyy-mm-dd hh24:mi')
+	,title=#{title}
+	,content=#{content}
+	where calNo=#{calNo}
+</update>
+
+<!-- 일정 찾기 -->
+
+<select id="searchPlan" parameterType="int" resultType="PlanVO">
+	select * from calendar
+		where calNo=#{calNo}
+</select>
+
+<!-- 일정 삭제하기 -->
+
+<delete id="deletePlan" parameterType="int">
+	delete from calendar
+		where calNo=#{calNo}
+</delete>
+
+<!-- 일정 리스트 가져오기 -->
+
+<select id="getList" resultType="PlanVO">
+	select calNo
+	,userNo
+	,to_char(startDate,'YYYY-MM-DD') as startDate
+	,startTime
+	,to_char(endDate,'YYYY-MM-DD') as endDate
+	,endTime
+	,title
+	,content 
+	from calendar
+	order by calNo asc
+		
+		
+		
+	
+		
+		
+	
+		
+		
+</select>
 
 
 </mapper>
