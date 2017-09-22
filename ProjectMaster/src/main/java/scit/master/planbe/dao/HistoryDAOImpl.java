@@ -1,6 +1,8 @@
 package scit.master.planbe.dao;
 
 
+import java.util.ArrayList;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -28,5 +30,10 @@ public class HistoryDAOImpl implements HistoryDAO {
 	public void addHistory(HistoryVO history) {
 		HistoryMapper mapper = Sqlsession.getMapper(HistoryMapper.class);
 		mapper.addHistory(history);
+	}
+	@Override
+	public ArrayList<HistoryVO> getHistoryList(int userNo) {
+		HistoryMapper mapper = Sqlsession.getMapper(HistoryMapper.class);
+		return mapper.getHistoryList(userNo);
 	}
 }

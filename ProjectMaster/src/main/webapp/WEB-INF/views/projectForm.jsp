@@ -79,6 +79,41 @@
 	})
 } */
 
+/* $(function(){
+    var $form = $(this),
+        $submit = $form.find('#submit');
+
+    $submit.on('click', function () {
+        noty({
+            text: 'asdf',
+            buttons: [{
+                addClass: 'btn btn-primary noty',
+                text: 'Ok',
+                onClick: function ($noty) {
+
+                    // this = button element
+                    // $noty = $noty element
+
+                    $noty.close();
+                    $form.submit();
+                }
+            }, {
+                addClass: 'btn btn-primary noty',
+                text: 'Cancel',
+                onClick: function ($noty) {
+                    $noty.close();
+                    noty({
+                        text: 'You clicked "Cancel" button',
+                        type: 'error'
+                    });
+                }
+            }]
+        });
+        
+        return false;
+    });
+ */
+
 /* //그룹 멤버리스트
  */
  function managerSelect(manager)
@@ -281,9 +316,9 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 								</div>
 							  </div>
 <!--멤버  -->						  
-						  
+						  <div class="btn btn-primary noty" data-noty-options='{"text":"This is a success information","layout":"top","type":"information"}'></div>
 							<div class="form-actions">
-							  <button type="submit" class="btn btn-primary">CONFIRM</button>
+							  <button id = submit type="submit" class="btn btn-primary">CONFIRM</button>
 							  <button type="reset" class="btn">Cancel</button>
 							</div>
 							

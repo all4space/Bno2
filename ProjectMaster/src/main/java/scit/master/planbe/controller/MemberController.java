@@ -13,6 +13,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import scit.master.planbe.service.MemberServiceImpl;
+import scit.master.planbe.service.ProjectServiceImpl;
+import scit.master.planbe.service.UsersServiceImpl;
 
 @RequestMapping("/member")
 @Controller
@@ -21,9 +23,25 @@ public class MemberController {
 	@Autowired
 	MemberServiceImpl service;
 	
+	@Autowired
+	ProjectServiceImpl projectService;
+
+	@Autowired
+	UsersServiceImpl usersService;
+
+	
 	@RequestMapping(value = "memberForm", method = RequestMethod.GET)
-	public String memberForm() {
-		return "memberForm";
+	public ModelAndView memberForm(HttpSession session) {
+		String userId = (String) session.getAttribute("loginId");
+		String groupName = projectService.getGroupName(userId);
+		
+		System.out.println(usersService.getUserVo(groupName));
+		
+		ModelAndView mov = new ModelAndView("/memberForm");
+		mov.addObject("userVo", usersService.getUserVo(groupName));
+		System.out.println("mov? " + mov.toString());
+		
+		return mov;
 	}
 	
 	@RequestMapping(value = "getProjectList", method = RequestMethod.GET) //로그인 유저의 멤버넘버를 가져온다.

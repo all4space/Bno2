@@ -26,4 +26,8 @@
 	)
 </insert>
 
+<select id = "getHistoryList" parameterType = "int" resultType = "HistoryVO">
+	select * from history where userno = #{userNo}
+</select>
+
 </mapper>

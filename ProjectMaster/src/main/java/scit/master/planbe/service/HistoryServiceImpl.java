@@ -1,5 +1,7 @@
 package scit.master.planbe.service;
 
+import java.util.ArrayList;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,5 +27,9 @@ public class HistoryServiceImpl implements HistoryService{
 	@Override
 	public void addHistory(HistoryVO history) {
 		dao.addHistory(history);
+	}
+	@Override
+	public ArrayList<HistoryVO> getHistoryList(int userNo) {
+		return dao.getHistoryList(userNo);
 	}
 }

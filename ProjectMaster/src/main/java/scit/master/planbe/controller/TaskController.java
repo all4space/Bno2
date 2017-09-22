@@ -124,7 +124,6 @@ public class TaskController {
 		@RequestMapping(value = "updateTask", method = RequestMethod.POST)
 		public String updateTask(TaskVO taskVo,Model model, HttpSession session) {
 			String code = "b";
-			ProjectDAOImpl projectDao = new ProjectDAOImpl();
 			
 			System.out.println("taskUpdate : " + taskVo.toString());
 			
@@ -166,14 +165,24 @@ public class TaskController {
 			{
 				content += "TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
 			}
-			if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+			if(!(vo.getTotalTime() == vo.getDoneTime()))
 			{
-				content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+				if(taskVo.getDoneTime() == taskVo.getTotalTime())
+				{
+					taskVo.setTaskStatus("done");
+					content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "done";
+				}
+				else if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+				{
+					content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+				}
 			}
 			if(!(taskVo.getStartDate().equals(vo.getStartDate())))
 			{
 				content += "TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
 			}
+			
+			
 			if(!(taskVo.getTotalTime() == vo.getTotalTime()))
 			{
 				content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
@@ -182,6 +191,9 @@ public class TaskController {
 			{
 				content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
 			}
+			
+			
+			
 			
 	
 			System.out.println(content); // CONTENT 값 확인 

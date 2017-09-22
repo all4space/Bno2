@@ -188,7 +188,7 @@ public class ProjectController {
 		
 		projectHistory(history, userName);
 		
-        ModelAndView mov = new ModelAndView("/newTaskForm");
+        ModelAndView mov = new ModelAndView("/newTask");
 		mov.addObject("MemberList", memberService.getMemberList(memberVo.getProjectNo()));
 		System.out.println("mov? " + mov.toString());
 		
@@ -268,6 +268,8 @@ public class ProjectController {
 	
 		service.projectUpdate(projectList);
 
+		
+		
 		return "redirect:projectList";	
 		
 	}
@@ -291,7 +293,8 @@ public class ProjectController {
 		history.setCodeNo(CODENO);
 		
 		String content = userName  + "님이"; 
-		content += service.getprojectName(history.getProjectNo()) + "방";
+		content += history.getProjectNo() + "번";
+		content += service.getprojectName(history.getProjectNo());
 		content += historyService.getCodeContent(CODENO) + "을/를";
 		content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
 		

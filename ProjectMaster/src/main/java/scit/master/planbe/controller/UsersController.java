@@ -15,8 +15,10 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
+import scit.master.planbe.service.HistoryServiceImpl;
 import scit.master.planbe.service.ProjectService;
 import scit.master.planbe.service.ProjectServiceImpl;
 import scit.master.planbe.service.UsersServiceImpl;
@@ -25,11 +27,15 @@ import scit.master.planbe.service.UsersServiceImpl;
 @Controller
 public class UsersController {
 	
+	
 	@Autowired
 	UsersServiceImpl service;
 	
 	@Autowired
 	ProjectServiceImpl projectService;
+	
+	@Autowired
+	HistoryServiceImpl historyService;
 	
 	// 로그인 양식 불러오기 
 	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
@@ -40,7 +46,19 @@ public class UsersController {
 	// 로그인 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(UsersVO vo, HttpSession session) {
+		String code = "a";
 		service.login(vo, session);
+		
+		String content = vo.getUserId() + "님이 로그인 하였습니다.";
+		
+		
+		/*String userName =(String)session.getAttribute("loginId");
+		history.setCdSelect(code);//create update delete 직접줌
+		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
+		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		
+		projectHistory(history, userName);*/
+		
 		return "redirect:/";
 	}
 	
@@ -112,5 +130,13 @@ public class UsersController {
 	public ArrayList<ProjectVO> projectList(int userNo)
 	{
 		return projectService.getProjectList(userNo);
+	}
+
+	// 유저넘버로 히스토리
+	@RequestMapping(value = "historyList", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<HistoryVO> historyList(int userNo)
+	{
+		return historyService.getHistoryList(userNo);
 	}
 }

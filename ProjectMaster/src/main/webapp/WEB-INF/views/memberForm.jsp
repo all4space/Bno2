@@ -60,6 +60,8 @@
 	<div>
      <%@include file="sideMenu.jsp"%>
     </div>	
+    <div class="container-fluid-full">
+		<div class="row-fluid">
 			
 			<noscript>
 				<div class="alert alert-block span10">

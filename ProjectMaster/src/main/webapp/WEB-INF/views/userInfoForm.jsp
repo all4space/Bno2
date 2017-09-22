@@ -52,6 +52,8 @@
 			dataType: "json",
 			success: function(result)
 			{
+				$("#List").empty();
+				
 				var addRow1 = '<div class="box span12">';
 				addRow1 += '<div class="box-header">';
 				addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>Project List</h2>';
@@ -71,7 +73,7 @@
 				addRow1 += '<th>Status</th>';                                          
 				addRow1 += '</tr>';
 				addRow1 += '</thead>'; 
-				addRow1 += '<tbody id = "ProjectMember">';
+				addRow1 += '<tbody id = "ListList">';
 				addRow1 += '</tbody>';
 				addRow1 += '</table>';  
 				addRow1 += '<div class="pagination pagination-centered">';
@@ -90,7 +92,7 @@
 				addRow1 += '</div>';
 				
 					
-				$("#ProjectList").append(addRow1);
+				$("#List").append(addRow1);
 				
 			
 					$(result).each(function(index, item){
@@ -106,7 +108,7 @@
 						  addRow2 += '</td>';                                        
 						  addRow2 += '</tr>';                                   
 						
-						  $("#ProjectMember").append(addRow2);
+						  $("#ListList").append(addRow2);
 				})
 			},
 			error : function()
@@ -115,7 +117,91 @@
 		})
 	}
 	
-	function userInfo() //그룹이름에 따른 멤버 리스트 select ver
+	function history()  // historyList
+	{
+		alert("대기타봐");
+		$.ajax
+		({
+			url: "/planbe/users/historyList",
+			type: "post",
+			data: {"userNo":${userVo.userNo}},
+			dataType: "json",
+			success: function(result)
+			{
+
+				$("#List").empty();
+				
+				var addRow1 = '<div class="box span12">';
+				addRow1 += '<div class="box-header">';
+				addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>Project List</h2>';
+				addRow1 += '<div class="box-icon">';
+				addRow1 += '<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>';
+				addRow1 += '<a href="#" class="btn-minimize"><i 	class="halflings-icon white chevron-up"></i></a>';
+				addRow1 += '<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>';
+				addRow1 += '</div>';
+				addRow1 += '</div>';
+				addRow1 += '<div class="box-content">';
+				addRow1 += '<table class="table table-bordered table-striped table-condensed">';
+				addRow1 += '<thead>';
+				addRow1 += '<tr>';
+				addRow1 += '<th>ProjectName</th>';
+				addRow1 += '<th>DueDate</th>';
+				addRow1 += '<th>Role</th>';
+				addRow1 += '<th>Status</th>';                                          
+				addRow1 += '</tr>';
+				addRow1 += '</thead>'; 
+				addRow1 += '<tbody id = "ListList">';
+				addRow1 += '</tbody>';
+				addRow1 += '</table>';  
+				addRow1 += '<div class="pagination pagination-centered">';
+				addRow1 += '<ul>';
+				addRow1 += '<li><a href="#">Prev</a></li>';
+				addRow1 += '<li class="active">';
+				addRow1 += '<a href="#">1</a>';
+				addRow1 += '</li>';
+				addRow1 += '<li><a href="#">2</a></li>';
+				addRow1 += '<li><a href="#">3</a></li>';
+				addRow1 += '<li><a href="#">4</a></li>';
+				addRow1 += '<li><a href="#">Next</a></li>';
+				addRow1 += '</ul>';
+				addRow1 += '</div>';     
+				addRow1 += '</div>';
+				addRow1 += '</div>';
+				
+					
+				$("#List").append(addRow1);
+				
+			
+					$(result).each(function(index, item){
+						
+						
+						  
+						  var addRow2 = '<tr>';
+						  addRow2 += '<td>'+item.projectNo+'</td>';
+						  addRow2 += '<td class="center">'+item.logTime+'</td>';
+						  addRow2 += '<td class="center">'+item.logContent+'</td>';
+						  addRow2 += '<td class="center">';
+						  addRow2 += '<span class="label label-success">aaaa</span>';
+						  addRow2 += '</td>';                                        
+						  addRow2 += '</tr>';                                   
+						
+						  $("#ListList").append(addRow2);
+				})
+			}, 
+			error : function()
+			{
+				alert("error");
+			}
+		})
+	}
+	
+	
+	
+	
+	
+	
+	
+/* 	function userInfo() // 여기 유저정보 뽑아내야됨
 	{
 		alert("B");
 		$.ajax
@@ -137,7 +223,7 @@
 				alert("error");
 			}
 		})
-	}
+	} */
 	
 </script>
 </head>
@@ -156,7 +242,6 @@
 	<div>
      <%@include file="sideMenu.jsp"%>
     </div>	
-			
 			<noscript>
 				<div class="alert alert-block span10">
 					<h4 class="alert-heading">Warning!</h4>
@@ -230,12 +315,12 @@
 					<div class="box-content">
 						<p class="center">
 							<button class="btn btn-primary" onclick = "userInfo()"><i class=" halflings-icon user"></i> General</button>
-							<button class="btn btn-primary"><i class="halflings-icon time"></i> Activity</button>
+							<button class="btn btn-primary" onclick = "history()"><i class="halflings-icon time"></i> Activity</button>
 							<button class="btn btn-primary" onclick = "ProjectList()"><i class="halflings-icon file"></i> Project</button>
 						</p>
 					</div>
 			</div><!--/row-->
-				<div class="row-fluid sortable" id = "ProjectList">
+				<div class="row-fluid sortable" id = "List">
 				</div>
 					<!-- //고고뗴 -->
 				
