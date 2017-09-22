@@ -81,6 +81,7 @@
 
 			
 			
+			
 		<!-- admin인 경우 -->
 			
 			<c:if test="${loginId == 'admin'}">
