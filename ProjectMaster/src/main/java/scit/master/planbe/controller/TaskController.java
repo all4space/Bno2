@@ -17,13 +17,11 @@ import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.PageNavigator;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
-import scit.master.planbe.dao.ProjectDAOImpl;
 import scit.master.planbe.dao.UsersDAOImpl;
 import scit.master.planbe.service.HistoryServiceImpl;
 import scit.master.planbe.service.MemberServiceImpl;
-import scit.master.planbe.service.ProjectService;
+import scit.master.planbe.service.ProjectServiceImpl;
 import scit.master.planbe.service.TaskService;
-import scit.master.planbe.service.UsersService;
 
 @RequestMapping("/task")
 @Controller
@@ -43,6 +41,9 @@ public class TaskController {
 	
 	@Autowired
 	UsersDAOImpl dao;
+	
+	@Autowired
+	ProjectServiceImpl ps;
 	
 	//task.jsp로 이동
 	@RequestMapping(value = "taskForm", method = RequestMethod.GET)
@@ -82,8 +83,11 @@ public class TaskController {
 	@RequestMapping(value = "newTaskForm", method = RequestMethod.GET)
 	public String newTaskForm(Model model,HttpSession session) {		
 		
+		
+		model.addAttribute("projectVO", ps.getProjectList((int)session.getAttribute("userno")));
 		model.addAttribute("projectList", ms.getProjectNo((String)session.getAttribute("loginId")));
-		System.out.println(ms.getProjectNo((String)session.getAttribute("loginId")));
+		System.out.println(ps.getProjectList((int)session.getAttribute("userno")));
+	
 		return "newTask";
 	}
 	

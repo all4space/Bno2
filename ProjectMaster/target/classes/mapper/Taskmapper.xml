@@ -36,20 +36,7 @@
 							and taskname LIKE '%'||#{searchword}||'%'
 	 
 	 </when>
-	  <when test="searchtype == 'startdate'">
-	  
-	  	t join member m on t.memberno=m.memberno 
-					join users u on m.userno = u.userno
-						and u.userno=#{userno} 
-	  						and startdate LIKE '%'||#{searchword}||'%'
-	 </when>
-	  <when test="searchtype == 'deudate'">
-	  	
-	  	t join member m on t.memberno=m.memberno 
-					join users u on m.userno = u.userno
-						and u.userno=#{userno} 
-	  						 duedate LIKE '%'||#{searchword}||'%'
-	 </when>
+	 
 	   <when test="target == 'HIGH'">
 	   
 	   	t join member m on t.memberno=m.memberno 
@@ -193,6 +180,8 @@
 
 </select>
 
+
+<!-- 전체 리스트(페이지 수와 상관없이)수 가져오기 -->
 <select id="getTaskCount" parameterType="int" resultType="int">
 	SELECT count(taskNo) FROM TASK t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
