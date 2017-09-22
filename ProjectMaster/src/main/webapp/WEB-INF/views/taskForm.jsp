@@ -67,6 +67,10 @@
 				</div>
 			</noscript>
 			
+			
+			<div class="row-fluid sortable">   
+
+					
 			<!-- start: Content -->
 			<div id="content" class="span10">
 			
@@ -153,9 +157,9 @@
 												
 							<div class="pull-right">
 							<div class="btn-group">
-								<button type="button"  class="btn btn-success btn-filter" data-target="good" id="btnGood" name="btnOption" value="good">good</button>
-								<button type="button" class="btn btn-warning btn-filter" data-target="urgent" id="btnUrgent" name="btnOption" value="urgent">urgent</button>
-								<button type="button" class="btn btn-danger btn-filter" data-target="disaster" id="btnDisaster" name="btnOption" value="disaster">disaster</button>
+								<button type="button"  class="btn btn-danger btn-filter" data-target="good" id="btnGood" name="btnOption" value="HIGH">HIGH</button>
+								<button type="button" class="btn btn-warning btn-filter" data-target="urgent" id="btnUrgent" name="btnOption" value="NORMAL">NORMAL</button>
+								<button type="button" class="btn btn-success btn-filter" data-target="disaster" id="btnDisaster" name="btnOption" value="LOW">LOW</button>
 								<button type="button" class="btn btn-all btn-filter" data-target="all" id="btnAll" name="btnOption" >all</button>
 								<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-progress btn-filter">progress</button></a>
 							</div>
@@ -174,12 +178,27 @@
 								<c:forEach items="${taskList}" var="task" varStatus="status"> 
 								<!-- [${status.index}]: ${gamelist[status.index]} -->
 									
-									<tr data-status="${task.taskPriority}" id="alList">
+									<tr data-status="${task.taskStatus}" id="alList">
 										<td>
 											
-											<div>
-												<input type="checkbox"  class="chbox" onclick= "clickedCheck('${task}')">										
-											</div>
+											<c:choose>
+															<c:when test="${task.taskStatus=='NEW'}">
+															  <span><h2 class="green">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:when test="${task.taskStatus=='PROGRESS'}">
+															  <span><h2 class="yellow">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:when test="${task.taskStatus=='COMPLETE'}">
+															  <span><h2 class="red">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:otherwise>
+															  <span>에러</span>
+															</c:otherwise>
+														
+											</c:choose>						
 																																		
 										</td>
 										
@@ -204,16 +223,16 @@
 														${task.taskName}
 																												
 														<c:choose>
-															<c:when test="${task.taskPriority=='good'}">
-															  <span class="pull-right green">${task.taskPriority}</span>
+															<c:when test="${task.taskPriority=='HIGH'}">
+															  <span class="pull-right red">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='urgent'}">
+															<c:when test="${task.taskPriority=='NORMAL'}">
 															  <span class="pull-right yellow">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='disaster'}">
-															  <span class="pull-right red">${task.taskPriority}</span>
+															<c:when test="${task.taskPriority=='LOW'}">
+															  <span class="pull-right green">${task.taskPriority}</span>
 															</c:when>
 															
 															<c:otherwise>
@@ -263,6 +282,7 @@
 		
 </div>
 
+</div><!--/row--> 
 			
  </c:if>
 
@@ -274,6 +294,9 @@
 	  <!-- admin이 아닌 경우 시작 -->
        
       <c:if test="${authority == member}">
+      
+      <div class="row-fluid sortable">  
+      
       <div class="userId">
       <h1>${authority} ${loginId}님의 Task</h1>
       </div>	
@@ -362,12 +385,27 @@
 								<c:forEach items="${taskList}" var="task" varStatus="status"> 
 								<!-- [${status.index}]: ${gamelist[status.index]} -->
 									
-									<tr data-status="${task.taskPriority}" id="alList">
+									<tr data-status="${task.taskStatus}" id="alList">
 										<td>
 											
-											<div>
-												<input type="checkbox"  class="chbox" >										
-											</div>
+											<c:choose>
+															<c:when test="${task.taskStatus=='NEW'}">
+															  <span><h2 class="green">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:when test="${task.taskStatus=='PROGRESS'}">
+															  <span><h2 class="yellow">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:when test="${task.taskStatus=='COMPLETE'}">
+															  <span><h2 class="red">${task.taskStatus}</h2></span>
+															</c:when>
+															
+															<c:otherwise>
+															  <span>에러</span>
+															</c:otherwise>
+														
+											</c:choose>							
 																																		
 										</td>
 										
@@ -392,16 +430,16 @@
 														${task.taskName}
 																												
 														<c:choose>
-															<c:when test="${task.taskPriority=='good'}">
-															  <span class="pull-right green">${task.taskPriority}</span>
+															<c:when test="${task.taskPriority=='HIGH'}">
+															  <span class="pull-right red">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='urgent'}">
+															<c:when test="${task.taskPriority=='NORMAL'}">
 															  <span class="pull-right yellow">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='disaster'}">
-															  <span class="pull-right red">${task.taskPriority}</span>
+															<c:when test="${task.taskPriority=='LOW'}">
+															  <span class="pull-right green">${task.taskPriority}</span>
 															</c:when>
 															
 															<c:otherwise>
@@ -476,6 +514,8 @@
 	</div>
 	
 	<div class="clearfix"></div>
+	
+	</div><!--/row--> 
 	
     <footer>
 

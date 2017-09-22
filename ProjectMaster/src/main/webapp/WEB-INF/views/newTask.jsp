@@ -162,9 +162,9 @@ function change(number){
                      <td>
                          <select class="form-control" id="taskPriority" name="taskPriority">
                          		<option>--선택--</option>
-                                <option>urgent</option>
-                                <option>good</option>
-                                <option>disaster</option>
+                                <option>HIGH</option>
+                                <option>NORMAL</option>
+                                <option>LOW</option>
                             </select>   
                        </td>                         
                     </tr>
@@ -174,9 +174,9 @@ function change(number){
                      <td>
                          <select class="form-control" id="taskStatus" name="taskStatus">
                          		<option>--선택--</option>
-                                <option>new</option>
-                                <option>ongoing</option>
-                                <option>done</option>
+                                <option>NEW</option>
+                                <option>PROGRESS</option>
+                                <option>COMPLETE</option>
                             </select>   
                        </td>                         
                     </tr>
@@ -298,9 +298,9 @@ function change(number){
                      <td>
                          <select class="form-control" id="taskPriority" name="taskPriority">
                          		<option>--선택--</option>
-                                <option>urgent</option>
-                                <option>good</option>
-                                <option>disaster</option>
+                                <option>HIGH</option>
+                                <option>NORMAL</option>
+                                <option>LOW</option>
                             </select>   
                        </td>                         
                     </tr>
@@ -310,9 +310,9 @@ function change(number){
                      <td>
                          <select class="form-control" id="taskStatus" name="taskStatus">
                          		<option>--선택--</option>
-                                <option>new</option>
-                                <option>ongoing</option>
-                                <option>done</option>
+                                <option>NEW</option>
+                                <option>PROGRESS</option>
+                                <option>COMPLETE</option>
                             </select>   
                        </td>                         
                     </tr>
