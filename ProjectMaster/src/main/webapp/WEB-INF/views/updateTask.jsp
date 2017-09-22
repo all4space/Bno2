@@ -86,7 +86,7 @@
 			<c:if test="${loginId == 'admin'}">
 			
 			<div class="title-1">
-			<legend><h1>${loginId}님의 Task</h1></legend>
+			<legend><h1>${authority} ${loginId}님의 UpdateTask</h1></legend>
 			</div>
 			<div class="row-fluid">				
 				<div class="span7">
@@ -270,7 +270,7 @@
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${loginId}님의 UpdateTask</h1></legend>
+            <legend><h1>${authority} ${loginId}님의 UpdateTask</h1></legend>  
         </div>
         <!-- panel preview -->
       
@@ -311,29 +311,29 @@
                      <td>
                          <select  id="taskPriority" name="taskPriority">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskPriority =='urgent'}">
+                         	  <c:when test="${updateTask.taskPriority =='HIGH'}">
                          	  		<option>--선택--</option>
-                         	  		<option selected>urgent</option>
-                         	  		<option>good</option>
-                         	  		<option>disaster</option>
+                         	  		<option selected>HIGH</option>
+                         	  		<option>NORMAL</option>
+                         	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='good'}">
+                         	  <c:when test="${updateTask.taskPriority =='NORMAL'}">
                          	  		<option>--선택--</option>
-                         	  		<option >urgent</option>
-                         	  		<option selected>good</option>
-                         	  		<option>disaster</option>
+                         	  		<option >HIGH</option>
+                         	  		<option selected>NORMAL</option>
+                         	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='disaster'}">
+                         	  <c:when test="${updateTask.taskPriority =='LOW'}">
                          	  		<option>--선택--</option>
-                         	  		<option>urgent</option>
-                         	  		<option>good</option>
-                         	  		<option selected>disaster</option>
+                         	  		<option>HIGH</option>
+                         	  		<option>NORMAL</option>
+                         	  		<option selected>LOW</option>
                          	  </c:when>
                          	  <c:otherwise>
                          	  		<option selected>--선택--</option>
-                         	  		<option>urgent</option>
-                         	  		<option>good</option>
-                         	  		<option>disaster</option>
+                         	  		<option>HIGH</option>
+                         	  		<option>NORMAL</option>
+                         	  		<option>LOW</option>
                          	  </c:otherwise>
                          	</c:choose>
                             </select>   
@@ -345,29 +345,29 @@
                      <td>
                          <select  id="taskStatus" name="taskStatus">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskStatus =='new'}">
+                         	  <c:when test="${updateTask.taskStatus =='NEW'}">
                          	  		<option>--선택--</option>
-                         	  		<option selected>new</option>
-                         	  		<option>ongoing</option>
-                         	  		<option>done</option>
+                         	  		<option selected>NEW</option>
+                         	  		<option>PROGRESS</option>
+                         	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='ongoing'}">
+                         	  <c:when test="${updateTask.taskStatus =='PROGRESS'}">
                          	  		<option>--선택--</option>
-                         	  		<option >new</option>
-                         	  		<option selected>ongoing</option>
-                         	  		<option>new</option>
+                         	  		<option >NEW</option>
+                         	  		<option selected>PROGRESS</option>
+                         	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='done'}">
+                         	  <c:when test="${updateTask.taskStatus =='COMPLETE'}">
                          	  		<option>--선택--</option>
-                         	  		<option>new</option>
-                         	  		<option>ongoing</option>
-                         	  		<option selected>done</option>
+                         	  		<option>NEW</option>
+                         	  		<option>PROGRESS</option>
+                         	  		<option selected>COMPLETE</option>
                          	  </c:when>
                          	  <c:otherwise>
                          	  		<option selected>--선택--</option>
-                         	  		<option>new</option>
-                         	  		<option>ongoing</option>
-                         	  		<option>done</option>
+                         	  		<option>NEW</option>
+                         	  		<option>PROGRESS</option>
+                         	  		<option>COMPLETE</option>
                          	  </c:otherwise>
                          	</c:choose>
                             </select>   

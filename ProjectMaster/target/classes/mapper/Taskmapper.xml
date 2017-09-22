@@ -50,21 +50,21 @@
 						and u.userno=#{userno} 
 	  						 duedate LIKE '%'||#{searchword}||'%'
 	 </when>
-	   <when test="target == 'good'">
+	   <when test="target == 'HIGH'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
 	 						and taskpriority LIKE '%'||#{target}||'%'
 	 </when>
-	   <when test="target == 'urgent'">
+	   <when test="target == 'NORMAL'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
 	   						and taskpriority LIKE '%'||#{target}||'%'
 	 </when>
-	   <when test="target == 'disaster'">
+	   <when test="target == 'LOW'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
@@ -139,21 +139,21 @@
 						and u.userno=#{userno}
 							and duedate like '%'||#{searchword}||'%'
 			</when>
-			 <when test="target == 'good'">
+			 <when test="target == 'HIGH'">
 			 
 			 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
 			 				and taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
-	  		 <when test="target == 'urgent'">
+	  		 <when test="target == 'NORMAL'">
 	  		 
 	  		 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
 	  		 				and taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
-	   		 <when test="target == 'disaster'">
+	   		 <when test="target == 'LOW'">
 	   		 
 	   		 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
