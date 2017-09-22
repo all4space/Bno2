@@ -153,44 +153,51 @@ public class TaskController {
 			System.out.println("1111111" + taskVo.getTaskName());
 			System.out.println("2222222" + vo.getTaskName());
 			
-			if(!(taskVo.getTaskName().equals(vo.getTaskName())))
-			{
-				content += "TaskName 변경 : " + vo.getTaskName() + " = >" + taskVo.getTaskName();
-			}
-			if(!(taskVo.getTaskContent().equals(vo.getTaskContent())))
-			{
-				content += "TaskContent 변경 : " + vo.getTaskContent() + " = > " + taskVo.getTaskContent();
-			}
-			if(!(taskVo.getTaskPriority().equals(vo.getTaskPriority())))
-			{
-				content += "TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
-			}
-			if(!(vo.getTotalTime() == vo.getDoneTime()))
-			{
-				if(taskVo.getDoneTime() == taskVo.getTotalTime())
+				if(!(taskVo.getTaskName().equals(vo.getTaskName())))
 				{
-					taskVo.setTaskStatus("done");
-					content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "done";
+					content += "TaskName 변경 : " + vo.getTaskName() + " = >" + taskVo.getTaskName();
 				}
-				else if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+				if(!(taskVo.getTaskContent().equals(vo.getTaskContent())))
 				{
-					content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+					content += "TaskContent 변경 : " + vo.getTaskContent() + " = > " + taskVo.getTaskContent();
 				}
-			}
-			if(!(taskVo.getStartDate().equals(vo.getStartDate())))
-			{
-				content += "TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
-			}
-			
-			
-			if(!(taskVo.getTotalTime() == vo.getTotalTime()))
-			{
-				content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
-			}
-			if(!(taskVo.getDoneTime() == vo.getDoneTime()))
-			{
-				content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
-			}
+				if(!(taskVo.getTaskPriority().equals(vo.getTaskPriority())))
+				{
+					content += "TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
+				}
+				if(!(vo.getTotalTime() == vo.getDoneTime()))
+				{
+					if(taskVo.getDoneTime() == taskVo.getTotalTime())
+					{
+						taskVo.setTaskStatus("done");
+						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "done";
+					}
+					else if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+					{
+						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+					}
+				}
+				else
+				{
+					if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+					{
+						taskVo.setTaskStatus("done");
+					}
+				}
+				if(!(taskVo.getStartDate().equals(vo.getStartDate())))
+				{
+					content += "TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
+				}
+				
+				
+				if(!(taskVo.getTotalTime() == vo.getTotalTime()))
+				{
+					content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
+				}
+				if(!(taskVo.getDoneTime() == vo.getDoneTime()))
+				{
+					content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
+				}
 			
 			
 			
@@ -199,6 +206,8 @@ public class TaskController {
 			System.out.println(content); // CONTENT 값 확인 
 			
 			history.setLogContent(content); //CONTENT값 VO에 세팅
+			
+			
 			historyService.addHistory(history); //history 디비에 히스토리정보 저장
 		
 				
