@@ -28,6 +28,7 @@ import scit.master.planbe.service.UsersServiceImpl;
 public class UsersController {
 	
 	
+	
 	@Autowired
 	UsersServiceImpl service;
 	
@@ -36,6 +37,9 @@ public class UsersController {
 	
 	@Autowired
 	HistoryServiceImpl historyService;
+	
+	private int CODE = 3;
+	HistoryVO history = new HistoryVO();
 	
 	// 로그인 양식 불러오기 
 	@RequestMapping(value = "loginForm", method = RequestMethod.GET)
@@ -46,19 +50,19 @@ public class UsersController {
 	// 로그인 
 	@RequestMapping(value = "login", method = RequestMethod.POST)
 	public String login(UsersVO vo, HttpSession session) {
-		String code = "a";
+
 		service.login(vo, session);
 		
-		String content = vo.getUserId() + "님이 로그인 하였습니다.";
+		String content = vo.getUserId() + "님이 로그인 했어용.";
+		System.out.println(content);
 		
-		
-		/*String userName =(String)session.getAttribute("loginId");
-		history.setCdSelect(code);//create update delete 직접줌
-		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
-		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
-		
-		projectHistory(history, userName);*/
-		
+		history.setUserNo(service.getUserNo(vo.getUserId()));
+		history.setCodeNo(CODE);
+		history.setLogContent(content);
+		history.setProjectNo(0);
+		history.setCdSelect("login");
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
+
 		return "redirect:/";
 	}
 	
@@ -72,6 +76,18 @@ public class UsersController {
 	@RequestMapping(value = "join", method = RequestMethod.POST)
 	public String join(UsersVO vo) {
 		service.join(vo);
+		
+		String content = vo.getUserId() + "님이 회원이되셨습니다. 축하해주세용~.";
+		System.out.println(content);
+
+		history.setUserNo(service.getUserNo(vo.getUserId()));
+		
+		history.setCodeNo(4);
+		history.setLogContent(content);
+		history.setProjectNo(0);
+		history.setCdSelect("join");
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
+		
 		return "redirect:/";
 	}
 	
@@ -92,7 +108,19 @@ public class UsersController {
 	// 로그아웃
 	@RequestMapping(value = "logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-        session.invalidate();
+        
+        String content = session.getAttribute("loginId") + "님이 로그아웃 했어용.";
+		System.out.println(content);
+
+		history.setUserNo(service.getUserNo((String)session.getAttribute("loginId")));
+		
+		session.invalidate();
+		history.setCodeNo(CODE);
+		history.setLogContent(content);
+		history.setProjectNo(0);
+		history.setCdSelect("login");
+		historyService.addHistory(history); //history 디비에 히스토리정보 저장
+        
 		return "redirect:/";
 	}
      
