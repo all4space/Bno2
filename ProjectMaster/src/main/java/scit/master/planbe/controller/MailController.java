@@ -1,6 +1,8 @@
 package scit.master.planbe.controller;
 
 
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import scit.master.planbe.VO.MailVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
@@ -127,17 +130,86 @@ public class MailController {
 	    		map.put("my_u_list", my_u_list);
 	    	}//else
 	    }//else
-	    System.out.println("ALL P"+map.get("all_p_list"));
-	    System.out.println("ALL U"+map.get("all_u_list"));
-	    System.out.println("MY P"+map.get("my_p_list"));
-	    System.out.println("MY U"+ map.get("my_u_list"));
 	    return map;
 	}
-	    		
+	    
+
+	// SendMail
+	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
+	public String sendMail(MailVO vo, HttpSession session, String p_no_list, String u_no_list) {
+		System.out.println("Send Mail접근");
+		System.out.println("넘겨온 값은 무엇이냐 : " + vo.toString());
+		
+		String userId = (String)session.getAttribute("loginId");
+		UsersVO uvo = service.getUserInfo(userId);
+		vo.setUserNo(uvo.getUserNo()); 
+		
+		if(p_no_list != ""){
+			System.out.println("프넘" + p_no_list);
+			String[] pArray = p_no_list.split(",");
+			for(int i=0; i < pArray.length; i++){
+                vo.setReceiveProject(Integer.parseInt(pArray[i]));				
+                System.out.println(vo.getReceiveProject());
+                System.out.println(vo.toString());
+                boolean result = service.sendMail(vo);
+                System.out.println(result);
+			}
+		}
+		
+
+		if(u_no_list != ""){
+			System.out.println("멤넘" + u_no_list);
+			String[] uArray = u_no_list.split(",");
+			for(int i=0; i < uArray.length; i++){
+                vo.setReceiveMember(Integer.parseInt(uArray[i]));				
+                System.out.println(vo.getReceiveMember());
+                System.out.println(vo.toString());
+                boolean result = service.sendMail(vo);
+                System.out.println(result);
+			}
+		}
+		
+		return "mailForm";
+	}
+        
 	
 	// MailList 불러오기 
 	@RequestMapping(value = "mailList", method = RequestMethod.GET)
-	public String mailList() {
+	public String mailList(HttpSession session, Model model) {
+		String userId = (String)session.getAttribute("loginId");
+		UsersVO uvo = service.getUserInfo(userId);
+		int userNo = uvo.getUserNo();
+		
+		/* 개인에게 온 메일리스트 가져오기  */
+		ArrayList<MailVO> mmlist = service.getMemberMailList(userNo);
+		/* 메일 송신자의 userName 가져오기 */
+		ArrayList<String> umlist = new ArrayList<>();
+		for(MailVO vo : mmlist){
+			UsersVO uvo2 = service.getUserInfo2(vo.getUserNo());
+            umlist.add(uvo2.getUserName());
+		}
+		System.out.println(umlist);
+		
+		/* 프로젝트에게 온 메일리스트 불러오기 */
+		ArrayList<MailVO> pmlist = service.getProjectMailList(userNo);
+		System.out.println(pmlist);
+		/* 메일 송신자의 userName 가져오기 */
+		ArrayList<String> umlist2 = new ArrayList<>();
+		for(MailVO vo : pmlist){
+			UsersVO uvo2 = service.getUserInfo2(vo.getUserNo());
+            umlist2.add(uvo2.getUserName());
+		}
+		
+		/* 내가 보낸 메일 리스트 가져오기 */
+		ArrayList<MailVO> smlist = service.getMySendMailList(userNo);
+	    System.out.println(smlist);
+	    
+		model.addAttribute("mmlist", mmlist);
+		model.addAttribute("umlist", umlist);
+		model.addAttribute("pmlist", pmlist);
+		model.addAttribute("umlist2", umlist2);
+		model.addAttribute("smlist", smlist);
+		
 		return "mailList";
 	}
 }

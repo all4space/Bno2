@@ -1,20 +1,22 @@
 package scit.master.planbe.VO;
 
+
 public class MailVO {
 
 	private int mailNo;
 	private int userNo;
 	private String mailTitle;
 	private String mailContent;
-	private String receiveProject;
-	private String receiveMember;
-	private String mailPriority;
-	private String sendDate; 
+	private int receiveProject;
+	private int receiveMember;
+	private String mailTag;
+	private String sendDate;
+    private String checkMail;
 	
-	public MailVO(){}
+    public MailVO(){}
 
-	public MailVO(int mailNo, int userNo, String mailTitle, String mailContent, String receiveProject,
-			String receiveMember, String mailPriority, String sendDate) {
+	public MailVO(int mailNo, int userNo, String mailTitle, String mailContent, int receiveProject, int receiveMember,
+			String mailTag, String sendDate, String checkMail) {
 		super();
 		this.mailNo = mailNo;
 		this.userNo = userNo;
@@ -22,8 +24,9 @@ public class MailVO {
 		this.mailContent = mailContent;
 		this.receiveProject = receiveProject;
 		this.receiveMember = receiveMember;
-		this.mailPriority = mailPriority;
+		this.mailTag = mailTag;
 		this.sendDate = sendDate;
+		this.checkMail = checkMail;
 	}
 
 	public int getMailNo() {
@@ -58,28 +61,28 @@ public class MailVO {
 		this.mailContent = mailContent;
 	}
 
-	public String getReceiveProject() {
+	public int getReceiveProject() {
 		return receiveProject;
 	}
 
-	public void setReceiveProject(String receiveProject) {
+	public void setReceiveProject(int receiveProject) {
 		this.receiveProject = receiveProject;
 	}
 
-	public String getReceiveMember() {
+	public int getReceiveMember() {
 		return receiveMember;
 	}
 
-	public void setReceiveMember(String receiveMember) {
+	public void setReceiveMember(int receiveMember) {
 		this.receiveMember = receiveMember;
 	}
 
-	public String getMailPriority() {
-		return mailPriority;
+	public String getMailTag() {
+		return mailTag;
 	}
 
-	public void setMailPriority(String mailPriority) {
-		this.mailPriority = mailPriority;
+	public void setMailTag(String mailTag) {
+		this.mailTag = mailTag;
 	}
 
 	public String getSendDate() {
@@ -90,14 +93,28 @@ public class MailVO {
 		this.sendDate = sendDate;
 	}
 
+	public String getCheckMail() {
+		return checkMail;
+	}
+
+	public void setCheckMail(String checkMail) {
+		this.checkMail = checkMail;
+	}
+
 	@Override
 	public String toString() {
 		return "MailVO [mailNo=" + mailNo + ", userNo=" + userNo + ", mailTitle=" + mailTitle + ", mailContent="
-				+ mailContent + ", receiveProject=" + receiveProject + ", receiveMember=" + receiveMember
-				+ ", mailPriority=" + mailPriority + ", sendDate=" + sendDate + "]";
+				+ mailContent + ", receiveProject=" + receiveProject + ", receiveMember=" + receiveMember + ", mailTag="
+				+ mailTag + ", sendDate=" + sendDate + ", checkMail=" + checkMail + "]";
 	}
+	
+} 
+	
+    
+	
 
-}
+	
+
 	
 
     

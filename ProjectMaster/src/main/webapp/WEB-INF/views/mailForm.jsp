@@ -55,10 +55,16 @@
 	
 	
 /* receiver groupSelect */ 
+  
+ 
+var group;
+
 function groupSelect(obj){
  
 	// ProjectList or MemberList 가져오기 
 	//alert("function In" + obj.value);
+	
+	group = obj.value;
 	
 	$.ajax({
 		url: "/planbe/mail/getSelectList",
@@ -80,25 +86,25 @@ function groupSelect(obj){
 
 		    if(all_p_list != undefined) {
 	  			$(all_p_list).each(function(index, item) {
-					addRow += '<option>' + item.projectName + '</option>';
+					addRow += '<option value="'+item.projectNo+'">' + item.projectName + '</option>'; 
 				});
   			} 
   				
   			if(all_u_list != undefined) {
 	  			$(all_u_list).each(function(index, item) {
-					addRow += '<option>' + item.userName + '</option>';
+					addRow += '<option value="'+item.userNo+'">' + item.userName + '</option>';
 				});
   			} 
   			
   			if(my_p_list != undefined) {
 	  			$(my_p_list).each(function(index, item) {
-					addRow += '<option>' + item.projectName + '</option>';
+					addRow += '<option value="'+item.projectNo+'">' + item.projectName + '</option>';
 				});
   			} 
   			
   			if(my_u_list != undefined) {
 	  			$(my_u_list).each(function(index, item) {
-					addRow += '<option>' + item.userName + '</option>';
+					addRow += '<option value="'+item.userNo+'">' + item.userName + '</option>';
 				});
   			} 
 
@@ -115,9 +121,55 @@ function groupSelect(obj){
 
 /* send Mail */
 function sendMail(){
-	alert("insert는 내일해야지~~~");
+
+	alert(group);
 	
+	var p_no_list="";
+	var u_no_list="";
+	
+	var data = $("#selectedList").val();
+	
+	if(group == "project"){
+		// receiveProject = $("#selectedList :selected").text(); // 300304 
+	//	var data = $("#selectedList").val(); // 300,304
+		for(var i=0; i<data.length; i++){
+			p_no_list += data[i]+",";
+		}
+	}
+			
+	if(group == "member"){
+		for(var i=0; i<data.length; i++){
+			u_no_list += data[i]+",";
+		}
+	}
+			
+	var mailTitle = $("#mailTitle").val();
+	var mailContent = $("#mailContent").val();
+	
+//	var list = 	$("#receiveProject :selected").text();;
+	
+	$.ajax({	
+		url: "/planbe/mail/sendMail",
+		type: "post",
+		data: {
+			   "mailTitle": mailTitle, 
+			   "mailContent": mailContent, 
+			   "p_no_list" : p_no_list,
+			   "u_no_list" : u_no_list,
+			   "mailTag": $("#mailTag").val()
+		       },
+			   
+		// dataType: "json",
+		success: function(result){
+			alert("success in");
+		},
+		
+		error : function(){
+			alert("sendMail 에라");
+		}
+	}); 
 }
+				   
 
 function mailList(){
 	location.href="/planbe/mail/mailList";
@@ -250,7 +302,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							<div class="control-group">
 							  <label class="control-label" for="typeahead">Mail Title</label>
 							  <div class="controls">
-								<input type="text" class="span6 typeahead" id="typeahead"  data-provide="typeahead" data-items="4" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
+								<input type="text" class="span6 typeahead" id="mailTitle"  data-provide="typeahead" data-items="4" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
 								<p class="help-block">Start typing to activate auto complete!</p>
 							  </div>
 							</div>
@@ -274,7 +326,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							  <div class="control-group">
 								<label class="control-label" for="selectError">Mail Tag</label>
 								<div class="controls">
-								  <select id="selectError2" data-rel="chosen">
+								  <select id="mailTag" data-rel="chosen">
 									<option>INFO</option>
 									<option>PROBLEM</option>
 									<option>TASK</option>
@@ -306,7 +358,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							  <div class="control-group">
 								<label class="control-label" for="selectError1">Receiver</label>
 								<div class="controls">
-								  <select id="selectedList" multiple data-rel="chosen">
+								  <select id="selectedList" name="selectedList" multiple data-rel="chosen">
 								  </select>
 								</div>
 							  </div>
@@ -315,7 +367,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							<div class="control-group hidden-phone">
 							  <label class="control-label" for="textarea2">Mail Content</label>
 							  <div class="controls">
-								<textarea class="cleditor" id="textarea2" rows="3"></textarea>
+								<textarea class="cleditor" id="mailContent" rows="3"></textarea>
 							  </div>
 							</div>
 							<div class="form-actions">

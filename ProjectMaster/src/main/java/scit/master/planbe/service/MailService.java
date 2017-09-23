@@ -2,6 +2,7 @@ package scit.master.planbe.service;
 
 import java.util.ArrayList;
 
+import scit.master.planbe.VO.MailVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
@@ -19,5 +20,13 @@ public interface MailService {
 	public ArrayList<MemberVO> getMyMemberInfo(int projectNo);
 	// Manager or Member가 속한 프로젝트에 속한 멤버의 userName 가져오기
 	public UsersVO getUserInfo2(int userNo);
+	// Send Mail 
+	public boolean sendMail(MailVO vo);
+	// MemberMailList 
+	public ArrayList<MailVO> getMemberMailList(int userNo);
+	// ProjectMailList
+	public ArrayList<MailVO> getProjectMailList(int userNo);
+	// MySendMailList
+	public ArrayList<MailVO> getMySendMailList(int userNo); 
 }
 	
