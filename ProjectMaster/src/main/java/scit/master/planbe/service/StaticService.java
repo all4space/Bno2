@@ -10,10 +10,12 @@ public interface StaticService {
 
 	public ArrayList<ProjectVO> getProjectList(ArrayList<Integer> pnoList);
 	
-	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList); // 프로젝트별 진행률
+	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList); // 팀원별 업무 진행률
 	
 	public ArrayList<TaskVO> progress(ProjectVO vo); // 업무별 진행률
 	
 	public ArrayList<UsersVO> taskOfusersName(ArrayList<Integer> usersNoList);
+	
+	public ArrayList<TaskVO> efficienty(ProjectVO vo);
 
 }

@@ -25,8 +25,8 @@ public class StaticServiceImpl implements StaticService{
 	}
 
 	@Override
-	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList) {
-		ArrayList<TaskVO> task = dao.efficiency(pnoList);
+	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList) {
+		ArrayList<TaskVO> task = dao.taskProgressOfDisease(pnoList);
 		System.out.println("group?" + task);
 /*		int totaltime = 0;
 		int donetime = 0;
@@ -64,9 +64,9 @@ public class StaticServiceImpl implements StaticService{
 	@Override
 	public ArrayList<UsersVO> taskOfusersName(ArrayList<Integer> memberNoList) {
 		ArrayList<MemberVO> userNoList = dao.usernoGetMember(memberNoList);
-		System.out.println("m"+userNoList);
+		/*System.out.println("m"+userNoList);*/
 		ArrayList<UsersVO> userNameList = dao.taskOfusersName(userNoList);
-		System.out.println("u"+userNameList);
+		/*System.out.println("u"+userNameList);*/
 		for (MemberVO memberVO : userNoList) {
 			for (UsersVO usersVO : userNameList) {
 				if(usersVO.getUserNo() == memberVO.getUserNo()){
@@ -74,8 +74,14 @@ public class StaticServiceImpl implements StaticService{
 				}
 			}
 		}
-		System.out.println("re"+userNameList);
+		/*System.out.println("re"+userNameList);*/
 		return dao.taskOfusersName(dao.usernoGetMember(memberNoList));
+	}
+
+	@Override
+	public ArrayList<TaskVO> efficienty(ProjectVO vo) {
+		/*System.out.println("service데스 "+ vo);*/
+		return dao.efficienty(vo);
 	}
 	
 	

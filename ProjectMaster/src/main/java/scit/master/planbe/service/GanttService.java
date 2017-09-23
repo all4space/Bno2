@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.TaskVO;
+import scit.master.planbe.VO.UsersVO;
 
 public interface GanttService {
 	//Gantt
@@ -15,4 +16,5 @@ public interface GanttService {
 	
 	public ArrayList<TaskVO> year(MemberVO m_vo);
 	public ArrayList<TaskVO> month(MemberVO m_vo);
+	
 }

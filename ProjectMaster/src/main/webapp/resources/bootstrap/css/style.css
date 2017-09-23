@@ -1642,6 +1642,30 @@ input[type="button"].btn-block {
   border-color: #8d9091;
 }
 
+/*Gantt Btn Color set ( year - month - week )  */
+
+.btn-year:hover,
+.btn-year:focus,
+.btn-year:active {
+  background-color: #92b4d6;
+  border-color: #92b4d6;
+}
+
+.btn-month:hover,
+.btn-month:focus,
+.btn-month:active {
+  background-color: #578EBE;
+  border-color: #578EBE;
+}
+
+.btn-week:hover,
+.btn-week:focus,
+.btn-week:active {
+  background-color: #3a6a96;
+  border-color: #3a6a96;
+}
+
+
 .btn.disabled:hover,
 .btn[disabled]:hover,
 fieldset[disabled] .btn:hover,

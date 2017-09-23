@@ -45,8 +45,6 @@
 			}
 		}
 		return false;
-		
-		
 
 	}
 	
@@ -82,18 +80,16 @@ $(function(){
 	 function setEfficiency(projectList, percent){
 		listUp(projectList, percent);
 		var noArr = [];
-		var color = ['circleStatsItemBox yellow','circleStatsItemBox green','circleStatsItemBox red','circleStatsItemBox pink','circleStatsItemBox blue','circleStatsItemBox green'];
-		
+		var color = ['circleStatsItemBox yellow','circleStatsItemBox green','circleStatsItemBox pink','circleStatsItemBox greenLight','circleStatsItemBox red','circleStatsItemBox blue','circleStatsItemBox greenDark','circleStatsItemBox orange'];
+		var addDiv = null; var boxCount = 1;
 		$(projectList).each(function(index1,item1){ // user가 속한 project들의 VO정보들 name,content,status...
 				var color_index = 0;
 			$(percent).each(function(index2,item2){ //percent 계산 하기 위해가져온 taskVO time들 (task 시간 싹다 합쳐온것)
-				if(index1 >= 5){color_index = index1 % 5;}else{color_index = index1}//색 설정
+				if(index1 >= 7){color_index = index1 % 7;}else{color_index = index1}//색 설정
 				if(item1.projectNo == item2.projectNo){
 					var percen = (item2.doneTime / item2.totalTime) * 100;
 					var percent = Math.round(percen); // 퍼센트 계산 했고, data 는 한번만 찍어야해. 
-						console.log(item2.projectNo +" : "+ percent)
 						var day = howlong(item1.dueDate);
-						
 						var data  = '<div class = "span2" onTablet="span4" onDesktop="span2">';
 							data	 += '<div class = "'+color[color_index]+'">';
 							data	 += '<div class = "header">'+projectList[index1].projectName+'</div>';
@@ -115,7 +111,11 @@ $(function(){
 							data	 += '</div>'; // color
 							data	 += '</div>'; // span
 							noArr[index2] = item2.projectNo;
-						$("#allchart").append(data);
+					if((index1 % 6) == 0  && index1 > 5 ){
+						boxCount += 1;
+						$(".box_allchart").append('<div id = "allchart'+boxCount+'" class="row-fluid hideInIE8 circleStats"></div>');
+						}
+						$("#allchart"+boxCount).append(data);
 				}//if
 			})//taskVO 포이치(= projectNo 같은 놈 탐색)
 			 if(!noArr.contains(item1.projectNo)){
@@ -143,18 +143,29 @@ $(function(){
 						data	 += '</div>'; // footer
 						data	 += '</div>'; // color
 						data	 += '</div>'; // span
-					$("#allchart").append(data);
+						if((index1 % 6) == 0  && index1 > 5){
+							boxCount += 1;
+							$(".box-allchart").append('<div id = "allchart'+boxCount+'" class="row-fluid hideInIE8 circleStats"></div>');
+							}
+							$("#allchart"+boxCount).append(data);
 			 }
 		})//ProjectVO 포이치(= 프로젝트별로 나타내기 위해...)
 	}//setEfficiency 함수 끗.
 	
 	/* 남은 기한(d-day) 구하기   */
-	function howlong(dueDate){
+	function howlong(dueDate,startDate){
 		var due = new Date(dueDate); // 종료날짜
 		var now = new Date();// 시스템 날짜
 		
 		var betweenDay = (due.getTime() - now.getTime())/1000/60/60/24 ;
+		if(startDate != undefined){
+			var start = new Date(startDate);
+			betweenDay = (start.getTime() - due.getTime())/1000/60/60/24;
+			return Math.abs(Math.floor(betweenDay));
+		}
+		
 		var bD = Math.floor(betweenDay);
+		
 		
 		if(betweenDay > 0 ){
 			bD = "+"+bD;
@@ -192,9 +203,14 @@ $(function(){
 	  			alert("progress result 성공!");
 	  			var taskList = result.taskList;
 	  			var usersNamelist = result.usersNamelist;
+	  			var efficienty = result.taskEfficienty;
+	  			
 	  			makeProgress(taskList,projectNo,usersNamelist);
-	  			$(".verticalChart").empty();
+	  			/* $(".verticalChart").empty(); */
 	  			whoIsBest(usersNamelist);
+	  			chart();
+	  			
+	  			makeEfficienty(efficienty);
 	  			chart();
 			}, // success
 	  		error: function() {	alert("통신 에------라!");	}
@@ -311,7 +327,8 @@ $(function(){
        for(var i=0; i<t_list.length; i++){
     	   var doneTime = t_list[i].doneTime.toFixed(2);
       	   var totalTime = t_list[i].totalTime.toFixed(2); 
-      	   var rate = (doneTime/totalTime).toFixed(2)*100; 
+      	   var rat = (doneTime/totalTime).toFixed(2)*100;
+      	   var rate = Math.round(rat);
            
       	   for(var j=0; j<objArray.length; j++){
       		   if(t_list[i].memberNo == objArray[j].m_no){
@@ -342,11 +359,32 @@ $(function(){
 			oneBar += '<div class="title">'+item.m_name+'</div>';
 			oneBar += '</div>';
 			oneBar += '<div></div>';
-		$(".verticalChart").append(oneBar);
+		$("#Progress").append(oneBar);
 	})	
 	
     }//function 
-
+	
+    function makeEfficienty(efficienty){
+    	
+    	$(efficienty).each(function(index,item){
+    		var x= howlong(item.dueDate,item.startDate);
+    		var y= howlong(item.taskPriority,item.startDate);
+    		var percent = x/y * 100;
+    		console.log("우왕 : "+ x + " // " + y + " // " + percent);
+    		
+    		var oneBar = '<div class="singleBar" style = "margin: 10px 10px 10px 10px">';
+			oneBar += '<div class="bar">';
+			oneBar += '<div class="value">';
+			oneBar += '<span>'+percent+'%</span>';
+			oneBar += '</div>';
+			oneBar += '</div>';
+			oneBar += '<div class="title">'+item.taskName+'<br>'+item.taskContent+'</div>';
+			oneBar += '</div>';
+			oneBar += '<div></div>';
+    	
+    	$("#efficienty_chart").append(oneBar);
+    	})
+    }
 	
 </script>
 <body>
@@ -396,7 +434,9 @@ $(function(){
 					  </div>					
 					</h2>
 					<hr>
-					<div id = "allchart" class="row-fluid hideInIE8 circleStats"></div>
+					<div class = "box-allchart">
+					<div id = "allchart1" class="row-fluid hideInIE8 circleStats"></div>
+					</div>
 				</div>
 			</div><!--/row-->
 							
@@ -404,14 +444,10 @@ $(function(){
 					<div class="box-header">
 						<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>TASK List</h2>
 						<div class="box-icon">
-							<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 						</div>
 					</div>
-					<div class="box-content">
 					<div id="chartdiv" style="width: 100%; height: 400px; background-color: #FFFFFF;" ></div>
-					</div>
 				</div>
 				
 			<div class="row-fluid">
@@ -424,20 +460,32 @@ $(function(){
 							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 						</div>
 					</div> -->
-					<div class="box-content">
-							<!-- <div id="ranking">랭킹  -->
-									<div class="widget blue span5" onTablet="span6" onDesktop="span5">
-										<h2><span class="glyphicons globe"><i></i></span> 담당자별 업무 효율 랭킹</h2>
+<!-- 팀원의 업무 진행도-->	<div class="box-content">
+							<div class="widget blue span5" onTablet="span6" onDesktop="span5">
+									<h2><span class="glyphicons globe"><i></i></span> Job efficiency ranking by team member</h2>
 										<hr>
 										<div class="content">
-											<div class="verticalChart">
+											<div id = "Progress" class="verticalChart">
 												<div class="clearfix"></div>
-											</div><!-- /verticalChart -->
+											</div>
+											<!-- /verticalChart -->
 										</div><!--/content  -->
 									<!-- </div>/span -->											
 							</div>
+<!-- 완료 업무 효율도  -->			<div class="widget red span5" onTablet="span6" onDesktop="span5">
+										<h2><span class="glyphicons globe"><i></i></span> 보류 </h2>
+										<hr>
+										<div class="content">
+											<div id = "efficienty_chart" class="verticalChart">
+												<div class="clearfix"></div>
+											</div>
+											<!-- /verticalChart -->
+										</div><!--/content  -->
+									<!-- </div>/span -->											
+							</div>							
 					</div>
 				</div>
+
 			
 <!-- 				<div class="box span6">
 					<div class="box-header" data-original-title>

@@ -75,11 +75,12 @@ function drawChart(GanttList, date) {
   
   $(GanttList).each(function(index, item) {
 	var per = (item.doneTime / item.totalTime) * 100;
+	var percent = Math.round(per);
 		if(date != 'year'){
-			a = [item.taskNo+'d', item.taskName, item.taskPriority, new Date(item.startDate), new Date(item.dueDate), null, per, null];
+			a = [item.taskNo+'d', item.taskName, item.taskPriority, new Date(item.startDate), new Date(item.dueDate), null, percent, null];
 		}else{
 			var dueDate = (parseInt(item.dueDate) + index);
-			a = [item.taskNo+'d', item.taskName, item.taskPriority, new Date(item.startDate,00,00), new Date(dueDate,00,00), null, per, null];
+			a = [item.taskNo+'d', item.taskName, item.taskPriority, new Date(item.startDate,00,00), new Date(dueDate,00,00), null, percent, null];
 		}
 	data.addRow(a);
 	listSize += 1;
@@ -88,7 +89,10 @@ function drawChart(GanttList, date) {
   var options = {
     height: listSize*40,
     gantt: {
-      trackHeight: 30
+      trackHeight: 30,
+      backgroundColor: {
+    	  					fill : 'green'
+				      }
     }
   };
 
@@ -100,14 +104,14 @@ function drawChart(GanttList, date) {
 /* 버튼 생성  */	
 	function drawButton(projectNo){
 		var date = ["'year'","'month'","'week'"];
-     	var button = '<input type = "button" class="btn" onclick="Gantt('+projectNo+','+date[0]+')" value = "year">';
-			button += '<input type = "button" class="btn" onclick="Gantt('+projectNo+','+date[1]+')" value = "month">';
-			button += '<input type = "button" class="btn" onclick="Gantt('+projectNo+','+date[2]+')" value = "week">';
+     	var button = '<input type = "button" class="btn btn-year" onclick="Gantt('+projectNo+','+date[0]+')" value = "year">';
+			button += '<input type = "button" class="btn btn-month" onclick="Gantt('+projectNo+','+date[1]+')" value = "month">';
+			button += '<input type = "button" class="btn btn-week" onclick="Gantt('+projectNo+','+date[2]+')" value = "week">';
 		 $(".btn-group").html(button);
 		
- 		var address = ["'/planbe/task/taskForm'","'/planbe/wbs/wbsForm?projectNo="+projectNo+"'"];
-		var button2 = '<button class="btn btn-large btn-primary" onclick= "location.href ='+address[0]+'">수정</button>'
-			button2 += '<button class="btn btn-large btn-warning" onclick= "location.href ='+address[1]+'">「 WBS 」로 보기</button>';
+ 		var address = ["'/planbe/project/projectUpdateForm?projectNo="+projectNo,"'/planbe/wbs/wbsForm?projectNo="+projectNo+"'"];
+		var button2 = '<button class="btn btn-large btn-primary" onclick= "location.href ='+address[0]+'">Modify Of Project</button>'
+			button2 += '<button class="btn btn-large btn-warning" onclick= "location.href ='+address[1]+'"> View as「 WBS 」</button>';
 		$(".btn_group2").html(button2);
 	}
 
@@ -125,13 +129,64 @@ function drawChart(GanttList, date) {
 		  		data: {"projectNo" : projectNo},
 		  		datatype: "json",
 		  		success: function(result) {
-                    var GanttList = result;
+		  			if(date == 'year' || date == 'month'){
+		  				var GanttList = result;
+		  			}else{
+                    var GanttList = result.taskList;
+                    var UserNameList = result.taskUserName;
+		  			}
+                    
                     drawChart(GanttList,date);
                     drawButton(projectNo);
+                    drawTaskList(GanttList,UserNameList);
 				}, // success,
 		  		error: function() {	alert("통신 에------라!");	}
 		})
 	}
+	
+/* task List 띄우기  */
+function drawTaskList(GanttList,UserNameList){
+		$("#taskList").empty();	
+	$(GanttList).each(function(index,item){
+		for(var i=0;i<GanttList.length; i++){
+			if(item.memberNo == UserNameList[i].userNo){
+				var oneTask  ='<tr>';
+					oneTask +='<td>'+UserNameList[i].userName+'</td>';
+					oneTask +='<td>'+item.taskName+'</td>';
+					oneTask +='<td>'+item.taskContent+'</td>';
+					oneTask +='<td class="center">'+item.startDate+'</td>';
+					oneTask +='<td class="center">'+item.dueDate+'</td>';
+					if(item.taskStatus == 'new'||item.taskStatus == 'NEW'){
+						oneTask +='<td class="center"><span class="label label-warning">'+item.taskStatus+'</span></td>'
+					}else if(item.taskStatus == 'done'){
+						oneTask +='<td class="center"><span class="label label-success">'+item.taskStatus+'</span></td>'
+					}else if(item.taskStatus == 'complete'||item.taskStatus == 'COMPLETE'){
+						oneTask +='<td class="center"><span class="label label-important">'+item.taskStatus+'</span></td>'
+					}
+					oneTask +='<td class="center"><a class="btn btn-success" href="/planbe/task/taskForm"><i class="halflings-icon white zoom-in"></i></a>';
+					oneTask +='<a class="btn btn-info" onclick="checkList('+item.taskNo+')"><i class="halflings-icon white edit"></i></a>';
+					oneTask +='<a class="btn btn-danger" onclick="checkList('+item.taskNo+')"><i class="halflings-icon white trash"></i></a>';
+					oneTask +='</td></tr>';
+					
+				$("#taskList").append(oneTask);
+			}else{continue;}// if 문
+					break;
+		}// for 문
+	})// for-each
+	$(".table table-striped table-bordered bootstrap-datatable datatable").trigger("display");
+}
+
+
+function checkList(taskNo){
+	var answer = confirm("Really do you want modify or remove at the task?");
+	if(answer){
+		alert("I will transfer for the task page. <br> You can modify / remove it at there!");
+		location.href="/planbe/task/updateTaskForm?taskNo="+taskNo;
+	}else{
+		return;
+	}
+	
+}
 </script>
 
 <body>
@@ -185,11 +240,9 @@ function drawChart(GanttList, date) {
 <div class="row-fluid sortable">		
 				<div class="box span12">
 					<div class="box-header" data-original-title>
-						<h2><i class="halflings-icon white user"></i><span class="break"></span>Project List</h2>
+						<h2><i class="halflings-icon white align-justify"></i><span class="break"></span>Project List</h2>
 						<div class="box-icon">
-							<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 						</div>
 					</div>
 					<div class="box-content" onTablet="span6" onDesktop="span5">
@@ -234,30 +287,61 @@ function drawChart(GanttList, date) {
 				</div><!--/span-->
 			</div><!--/row-->
 
-<!-- gantt -->            
-			  <div class="row-fluid">
-				
+<!-- gantt -->     
+<div class="row-fluid sortable">	       
 				<div class="box span12">
 						<div class="box-header">
-							<h2><i class="halflings-icon white th"></i><span class="break"></span>Gantt Chart</h2>
+							<h2><i class="halflings-icon align-left white th"></i><span class="break"></span>Gantt Chart</h2>
 						</div>
 						
 						<div class="box-content">
 						<div id="chart_div"></div> <!-- Gantt  -->
 						<div id="oneGroup">
-							<p class="btn-group"><!-- 년월일 버튼  -->
-							</p>							
-						</div>
 							<div class="box-content buttons">
-								<p class="btn_group2"></p>
-							</div> <!-- wbs연동  -->
+							<center>
+							<p class="btn-group"><!-- 년월일 버튼  --></p>							
+							<p class="btn_group2"><!-- wbs연동  --></p>
+							</center>
+							</div> 
+						</div>
 						</div>
 				</div><!--/span-->
-			</div><!--/row-->			
-			<div>
+			</div><!--/row-->					
 			
-	</div><!--/.fluid-container-->
-	
+<!-- 한 프로젝트의 task List  -->
+	<div class="row-fluid sortable">		
+				<div class="box span12">
+					<div class="box-header">
+						<h2><i class="halflings-icon white list"></i><span class="break"></span>Task List</h2>
+						<div class="box-icon">
+							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
+						</div>
+					</div>
+					<div class="box-content" style = "display: none">
+						<table class="table table-bordered table-striped table-condensed">
+						  <thead>
+							  <tr>
+								  <th>Username</th>
+								  <th>Taskname</th>
+								  <th>TaskContent</th>
+								  <th>startDate</th>
+								  <th>dueDate</th>
+								  <th>Status</th>
+								  <th>Actions</th>
+							  </tr>
+						  </thead>   
+						  <tbody id = "taskList" ></tbody>
+					  </table>            
+					</div>
+				</div><!--/span-->
+			
+			</div><!--/row-->			
+			
+			
+				
+
+</div><!--/.fluid-container-->
+
 			<!-- end: Content -->
 		</div><!--/#content.span10-->
 		</div><!--/fluid-row-->
@@ -277,6 +361,7 @@ function drawChart(GanttList, date) {
 	</div>
 	
 	<div class="clearfix"></div>
+</div>
 
 	<!-------------------------------------------------------------------------------------------------------------- 아래  -->	
 	<footer>

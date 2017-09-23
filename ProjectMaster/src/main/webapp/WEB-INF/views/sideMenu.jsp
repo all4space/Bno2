@@ -32,7 +32,7 @@
 						<li><a href="/planbe/users/loginForm"><i class="icon-lock"></i><span class="hidden-tablet"> Login</span></a></li>
 					    </c:if>
 <!-- Logout 메뉴 -->		<c:if test="${userName != null}">
-					    <li><a href="/planbe/users/logout"><i class="halflings-icon off"></i><span class="hidden-tablet"> Logout</span></a></li>
+					    <li><a href="/planbe/users/logout"><i class="halflings-icon off white"></i><span class="hidden-tablet"> Logout</span></a></li>
 					    </c:if>
 					</ul>
 				</div>
