@@ -80,7 +80,38 @@ public class ProjectController {
 	
 		ModelAndView mov = new ModelAndView("/projectList");
 		mov.addObject("userNo",usersService.getUserNo(userId));
-		mov.addObject("projectList", service.getProjectList(usersService.getUserNo(userId)));
+		ArrayList<ProjectVO> project = service.getProjectList(usersService.getUserNo(userId));
+		
+		
+		
+		
+		System.out.println("집에 가라 ㅋㅋㅋㅋ" + project.toString());
+		
+/*		for(int i = 0; i < project.size(); i++)
+		{
+			String startDate = project.get(i).getStartDate();
+			String dueDate = project.get(i).getDueDate();
+			
+			System.out.println(startDate.substring(0, 10));
+			System.out.println(dueDate.substring(0, 10));
+
+			project.get(i).setStartDate(startDate);
+			project.set(i, project.get(i));
+			
+			System.out.println(project.get(i).getStartDate());
+			
+			project.get(i).setDueDate(dueDate);
+			project.set(i, project.get(i));
+			
+			System.out.println(project.get(i).getDueDate());
+			
+		}*/
+		
+		
+		
+		
+		
+		mov.addObject("projectList", project);
 		System.out.println("mov? " + mov.toString());
 		
 		return mov;

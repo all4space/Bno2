@@ -17,11 +17,13 @@ import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.PageNavigator;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
+import scit.master.planbe.dao.ProjectDAOImpl;
 import scit.master.planbe.dao.UsersDAOImpl;
 import scit.master.planbe.service.HistoryServiceImpl;
 import scit.master.planbe.service.MemberServiceImpl;
-import scit.master.planbe.service.ProjectServiceImpl;
+import scit.master.planbe.service.ProjectService;
 import scit.master.planbe.service.TaskService;
+import scit.master.planbe.service.UsersService;
 
 @RequestMapping("/task")
 @Controller
@@ -41,9 +43,6 @@ public class TaskController {
 	
 	@Autowired
 	UsersDAOImpl dao;
-	
-	@Autowired
-	ProjectServiceImpl ps;
 	
 	//task.jsp로 이동
 	@RequestMapping(value = "taskForm", method = RequestMethod.GET)
@@ -83,11 +82,8 @@ public class TaskController {
 	@RequestMapping(value = "newTaskForm", method = RequestMethod.GET)
 	public String newTaskForm(Model model,HttpSession session) {		
 		
-		
-		model.addAttribute("projectVO", ps.getProjectList((int)session.getAttribute("userno")));
 		model.addAttribute("projectList", ms.getProjectNo((String)session.getAttribute("loginId")));
-		System.out.println(ps.getProjectList((int)session.getAttribute("userno")));
-	
+		System.out.println(ms.getProjectNo((String)session.getAttribute("loginId")));
 		return "newTask";
 	}
 	
@@ -173,19 +169,20 @@ public class TaskController {
 				{
 					if(taskVo.getDoneTime() == taskVo.getTotalTime())
 					{
-						taskVo.setTaskStatus("done");
-						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "done";
+						taskVo.setTaskStatus("COMPLETE");
+						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "COMPLETE";
 					}
 					else if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
 					{
 						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+						
 					}
 				}
 				else
 				{
-					if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
+					if(taskVo.getDoneTime() == taskVo.getTotalTime() || !(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
 					{
-						taskVo.setTaskStatus("done");
+						taskVo.setTaskStatus("COMPLETE");
 					}
 				}
 				if(!(taskVo.getStartDate().equals(vo.getStartDate())))
@@ -197,10 +194,21 @@ public class TaskController {
 				if(!(taskVo.getTotalTime() == vo.getTotalTime()))
 				{
 					content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
+					
+					if(!(taskVo.getDoneTime() == taskVo.getTotalTime()))
+					{
+						taskVo.setTaskStatus("PROGRESS");
+					}
 				}
 				if(!(taskVo.getDoneTime() == vo.getDoneTime()))
 				{
 					content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
+					
+					if(!(taskVo.getDoneTime() == taskVo.getTotalTime()))
+					{
+						taskVo.setTaskStatus("PROGRESS");
+					}
+					
 				}
 			
 			
@@ -300,11 +308,10 @@ public class TaskController {
 			history.setLogContent(content); //CONTENT값 VO에 세팅
 			historyService.addHistory(history); //history 디비에 히스토리정보 저장
 		}
-
-	
 }
 
 	
 
 	
 	
+

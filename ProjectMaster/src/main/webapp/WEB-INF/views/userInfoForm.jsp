@@ -52,7 +52,7 @@
 			dataType: "json",
 			success: function(result)
 			{
-				$("#List").empty();
+				$("#test").empty();
 				
 				var addRow1 = '<div class="box span12">';
 				addRow1 += '<div class="box-header">';
@@ -68,9 +68,10 @@
 				addRow1 += '<thead>';
 				addRow1 += '<tr>';
 				addRow1 += '<th>ProjectName</th>';
+				addRow1 += '<th>Content';
+				addRow1 += '<th>StartDate</th>';
 				addRow1 += '<th>DueDate</th>';
-				addRow1 += '<th>Role</th>';
-				addRow1 += '<th>Status</th>';                                          
+				addRow1 += '<th>Status</th>';                                      
 				addRow1 += '</tr>';
 				addRow1 += '</thead>'; 
 				addRow1 += '<tbody id = "ListList">';
@@ -92,7 +93,7 @@
 				addRow1 += '</div>';
 				
 					
-				$("#List").append(addRow1);
+				$("#test").append(addRow1);
 				
 			
 					$(result).each(function(index, item){
@@ -101,10 +102,29 @@
 						  
 						  var addRow2 = '<tr>';
 						  addRow2 += '<td>'+item.projectName+'</td>';
+						  addRow2 += '<td>'+item.projectContent+'</td>';
+						  addRow2 += '<td>'+item.startDate+'</td>';
 						  addRow2 += '<td class="center">'+item.dueDate+'</td>';
-						  addRow2 += '<td class="center">atatata</td>';
-						  addRow2 += '<td class="center">';
-						  addRow2 += '<span class="label label-success">'+item.projectStatus+'</span>';
+						 
+						if(item.projectStatus=="Progress")
+						{
+							addRow2 += '<td class="center">';
+							addRow2 += '<span class="label label-success">'+item.projectStatus+'</span>';
+							addRow2 += '</td>';
+						}
+						else if(item.projectStatus=="Waiting")
+						{
+							addRow2 += '<td class="center">';
+							addRow2 += '<span class="label label-warning">'+item.projectStatus+'</span>';
+							addRow2 += '</td>';
+						}
+						else if(item.projectStatus=="Terminate")
+						{
+							addRow2 += '<td class="center">';
+							addRow2 += '<span class="label label-important">'+item.projectStatus+'</span>';
+							addRow2 += '</td>';
+						}
+						
 						  addRow2 += '</td>';                                        
 						  addRow2 += '</tr>';                                   
 						
@@ -117,85 +137,174 @@
 		})
 	}
 	
-	function history()  // historyList
-	{
-		alert("대기타봐");
-		$.ajax
-		({
-			url: "/planbe/users/historyList",
-			type: "post",
-			data: {"userNo":${userVo.userNo}},
-			dataType: "json",
-			success: function(result)
-			{
+function history()  // historyList
+{
+	alert("대기타봐");
+	$.ajax
+	({
+		url: "/planbe/users/historyList",
+		type: "post",
+		data: {"userNo":${userVo.userNo}},
+		dataType: "json",
+		success: function(result)
+		{
 
-				$("#List").empty();
-				
-				var addRow1 = '<div class="box span12">';
-				addRow1 += '<div class="box-header">';
-				addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>Project List</h2>';
-				addRow1 += '<div class="box-icon">';
-				addRow1 += '<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>';
-				addRow1 += '<a href="#" class="btn-minimize"><i 	class="halflings-icon white chevron-up"></i></a>';
-				addRow1 += '<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>';
-				addRow1 += '</div>';
-				addRow1 += '</div>';
-				addRow1 += '<div class="box-content">';
-				addRow1 += '<table class="table table-bordered table-striped table-condensed">';
-				addRow1 += '<thead>';
-				addRow1 += '<tr>';
-				addRow1 += '<th>ProjectName</th>';
-				addRow1 += '<th>DueDate</th>';
-				addRow1 += '<th>Role</th>';
-				addRow1 += '<th>Status</th>';                                          
-				addRow1 += '</tr>';
-				addRow1 += '</thead>'; 
-				addRow1 += '<tbody id = "ListList">';
-				addRow1 += '</tbody>';
-				addRow1 += '</table>';  
-				addRow1 += '<div class="pagination pagination-centered">';
-				addRow1 += '<ul>';
-				addRow1 += '<li><a href="#">Prev</a></li>';
-				addRow1 += '<li class="active">';
-				addRow1 += '<a href="#">1</a>';
-				addRow1 += '</li>';
-				addRow1 += '<li><a href="#">2</a></li>';
-				addRow1 += '<li><a href="#">3</a></li>';
-				addRow1 += '<li><a href="#">4</a></li>';
-				addRow1 += '<li><a href="#">Next</a></li>';
-				addRow1 += '</ul>';
-				addRow1 += '</div>';     
-				addRow1 += '</div>';
-				addRow1 += '</div>';
-				
-					
-				$("#List").append(addRow1);
-				
+			$("#test").empty();
 			
-					$(result).each(function(index, item){
-						
-						
-						  
-						  var addRow2 = '<tr>';
-						  addRow2 += '<td>'+item.projectNo+'</td>';
-						  addRow2 += '<td class="center">'+item.logTime+'</td>';
-						  addRow2 += '<td class="center">'+item.logContent+'</td>';
-						  addRow2 += '<td class="center">';
-						  addRow2 += '<span class="label label-success">aaaa</span>';
-						  addRow2 += '</td>';                                        
-						  addRow2 += '</tr>';                                   
-						
-						  $("#ListList").append(addRow2);
-				})
-			}, 
-			error : function()
-			{
-				alert("error");
-			}
-		})
-	}
+			var addRow1 = '<div class="box span12">';
+			addRow1 += '<div class="box-header">';
+			addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>Project List</h2>';
+			addRow1 += '<div class="box-icon">';
+			addRow1 += '<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>';
+			addRow1 += '<a href="#" class="btn-minimize"><i 	class="halflings-icon white chevron-up"></i></a>';
+			addRow1 += '<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>';
+			addRow1 += '</div>';
+			addRow1 += '</div>';
+			addRow1 += '<div class="box-content">';
+			addRow1 += '<table class="table table-bordered table-striped table-condensed">';
+			addRow1 += '<thead>';
+			addRow1 += '<tr>';
+			addRow1 += '<th>LogTime</th>';
+			addRow1 += '<th>LogContent</th>';
+			addRow1 += '</tr>';
+			addRow1 += '</thead>'; 
+			addRow1 += '<tbody id = "ListList">';
+			addRow1 += '</tbody>';
+			addRow1 += '</table>';  
+			addRow1 += '<div class="pagination pagination-centered">';
+			addRow1 += '<ul>';
+			addRow1 += '<li><a href="#">Prev</a></li>';
+			addRow1 += '<li class="active">';
+			addRow1 += '<a href="#">1</a>';
+			addRow1 += '</li>';
+			addRow1 += '<li><a href="#">2</a></li>';
+			addRow1 += '<li><a href="#">3</a></li>';
+			addRow1 += '<li><a href="#">4</a></li>';
+			addRow1 += '<li><a href="#">Next</a></li>';
+			addRow1 += '</ul>';
+			addRow1 += '</div>';     
+			addRow1 += '</div>';
+			addRow1 += '</div>';
+			
+				
+			$("#test").append(addRow1);
+			
+		
+				$(result).each(function(index, item){
+					
+					
+					  
+					  var addRow2 = '<tr>';
+					  addRow2 += '<td class="center">'+item.logTime+'</td>';
+					  addRow2 += '<td class="center">'+item.logContent+'</td>';
+					  addRow2 += '</tr>';                                   
+					
+					  $("#ListList").append(addRow2);
+			})
+		}, 
+		error : function()
+		{
+			alert("error");
+		}
+	})
+}
+/* function history()  // historyList
+{
+	alert("대기타봐");
+	$.ajax
+	({
+		url: "/planbe/users/historyList",
+		type: "post",
+		data: {"userNo":${userVo.userNo}},
+		dataType: "json",
+		success: function(result)
+		{
+
+			alert("abcdefg");
+			$("#test").empty();
+			
+			var addRow1 = '<div class="row-fluid">';
+				addRow1 += '<div class="span5 noMarginLeft">';
+				addRow1 += '<div class="dark">';
+				addRow1 += '<h1>History</h1>';
+				addRow1 += '<div class="timeline">';
+				addRow1 += '<div class="timeslot">';
+				addRow1 += '<div class="task">';
+				addRow1 += '<span>';
+				addRow1 += '<span class="type">appointment</span>';
+				addRow1 += '<span class="details">';
+				addRow1 += 'Dennis Ji at Bootstrap Metro Dashboard HQ';
+				addRow1 += '</span>';
+				addRow1 += '<span>';
+				addRow1 += 'remaining time';
+				addRow1 += '<span class="remaining">';
+				addRow1 += '3h 38m 15s';
+				addRow1 += '</span>';
+				addRow1 += '</span>'; 
+				addRow1 += '</span>';
+				addRow1 += '<div class="arrow"></div>';
+				addRow1 += '</div>';							
+				addRow1 += '<div class="icon">';
+				addRow1 += '<i class="icon-map-marker"></i>';
+				addRow1 += '</div>';
+				addRow1 += '<div class="time">';
+				addRow1 += '3:43 PM';
+				addRow1 += '</div>';	
+				addRow1 += '</div>';
+				addRow1 += '<div class="clearfix"></div>';
+				addRow1 += '<div class="timeslot alt">';
+				addRow1 += '<div class="task">';
+				addRow1 += '<span>';
+				addRow1 += '<span class="type">phone call</span>';
+				addRow1 += '<span class="details">';
+				addRow1 += 'Dennis Ji';
+				addRow1 += '</span>';
+				addRow1 += '<span>';
+				addRow1 += 'remaining time';
+				addRow1 += '<span class="remaining">';
+				addRow1 += '3h 38m 15s';
+				addRow1 += '</span>';
+				addRow1 += '</span>';
+				addRow1 += '</span>';
+				addRow1 += '<div class="arrow"></div>';
+				addRow1 += '</div>';
+				addRow1 += '<div class="icon">';
+				addRow1 += '<i class="icon-phone"></i>';
+				addRow1 += '</div>';
+				addRow1 += '<div class="time">';
+				addRow1 += '3:43 PM';
+				addRow1 += '</div>';
+				addRow1 += '</div>';
+				addRow1 += '</div>';
+			$("#test").append(addRow1);
+			
+		
+				$(result).each(function(index, item){
+					
+					
+					  
+					  var addRow2 = '<tr>';
+					  addRow2 += '<td>'+item.projectNo+'</td>';
+					  addRow2 += '<td class="center">'+item.logTime+'</td>';
+					  addRow2 += '<td class="center">'+item.logContent+'</td>';
+					  addRow2 += '<td class="center">';
+					  addRow2 += '<span class="label label-success">aaaa</span>';
+					  addRow2 += '</td>';                                        
+					  addRow2 += '</tr>';                                   
+					
+					  $("#ListList").append(addRow2); 
+			})
+		}, 
+		error : function()
+		{
+			alert("error");
+		}
+	})
 	
+} */
+
 	
+		
 	
 	
 	
@@ -242,6 +351,7 @@
 	<div>
      <%@include file="sideMenu.jsp"%>
     </div>	
+			
 			<noscript>
 				<div class="alert alert-block span10">
 					<h4 class="alert-heading">Warning!</h4>
@@ -260,8 +370,6 @@
 			
 			<!-- start: Content -->
 			<div id="content" class="span10">
-			
-						
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
@@ -320,10 +428,12 @@
 						</p>
 					</div>
 			</div><!--/row-->
-				<div class="row-fluid sortable" id = "List">
-				</div>
+		</div>
+		</div>
+		
 					<!-- //고고뗴 -->
-				
+					<div id = "test">
+			</div>
 	<!-- start: JavaScript-->
 
 		<script src="/planbe/resources/bootstrap/js/jquery-1.9.1.min.js"></script>

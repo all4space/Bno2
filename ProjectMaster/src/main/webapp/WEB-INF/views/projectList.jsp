@@ -87,7 +87,7 @@
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Project</a></li>
-				<a id = "projectadd" href = "projectForm">Project ADD</a>
+				<a id = "projectadd" href = "projectForm"><button class="btn btn-small btn-primary">Project ADD</button></a>
 			</ul>
 			
 			<div class="row-fluid sortable">		
@@ -104,13 +104,11 @@
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>
-							  	  <th>No</th>
-								  <th>Name</th>
+								  <th>ProjectName</th>
 								  <th>Content</th>
 								  <th>StartDate</th>
 								  <th>DueDate</th>
 								  <th>Status</th>
-								  <th>%DONE(doneTime/totalTime)</th>
 								  <th>Update/Delete</th>
 							  </tr>
 						  </thead>   
@@ -119,20 +117,19 @@
 						  
 						  <c:forEach items = "${projectList}" var = "vo">
 							<tr>
-								<td>${vo.projectNo}</td>
-								<td><a href = /planbe/project/projectInfo?projectNo=${vo.projectNo}>${vo.projectName}</a></td>
-								<td class="center">${vo.projectContent}</td>
+								<td><a href = /planbe/project/projectInfo?projectNo=${vo.projectNo}><button class = "btn btn-small btn-primary">${vo.projectName}</button></a></td>
+								<td>${vo.projectContent}</td>
 								<td>${vo.startDate}</td>
 								<td>${vo.dueDate}</td>
 								<c:choose>
 									<c:when test = "${vo.projectStatus eq 'Progress'}">
 										<td class="center">
-											<span class="label label-warning">${vo.projectStatus}</span>
-										</td>
+											<span class="label label-success">${vo.projectStatus}</span>
+										</td>		
 									</c:when>
 									<c:when test = "${vo.projectStatus eq 'Waiting'}">
 										<td class="center">
-											<span class="label label-success">${vo.projectStatus}</span>
+											<span class="label label-warning">${vo.projectStatus}</span>
 										</td>
 									</c:when>
 									<c:when test = "${vo.projectStatus eq 'Terminate'}">
@@ -143,7 +140,6 @@
 																	
 								</c:choose>
 								
-								<td>
 								<td class="center">
 									<a class="btn btn-info" href="/planbe/project/projectUpdateForm?projectNo=${vo.projectNo}">
 										<i class="halflings-icon white edit"></i>  
