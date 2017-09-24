@@ -8,6 +8,7 @@ import javax.jws.soap.SOAPBinding.Use;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import scit.master.planbe.VO.MailVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
@@ -49,6 +50,33 @@ public class MailServiceImpl implements MailService {
 	public UsersVO getUserInfo2(int userNo) {
 		return dao.getUserInfo2(userNo);
 	}
+
+	@Override
+	public boolean sendMail(MailVO vo) {
+		if(dao.sendMail(vo) == 1) return true;
+		return false;
+	}
+
+	@Override
+	public ArrayList<MailVO> getMemberMailList(int userNo) {
+		return dao.getMemberMailList(userNo);
+	}
+
+	@Override
+	public ArrayList<MailVO> getProjectMailList(int userNo) {
+		return dao.getProjectMailList(userNo);
+	}
+
+	@Override
+	public ArrayList<MailVO> getMySendMailList(int userNo) {
+		return dao.getMySendMailList(userNo);
+	}
+
+	
+
+	
+
+
 
 
 }

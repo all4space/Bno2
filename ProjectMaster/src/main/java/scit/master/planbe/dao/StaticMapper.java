@@ -11,7 +11,7 @@ public interface StaticMapper {
 	       
 	public ArrayList<ProjectVO> getProjectList(ArrayList<Integer> pnoList);
 
-	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList);
+	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList);
 	
 	public ArrayList<TaskVO> progress(ProjectVO vo);
 	
@@ -19,5 +19,5 @@ public interface StaticMapper {
 	
 	public ArrayList<UsersVO> taskOfusersName(ArrayList<MemberVO> usersNoList);
 	
-	
+	public ArrayList<TaskVO> efficienty(ProjectVO vo);
 }

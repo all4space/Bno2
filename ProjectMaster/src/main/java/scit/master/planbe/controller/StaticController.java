@@ -34,9 +34,9 @@ public class StaticController {
 	// 업무 전체 효율
 	@RequestMapping(value = "getProjectList", method = RequestMethod.POST)
 	@ResponseBody
-	public HashMap<String,Object> efficiency(@RequestParam(value = "pnoList[]") ArrayList<Integer> pnoList) {
+	public HashMap<String,Object> taskProgressOfDisease(@RequestParam(value = "pnoList[]") ArrayList<Integer> pnoList) {
 		ArrayList<ProjectVO> p_vo = service.getProjectList(pnoList);
-		ArrayList<TaskVO> efficiencyTime = service.efficiency(pnoList);
+		ArrayList<TaskVO> efficiencyTime = service.taskProgressOfDisease(pnoList);
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("projectList", p_vo);
 		map.put("taskList", efficiencyTime);
@@ -48,7 +48,6 @@ public class StaticController {
 	@ResponseBody
 	public HashMap<String,Object> progress(ProjectVO vo) {
 		ArrayList<TaskVO> taskList = service.progress(vo); //TaskList
-		
 		ArrayList<Integer> memberNoList = new ArrayList<>(); // 랭킹 위한 이름
 		for (TaskVO taskVO : taskList) {
 			if(!memberNoList.contains(taskVO.getMemberNo())){
@@ -70,10 +69,29 @@ public class StaticController {
 			}
 		}
 		
+//		업무 효율
+		ArrayList<TaskVO> teffiList = service.efficienty(vo); System.out.println("controller" + vo);
+		ArrayList<TaskVO> newlist = new ArrayList<>();
+		for (TaskVO taskVO : teffiList) {
+			for(UsersVO usersVO : usersNamelist){
+				if(taskVO.getMemberNo() == usersVO.getUserNo()){
+					TaskVO task = new TaskVO(taskVO.getProjectNo(),taskVO.getMemberNo(),
+										   0,taskVO.getTaskName(),usersVO.getUserName(),
+										   null,"complete",taskVO.getStartDate(),
+										   taskVO.getDueDate(),taskVO.getTotalTime(),
+										   taskVO.getDoneTime());
+					newlist.add(task);
+				}
+			}
+		}
+		
+		
 		System.out.println("ts2"+taskandnameList);
+		System.out.println("effi"+ newlist);
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("taskList", taskList);
 		map.put("usersNamelist", taskandnameList);
+		map.put("taskEfficienty",newlist);
 		return map;
 	}
 }

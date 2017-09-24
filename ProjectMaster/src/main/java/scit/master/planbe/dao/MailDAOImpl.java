@@ -7,6 +7,7 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import scit.master.planbe.VO.MailVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.UsersVO;
@@ -54,6 +55,35 @@ public class MailDAOImpl implements MailDAO {
 		return mapper.getUserInfo2(userNo);
 	}
 
+	@Override
+	public int sendMail(MailVO vo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.sendMail(vo);
+	}
+
+	@Override
+	public ArrayList<MailVO> getMemberMailList(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getMemberMailList(userNo);
+	}
+
+	@Override
+	public ArrayList<MailVO> getProjectMailList(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getProjectMailList(userNo);
+	}
+
+	@Override
+	public ArrayList<MailVO> getMySendMailList(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getMySendMailList(userNo);
+	}
+
+
+	
+
+
+	
 }
 
 

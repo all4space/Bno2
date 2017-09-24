@@ -438,7 +438,7 @@ function template_functions(){
 				})
 			}
 		});
-		
+	
 		if($(".taskProgress")) {
 		
 			$(".taskProgress").each(function(){

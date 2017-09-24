@@ -28,9 +28,9 @@ public class StaticDAOImpl implements StaticDAO {
 	}
 
 	@Override
-	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList) {
+	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList) {
 		StaticMapper mapper = Sqlsession.getMapper(StaticMapper.class);
-		return mapper.efficiency(pnoList);
+		return mapper.taskProgressOfDisease(pnoList);
 	}
 
 	@Override
@@ -49,6 +49,14 @@ public class StaticDAOImpl implements StaticDAO {
 	public ArrayList<UsersVO> taskOfusersName(ArrayList<MemberVO> usersNoList) {
 		StaticMapper mapper = Sqlsession.getMapper(StaticMapper.class);
 		return mapper.taskOfusersName(usersNoList);
+	}
+
+	@Override
+	public ArrayList<TaskVO> efficienty(ProjectVO vo) {
+		StaticMapper mapper = Sqlsession.getMapper(StaticMapper.class);
+		System.out.println("들어오미까 dao11" + vo);
+		System.out.println("들어오미까 dao22" + mapper.efficienty(vo));
+		return mapper.efficienty(vo);
 	}
 
 	

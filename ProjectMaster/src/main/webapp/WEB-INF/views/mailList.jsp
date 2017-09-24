@@ -72,18 +72,19 @@
 				</div>
 			</noscript>
 			
-				<!-- start: Content -->
+			
+			<!-- start: Content -->
 			<div id="content" class="span10">
 			
-						
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
 					<a href="index.jsp">Home</a> 
 					<i class="icon-angle-right"></i>
 				</li>
-				<li><a href="#">Messages</a></li>
+				<li><a href="#">Mail</a></li>
 			</ul>
+
 
 			<div class="row-fluid">
 				
@@ -91,75 +92,40 @@
 					<h1>Inbox</h1>
 					
 					<ul class="messagesList">
-						
+					<c:forEach items="${mmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title"><span class="label label-warning">problem</span> Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${umlist[status.index]}</span><span class="title">
+                             <c:choose>
+				  			 <c:when test="${vo.mailTag == 'INFO'}">
+      							<span class="label label-info">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'TASK'}">
+				  				 <span class="label label-success">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:otherwise>
+				  				<span class="label label-warning">${vo.mailTag}</span>
+				  			 </c:otherwise>
+						     </c:choose>		
+						     ${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
+					</c:forEach>	
+					<c:forEach items="${pmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${umlist2[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title"><span class="label label-success">task</span> Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title"><span class="label label-info">information</span> Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji <span class="glyphicons paperclip"><i></i></span></span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						<li>
-							<span class="from"><span class="glyphicons dislikes"><i></i></span> Dennis Ji</span><span class="title">Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit..</span><span class="date">Today, <b>3:47 PM</b></span>
-						</li>
-						
+					</c:forEach>
 					</ul>
+					
+					<h1>Outbox</h1>
+					
+					<ul class="messagesList">
+					<c:forEach items="${smlist}" var="vo" varStatus="status">
+						<li>
+							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+						</li>
+					</c:forEach>	
+					</ul>	
+						
 					<div class="common-modal modal fade" id="common-Modal1" tabindex="-1" role="dialog" aria-hidden="true">
 						<div class="modal-content">
 							<ul class="list-inline item-details">
@@ -169,6 +135,8 @@
 						</div>
 					</div>	
 				</div>
+				
+				
 				<div class="span5 noMarginLeft">
 					
 					<div class="message dark">

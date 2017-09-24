@@ -35,6 +35,38 @@
     SELECT * FROM USERS WHERE USERNO = #{userNo}
 </select>
 
+<!-- SendMail -->
+<insert id="sendMail" parameterType="MailVO" >
+    INSERT INTO MAIL VALUES(
+        mail_seq.nextval,
+        #{userNo},
+        #{mailTitle},
+        #{mailContent},
+        #{receiveProject},
+        #{receiveMember},
+        #{mailTag},
+        sysdate,
+        'no'
+    ) 
+</insert>
+
+<!-- MemberMailList 가져오기  -->
+<select id="getMemberMailList" parameterType="int" resultType="MailVO">
+    SELECT * FROM MAIL WHERE RECEIVEMEMBER = #{userNo} ORDER BY SENDDATE DESC
+</select>
+
+<!-- ProjectMailList 가져오기  -->
+<select id="getProjectMailList" parameterType="int" resultType="MailVO">
+    SELECT * FROM MAIL WHERE RECEIVEPROJECT in (SELECT PROJECTNO as RECEIVEPROJECT FROM MEMBER WHERE USERNO = #{userNo}) 
+    ORDER BY SENDDATE DESC 
+</select>
+
+<!-- MySendMailList 가져오기  -->
+<select id="getMySendMailList" parameterType="int" resultType="MailVO">
+    SELECT * FROM MAIL WHERE USERNO = #{userNo} 
+    ORDER BY SENDDATE DESC 
+</select>
+
 </mapper>
 
 

@@ -11,11 +11,13 @@ public interface StaticDAO {
 	    
 	public ArrayList<ProjectVO> getProjectList(ArrayList<Integer> pnoList);
 	
-	public ArrayList<TaskVO> efficiency(ArrayList<Integer> pnoList);
+	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList);
 	
 	public ArrayList<TaskVO> progress(ProjectVO vo);
 	
 	public ArrayList<MemberVO> usernoGetMember(ArrayList<Integer> userNoList); // member 테이블에서 가져옴  userno를
 	
 	public ArrayList<UsersVO> taskOfusersName(ArrayList<MemberVO> usersNoList); // user 테이블에서 가져옴 name을
+	
+	public ArrayList<TaskVO> efficienty(ProjectVO vo);
 }

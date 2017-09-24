@@ -136,8 +136,10 @@ public class TaskServiceImpl implements TaskService{
 		map.put("target", target);
 		map.put("userno", userno);
 		
+	
+		
 		try {
-		sqlsession.select("getList", map, new ResultHandler<TaskVO>(){
+		sqlsession.select("getTotalList", userno, new ResultHandler<TaskVO>(){
 			
 			@Override
 			public void handleResult(ResultContext<? extends TaskVO> resultContext) {

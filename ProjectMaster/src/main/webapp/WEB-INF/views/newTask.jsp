@@ -113,10 +113,10 @@ function change(number){
             
          <span class="pull-right" id="projectNoList">
          	<label>ProjectNo</label>
-         		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
+         		<select style="width:300px" id="select" name="projectNo" onchange="javascipt:change(this)">
  							<option selected="selected">프로젝트 선택</option>
- 					<c:forEach items="${projectList}"	 var="projectNo" >
- 							<option value="${projectNo}">${projectNo}</option>
+ 					<c:forEach items="${projectVO}"	 var="project" >
+ 							<option value="${project.projectNo}">${project.projectNo} : ${project.projectName}</option>
  					</c:forEach>
 					        		
          		</select>
@@ -248,11 +248,11 @@ function change(number){
             <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
             
       <span class="pull-right" id="projectNoList">
-         	<label>ProjectNo</label>
+         	<label>ProjectNo : ProjectName</label>
          		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
  							<option selected="selected">프로젝트 선택</option>
- 					<c:forEach items="${projectList}"	 var="projectNo" >
- 							<option value="${projectNo}">${projectNo}</option>
+ 					<c:forEach items="${projectVO}"	 var="project" >
+ 							<option value="${project.projectNo}">${project.projectNo} : ${project.projectName}</option>
  					</c:forEach>
 					        		
          		</select>
@@ -268,6 +268,10 @@ function change(number){
                 <div class="panel-body form-horizontal payment-form">
                 	
                   <table>
+
+
+
+                                   		
                                    		
                   	<tr>
                   		<th>ProjectNo</th>
