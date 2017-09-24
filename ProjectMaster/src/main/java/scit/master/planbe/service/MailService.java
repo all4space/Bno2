@@ -32,5 +32,9 @@ public interface MailService {
 	public String getProjectName(int projectNo);
 	// User Name 가져오기 
 	public String getUserName(int userNo);
+	// MailInfo 가져오기 
+	public MailVO getMailInfo(int mailNo);
+	// Check Mail 
+	public boolean checkMail(int mailNo);
 }
 	

@@ -82,6 +82,20 @@ public class MailServiceImpl implements MailService {
 		return dao.getUserName(userNo);
 	}
 
+	@Override
+	public MailVO getMailInfo(int mailNo) {
+		return dao.getMailInfo(mailNo);
+	}
+
+	@Override
+	public boolean checkMail(int mailNo) {
+		if(dao.checkMail(mailNo) == 1) return true;
+		return false;
+	}
+
+
+	
+
 }
 
 		

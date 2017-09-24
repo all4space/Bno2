@@ -465,7 +465,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		$(".T_INFO").empty();
 		
 		$(taskList).each(function(index, item) {
-		     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse'>" + mList[index] + "</button>"
+		     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse' onclick='memberForm()'>" + mList[index] + "</button>"
 		    		          + "</td><td class='center' id='taskName'>" + item.taskName 
 		     		          + "</td><td class='center' id='taskContent'>" + item.taskContent 
 		     		          + "</td><td class='center' id='taskPriority'>" + item.taskPriority 
@@ -489,6 +489,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	}
 	
 	
+	
     	
 /* 개별 TaskInfo 가져오기 */
 	function getTaskInfo(selectTask, selectMember){
@@ -496,7 +497,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		 $("#taskBox").removeAttr("style");
 	     
 	     $(".T_INFO").empty();
-	     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse'>" + selectMember + "</button>"
+	     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse' onclick='memberForm()'>" + selectMember + "</button>"
 	    		          + "</td><td class='center' id='taskName'>" + selectTask.taskName 
 	     		          + "</td><td class='center' id='taskContent'>" + selectTask.taskContent 
 	     		          + "</td><td class='center' id='taskPriority'>" + selectTask.taskPriority 
@@ -584,17 +585,22 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		}
 	}
 		
-	
+		
+/* UserInfo 페이지로 이동	 */	
+	function memberForm(){
+		location.href="/planbe/member/memberForm"; 	
+	}
   
 /* Task 페이지로 이동 */
     function taskForm(){
-	    location.href="/planbe/task/taskForm?projectNo=" + p_no;
+	 alert("테스크 폼 ");
+	    location.href="/planbe/task/taskForm"; // 왜 안가지? 
     }
 
 	
 /* Gantt : gantt 페이지로 이동 */	
 	function showGantt(){
-		location.href="/planbe/gantt/ganttForm?projectNo=" + p_no; // url 확인해서 변경 필요.
+		location.href="/planbe/gantt/ganttForm?projectNo=" + p_no; 
 	}
 
 
@@ -656,13 +662,6 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 			
 	
 <!-- ========================================================================================================================== -->
-
-				
-				
-				
-				
-				
-				
 								
 <!-- start : 프로젝트 리스트  -->			
 	<div class="row-fluid sortable">	

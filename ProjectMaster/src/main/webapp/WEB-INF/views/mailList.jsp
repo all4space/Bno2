@@ -43,7 +43,46 @@
 
 <script>
 	
+	
+/* 메일 내용 확인하기 */	
 
+var mail_no; 
+
+function showContent(mailNo){
+	alert("메일 확인");
+	alert(mailNo);
+	
+	mail_no = mailNo;
+	
+	$.ajax({
+  		url: "/planbe/mail/getMailInfo",
+  		type: "post",
+  		data: {"mailNo" : mailNo},
+  		datatype: "json",
+  		success: function(result) {
+            alert("success에 들어옴");	
+            
+            $(result).each(function(index, item) {
+            	$("#msgHead").empty();		
+            	var data = "<h1>" + result.mailTitle + "</h1>"
+                         + "<div class='date'><i class='halflings-icon time'></i> <b>" + result.sendDate + "</b></div>";
+            	$("#msgHead").append(data);
+            	
+            	$("#msgBody").empty();		
+            	var data2 = "<blockquote>" + result.mailContent + "</blockquote>";
+            	$("#msgBody").append(data2);
+            	
+   		    }); // for each 
+		}// success
+    });
+}
+  			
+            
+/* 메일 확인 체크하기  */
+function checkMail(){
+	alert("체크 메일");
+	location.href="/planbe/mail/checkMail?mailNo=" + mail_no; 
+}
  
 
  
@@ -94,13 +133,16 @@
 					<ul class="messagesList">
 					<c:forEach items="${mmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${umlist[status.index]}</span><span class="title">
+							<span class="from"><span class="glyphicons star"><i></i></span>${umlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
                              <c:choose>
 				  			 <c:when test="${vo.mailTag == 'INFO'}">
       							<span class="label label-info">${vo.mailTag}</span>
 				  			 </c:when>
 				  			 <c:when test="${vo.mailTag == 'TASK'}">
 				  				 <span class="label label-success">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+				  				 <span class="label label-important">${vo.mailTag}</span>
 				  			 </c:when>
 				  			 <c:otherwise>
 				  				<span class="label label-warning">${vo.mailTag}</span>
@@ -118,7 +160,22 @@
 					
 					<c:forEach items="${pmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${umlist2[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${umlist2[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+                             <c:choose>
+				  			 <c:when test="${vo.mailTag == 'INFO'}">
+      							<span class="label label-info">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'TASK'}">
+				  				 <span class="label label-success">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+				  				 <span class="label label-important">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:otherwise>
+				  				<span class="label label-warning">${vo.mailTag}</span>
+				  			 </c:otherwise>
+						     </c:choose>									
+							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>
 					</ul>
@@ -128,7 +185,22 @@
 					<ul class="messagesList">
 					<c:forEach items="${sendM}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${unlist[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${unlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							 <c:choose>
+				  			 <c:when test="${vo.mailTag == 'INFO'}">
+      							<span class="label label-info">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'TASK'}">
+				  				 <span class="label label-success">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+				  				 <span class="label label-important">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:otherwise>
+				  				<span class="label label-warning">${vo.mailTag}</span>
+				  			 </c:otherwise>
+						     </c:choose>		
+							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>	
 					</ul>	
@@ -138,7 +210,22 @@
 					<ul class="messagesList">
 					<c:forEach items="${sendP}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${pnlist[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${pnlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							 <c:choose>
+				  			 <c:when test="${vo.mailTag == 'INFO'}">
+      							<span class="label label-info">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'TASK'}">
+				  				 <span class="label label-success">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+				  				 <span class="label label-important">${vo.mailTag}</span>
+				  			 </c:when>
+				  			 <c:otherwise>
+				  				<span class="label label-warning">${vo.mailTag}</span>
+				  			 </c:otherwise>
+						     </c:choose>		
+							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>	
 					</ul>	
@@ -158,27 +245,21 @@
 					
 					<div class="message dark">
 						
-						<div class="header">
-							<h1>"Neque porro quisquam est qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit.."</h1>
-							<div class="from"><i class="halflings-icon user"></i> <b>Dennis Ji</b> / jiguofei@msn.com</div>
-							<div class="date"><i class="halflings-icon time"></i> Today, <b>3:47 PM</b></div>
+						<div class="header" id="msgHead">
+							<h1>${mmlist[0].mailTitle}</h1>
+						<%-- 	<div class="from"><i class="halflings-icon user"></i> <b>${umlist[0]}</b></div> --%>
+							<div class="date"><i class="halflings-icon time"></i> <b>${mmlist[0].sendDate}</b></div>
 							
 							<div class="menu"></div>
 							
 						</div>
 						
-						<div class="content">
-							<p>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</p>
+						<div class="content" id="msgBody">
 							<blockquote>
-								Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+							${mmlist[0].mailContent}
 							</blockquote>
-							<p>
-							Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
-							</p>	
 						</div>
-						
+						<!-- 
 						<div class="attachments">
 							<ul>
 								<li>
@@ -207,21 +288,21 @@
 								</li>
 							</ul>		
 						</div>
-						
-						<form class="replyForm"method="post" action="">
+						 -->
+					<!-- 	<form class="replyForm"method="post" action=""> -->
 
 							<fieldset>
-								<textarea tabindex="3" class="input-xlarge span12" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea>
+							<!-- 	<textarea tabindex="3" class="input-xlarge span12" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea> -->
 
 								<div class="actions">
 									
-									<button tabindex="3" type="submit" class="btn btn-success">Send message</button>
+									<button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button>
 									
 								</div>
 
 							</fieldset>
-
-						</form>	
+<!-- 
+						</form>	 -->
 						
 					</div>	
 					

@@ -183,4 +183,23 @@ public class MailController {
 		
 		return "mailList";
 	}
+	
+	// getMailInfo 불러오기 
+	@RequestMapping(value = "getMailInfo", method = RequestMethod.POST)
+	@ResponseBody
+	public MailVO getMailInfo(int mailNo) {
+		System.out.println("메일인포");
+	    System.out.println(Integer.toString(mailNo));  
+	    return service.getMailInfo(mailNo);
+	}
+	
+	// checkMail  
+	@RequestMapping(value = "checkMail", method = RequestMethod.GET)
+	public String checkMail(int mailNo) {
+		System.out.println("체크메일");
+	    System.out.println(Integer.toString(mailNo));  
+	    boolean result = service.checkMail(mailNo);
+	    return "forward:/mail/mailList";
+	}
+	
 }

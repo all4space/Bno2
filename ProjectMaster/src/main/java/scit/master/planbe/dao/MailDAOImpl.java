@@ -90,6 +90,20 @@ public class MailDAOImpl implements MailDAO {
 		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
 		return mapper.getUserName(userNo);
 	}
+
+	@Override
+	public MailVO getMailInfo(int mailNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getMailInfo(mailNo);
+	}
+
+	@Override
+	public int checkMail(int mailNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.checkMail(mailNo);
+	}
+
+	
 	
 }
 

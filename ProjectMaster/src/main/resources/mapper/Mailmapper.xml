@@ -77,6 +77,18 @@
     SELECT USERNAME FROM USERS WHERE USERNO = #{userNo} 
 </select>
 
+<!-- MailInfo 가져오기 -->
+<select id="getMailInfo" parameterType="int" resultType="MailVO">
+    SELECT * FROM MAIL WHERE MAILNO = #{mailNo} 
+</select>
+
+<!-- Check Mail -->
+<update id="checkMail" parameterType="int" >
+    UPDATE MAIL
+    SET CHECKMAIL = 'YES'  
+    WHERE MAILNO = #{mailNo}     
+</update>
+
 </mapper>
 
 
