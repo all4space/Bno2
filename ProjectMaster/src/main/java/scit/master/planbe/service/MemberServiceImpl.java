@@ -52,4 +52,16 @@ public class MemberServiceImpl implements MemberService{
 	public ArrayList<MemberVO> getMemberList(int projectNo) {
 		return dao.getMemberList(projectNo);
 	}
+	@Override
+	public boolean favoriteAdd(MemberVO memberVo) {
+		return dao.favoriteAdd(memberVo);
+	}
+	@Override
+	public boolean favoriteDelete(MemberVO memberVo) {
+		return dao.favoriteDelete(memberVo);
+	}
+	@Override
+	public ArrayList<MemberVO> getFavorite(int userNo) {
+		return dao.getFavorite(userNo);
+	}
 }

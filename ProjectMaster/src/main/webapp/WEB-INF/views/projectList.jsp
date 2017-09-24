@@ -35,6 +35,56 @@
 }
 
 </style>	
+<script src="/planbe/resources/bootstrap/js/jquery-1.9.1.min.js"></script>
+<script>
+
+	function favorite(chkbox)
+	{
+
+		if (chkbox.checked == true)
+		{
+			alert(chkbox.value);
+			
+				$.ajax
+				({
+					url: "/planbe/member/favoriteAdd",
+					type: "post",
+					data: {"projectNo":chkbox.value},
+					dataType: "json",
+					success: function(result)
+					{
+						alert("즐겨찾기 추가");
+					},
+					error : function()
+					{
+						alert("error");
+					}
+				})
+			
+		}
+		else
+		{
+
+			
+			$.ajax
+			({
+				url: "/planbe/member/favoriteDelete",
+				type: "post",
+				data: {"projectNo":chkbox.value},
+				dataType: "json",
+				success: function(result)
+				{
+					alert("즐겨찾기 해제");
+				},
+				error : function()
+				{
+					alert("error");
+				}
+			})
+		}
+	}
+
+</script>
 
 	<!-- The HTML5 shim, for IE6-8 support of HTML5 elements -->
 	<!--[if lt IE 9]>
@@ -104,6 +154,7 @@
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>
+							  	<th>Favorite</th>
 								  <th>ProjectName</th>
 								  <th>Content</th>
 								  <th>StartDate</th>
@@ -115,24 +166,31 @@
 						  
 						  <tbody>
 						  
-						  <c:forEach items = "${projectList}" var = "vo">
-							<tr>
+						  <c:forEach items = "${projectList}" var = "vo" varStatus="status">
+							<tr><c:choose>
+								<c:when test = "${member[status.index].favorite eq 'YES'}">
+									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)" checked="checked"></td>
+								</c:when>
+								<c:when test = "${member[status.index].favorite eq 'NO'}">
+									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)"></td>
+								</c:when>
+							</c:choose>
 								<td><a href = /planbe/project/projectInfo?projectNo=${vo.projectNo}><button class = "btn btn-small btn-primary">${vo.projectName}</button></a></td>
 								<td>${vo.projectContent}</td>
 								<td>${vo.startDate}</td>
 								<td>${vo.dueDate}</td>
 								<c:choose>
-									<c:when test = "${vo.projectStatus eq 'Progress'}">
+									<c:when test = "${vo.projectStatus eq 'PROGRESS'}">
 										<td class="center">
 											<span class="label label-success">${vo.projectStatus}</span>
 										</td>		
 									</c:when>
-									<c:when test = "${vo.projectStatus eq 'Waiting'}">
+									<c:when test = "${vo.projectStatus eq 'NEW'}">
 										<td class="center">
 											<span class="label label-warning">${vo.projectStatus}</span>
 										</td>
 									</c:when>
-									<c:when test = "${vo.projectStatus eq 'Terminate'}">
+									<c:when test = "${vo.projectStatus eq 'COMPLETE'}">
 										<td class="center">
 											<span class="label label-important">${vo.projectStatus}</span>
 										</td>

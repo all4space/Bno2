@@ -30,7 +30,10 @@ public class ProjectController {
 	
 	
 	private int CODENO = 1;
+	
 	HistoryVO history = new HistoryVO();
+	
+	MemberVO memberVo = new MemberVO();
 	
 	@Autowired
 	ProjectServiceImpl service;
@@ -82,6 +85,7 @@ public class ProjectController {
 		mov.addObject("userNo",usersService.getUserNo(userId));
 		ArrayList<ProjectVO> project = service.getProjectList(usersService.getUserNo(userId));
 		
+		ArrayList<MemberVO> memberVo = memberService.getFavorite(usersService.getUserNo(userId));
 		
 		
 		
@@ -107,11 +111,8 @@ public class ProjectController {
 			
 		}*/
 		
-		
-		
-		
-		
 		mov.addObject("projectList", project);
+		mov.addObject("member", memberVo);
 		System.out.println("mov? " + mov.toString());
 		
 		return mov;

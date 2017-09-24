@@ -237,7 +237,6 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 					<div class="box-content">
 						<form action = "/planbe/project/projectAdd" method = "post" class="form-horizontal">
 						
-						<button class="btn btn-primary noty" data-noty-options='{"text":"${loginId}","layout":"top","type":"information"}'></button>
 						
 						  <fieldset>
 							<div class="control-group">
@@ -316,7 +315,6 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 								</div>
 							  </div>
 <!--멤버  -->						  
-						  <div class="btn btn-primary noty" data-noty-options='{"text":"This is a success information","layout":"top","type":"information"}'></div>
 							<div class="form-actions">
 							  <button id = submit type="submit" class="btn btn-primary">CONFIRM</button>
 							  <button type="reset" class="btn">Cancel</button>

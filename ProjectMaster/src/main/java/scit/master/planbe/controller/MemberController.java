@@ -1,6 +1,7 @@
 package scit.master.planbe.controller;
 
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
@@ -10,8 +11,12 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 
+import scit.master.planbe.VO.HistoryVO;
+import scit.master.planbe.VO.MemberVO;
+import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.service.MemberServiceImpl;
 import scit.master.planbe.service.ProjectServiceImpl;
 import scit.master.planbe.service.UsersServiceImpl;
@@ -62,5 +67,41 @@ public class MemberController {
 		String userId = (String) session.getAttribute("loginId");
 		model.addAttribute("projectNo_list", service.getProjectNo(userId)); 
 		return "staticForm";
+	}
+	
+	@RequestMapping(value = "favoriteAdd", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean favoriteAdd(int projectNo, HttpSession session)
+	{
+		MemberVO memberVo = new MemberVO();
+		
+		String userId = (String) session.getAttribute("loginId");
+		memberVo.setUserNo(usersService.getUserNo(userId));
+		memberVo.setProjectNo(projectNo);
+		
+		return service.favoriteAdd(memberVo);
+	}
+	
+	@RequestMapping(value = "favoriteDelete", method = RequestMethod.POST)
+	@ResponseBody
+	public boolean favoriteDelete(int projectNo, HttpSession session)
+	{
+		MemberVO memberVo = new MemberVO();
+		
+		String userId = (String) session.getAttribute("loginId");
+		memberVo.setUserNo(usersService.getUserNo(userId));
+		memberVo.setProjectNo(projectNo);
+		
+		return service.favoriteDelete(memberVo);
+	}
+	
+	@RequestMapping(value = "favoriteCheck", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<MemberVO> favoriteCheck(ArrayList<ProjectVO> projectList, HttpSession session)
+	{
+		ArrayList<MemberVO> memberVo = new ArrayList<MemberVO>();
+		System.out.println("파보리테 : " + projectList.toString());
+		
+		return memberVo;
 	}
 }
