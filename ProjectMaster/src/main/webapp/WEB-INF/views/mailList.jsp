@@ -89,7 +89,7 @@
 			<div class="row-fluid">
 				
 				<div class="span7">
-					<h1>Inbox</h1>
+					<h1>Private Inbox</h1>
 					
 					<ul class="messagesList">
 					<c:forEach items="${mmlist}" var="vo" varStatus="status">
@@ -108,7 +108,14 @@
 						     </c:choose>		
 						     ${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
-					</c:forEach>	
+                    </c:forEach>
+					</ul>
+					
+					
+					<h1>Project Inbox</h1>
+					
+					<ul class="messagesList">
+					
 					<c:forEach items="${pmlist}" var="vo" varStatus="status">
 						<li>
 							<span class="from"><span class="glyphicons star"><i></i></span>${umlist2[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
@@ -116,12 +123,22 @@
 					</c:forEach>
 					</ul>
 					
-					<h1>Outbox</h1>
+					<h1>Private Outbox</h1>
 					
 					<ul class="messagesList">
-					<c:forEach items="${smlist}" var="vo" varStatus="status">
+					<c:forEach items="${sendM}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span> Dennis Ji</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+							<span class="from"><span class="glyphicons star"><i></i></span>${unlist[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
+						</li>
+					</c:forEach>	
+					</ul>	
+					
+					<h1>Project Outbox</h1>
+					
+					<ul class="messagesList">
+					<c:forEach items="${sendP}" var="vo" varStatus="status">
+						<li>
+							<span class="from"><span class="glyphicons star"><i></i></span>${pnlist[status.index]}</span><span class="title"><span class="label label-warning">${vo.mailTag}</span>${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>	
 					</ul>	

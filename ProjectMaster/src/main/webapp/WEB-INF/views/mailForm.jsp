@@ -246,6 +246,10 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 
 /*=============================================================================================================  */
  
+ function ganttTest(){
+	location.href="/planbe/wbs/fromGantt?projectNo=122";
+ }
+ 
 </script>
 		
 </head>
@@ -374,6 +378,7 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 							  <button type="submit" class="btn btn-primary" onclick="sendMail()">Send Mail</button>
 							  <button type="reset" class="btn">Cancel</button>
 							  <button type="reset" class="btn" onclick="mailList()">MailList Test btn</button>
+							   <button type="reset" class="btn" onclick="ganttTest()">Gantt Test btn</button>
 							</div>
 						  </fieldset>
 						</form>   

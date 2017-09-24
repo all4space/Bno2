@@ -48,21 +48,23 @@
 <script>
 
 /* Gantt와 연동 */
-/* 
-    var projectNo = ${fromG} 
-		$(function(projectNo){
-		    if(projectNo != null) getWbs(projectNo);
-		});
+ 
+ var fromGantt = "<c:out value='${fromGantt}'/>"; 
 
- */	
-
+ $(function(){
+   if(fromGantt != null){
+	   getWbs(fromGantt);
+   } 
+ });
+	 
+ 
+ 
 
 /* start : WBS 트리 생성 */
 
 google.charts.load('current', {packages:['wordtree']});
 google.charts.setOnLoadCallback(drawSimpleNodeChart);
 
-<!-- This adds the proper namespace on the generated SVG -->
 function AddNamespace(){
   var svg = jQuery('#wordtree_explicit svg');
   svg.attr("xmlns", "http://www.w3.org/2000/svg");
@@ -204,15 +206,11 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
 
 /*=========================================================================================================================*/
 
+/* 
 <!-- Convert the SVG to PDF and download it -->
 var click="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg'})";
 $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
-<!-- Convert the SVG to PNG@120dpi and open it -->
-click="return xepOnline.Formatter.Format('JSFiddle', {render:'newwin', mimeType:'image/png', resolution:'120', srctype:'svg'})";
-$('#bbbttt').append('<button onclick="'+ click +'">PNG @120dpi</button>');
-<!-- Convert the SVG to JPG@300dpi and open it -->
-click="return xepOnline.Formatter.Format('JSFiddle', {render:'newwin', mimeType:'image/jpg', resolution:'300', srctype:'svg'})";
-$('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
+ */
 
 
 
@@ -244,6 +242,8 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 		  		datatype: "json",
 		  		success: function(result) {
                     alert("success에 들어옴");	
+                    
+                    $("#wbsBox").removeAttr("style");
                     
                     var p_name = result.projectName;
                     var t_list = result.taskList; 	
@@ -453,6 +453,9 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 	function getAllTaskInfo(taskList, memberList){
         
 	    alert("getALLLLL");
+	    
+	    $("#taskBox").removeAttr("style");
+	    
 		var mList = [];
 		
 		$(memberList).each(function(index, item) {
@@ -489,7 +492,8 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
     	
 /* 개별 TaskInfo 가져오기 */
 	function getTaskInfo(selectTask, selectMember){
-	   		
+	   	
+		 $("#taskBox").removeAttr("style");
 	     
 	     $(".T_INFO").empty();
 	     $(".T_INFO").append("<tr><td class='center' id='member'><button class='btn btn-small btn-inverse'>" + selectMember + "</button>"
@@ -686,15 +690,15 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 							  <c:forEach items="${p_list}" var="vo" varStatus="status">
 								<tr>
 									<td class="center">
-								    <button class="btn btn-mini btn-primary" onclick="getWbs(${vo.projectNo})">${vo.projectName}</button> 
+								    <button class="btn btn-success" onclick="getWbs(${vo.projectNo})">${vo.projectName}</button> 
 									</td>                                       
 									<td class="center">${vo.projectContent}</td>
 								    <td class="center">
 									     <c:choose>
-							  			 <c:when test="${vo.projectStatus == 'Waiting'}">
+							  			 <c:when test="${vo.projectStatus == 'NEW'}">
 											 <span class="label label-warning">${vo.projectStatus}</span>
 							  			 </c:when>
-							  			 <c:when test="${vo.projectStatus == 'Progress'}">
+							  			 <c:when test="${vo.projectStatus == 'PROGRESS'}">
 							  				 <span class="label label-success">${vo.projectStatus}</span>
 							  			 </c:when>
 							  			 <c:otherwise>
@@ -715,8 +719,6 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 <!-- end : 프로젝트 리스트  -->		    			
 				
 							
-							
-							
 								
 <!-- start: WBS 트리 박스 -->	
              <div class="row-fluid sortable">			   
@@ -731,7 +733,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 								  </div>
 							</div> <!-- header -->
 							
-	                        <div class="box-content" />
+	                        <div class="box-content"  id="wbsBox" style = "display: none" />
 
 <!-- start : 키워드 드롭다운 -->
 							<div class="control-group" style="float: right;"/>
@@ -747,8 +749,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 
 
 <!-- WBS 삭제 / Gantt 링크 버튼   -->                                  
-               <div id="bbbttt" class="buttons" style="height: 20px"></div>
-               <hr/>
+             
                <div id="JSFiddle">
                           <div id="wordtree_explicit" style="width: 850px; height: 600px;"></div>	
                </div>
@@ -772,7 +773,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">JPG @300dpi</button>');
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
 						</div>
 					</div>
-					<div class="box-content">
+					<div class="box-content" id="taskBox" style = "display: none" >
 					<table id="ttt" class="table table-bordered table-striped table-condensed">
 						  <thead>
 							  <tr>

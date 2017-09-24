@@ -30,9 +30,10 @@ public class WbsController {
 	// Gantt와 연동 : Gantt 페이지에서 클릭한 프로젝트의 WBS 트리를 보여줌  
 	@RequestMapping(value = "fromGantt", method = RequestMethod.GET)
 	public String fromGantt(Model model, int projectNo) {
-		model.addAttribute("fromG", projectNo);
-		return "wbsForm";
+		model.addAttribute("fromGantt", projectNo);
+		return "forward:/wbs/wbsForm";
 	}
+	
 	
 	// WBS 페이지 불러오기 
 	@RequestMapping(value = "wbsForm", method = RequestMethod.GET)
@@ -44,13 +45,13 @@ public class WbsController {
 		// ProjectList 가져오기 
 		ArrayList<ProjectVO> p_list = new ArrayList<>();
 		for(MemberVO mvo : m_list){
-			int projectNo = mvo.getProjectNo();
-			p_list.add(service.getProjectInfo(projectNo));
+			int projectNo2 = mvo.getProjectNo();
+			p_list.add(service.getProjectInfo(projectNo2));
 		}
 		
 	    model.addAttribute("m_list", m_list);
 		model.addAttribute("p_list", p_list);
-		
+			
 		return "wbsForm";
 	}
 	

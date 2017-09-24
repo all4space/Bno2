@@ -1,8 +1,5 @@
 package scit.master.planbe.controller;
 
-
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.forwardedUrl;
-
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -30,51 +27,7 @@ public class MailController {
 	
 	// MailForm 불러오기 
 	@RequestMapping(value = "mailForm", method = RequestMethod.GET)
-	public String mailForm(HttpSession session, Model model) {
-	    /*
-		String userId = (String)session.getAttribute("loginId");
-
-	    UsersVO uvo = service.getUserInfo(userId);
-	        CTO 권한의 경우 
-           if("cto".equals(uvo.getAuthority())){
-	        	// CTO 그룹의 전체 프로젝트 가져오기
-	        	ArrayList<ProjectVO> all_p_list = service.getAllProjectList(uvo.getGroupName());
-
-	        	// CTO 그룹의 전체 멤버(user) 가져오기 
-	        	ArrayList<UsersVO> all_u_list = service.getAllMemberList(uvo.getGroupName());
-	        	//System.out.println("p리스트" + all_p_list.toString() + "멤바" + all_u_list);
-	        	
-	        	model.addAttribute("all_p_list", all_p_list); // 그룹의 전체 프로젝트 리스트 
-	        	model.addAttribute("all_u_list", all_u_list); // 그룹의 전체 멤버(user) 리스트
-	        	
-	        } else { 
-	        Manager or Member 권한의 경우 
-	        	// Manager or Member가 속한 프로젝트 가져오기 
-	        	ArrayList<ProjectVO> my_p_list = service.getMyProjectList(uvo.getUserNo());
-	        	
-	        	// Manager or Member가 속한 프로젝트에 속한 멤버 가져오기
-	        	ArrayList<Integer> my_m_userNo = new ArrayList<>();
-	        	for(ProjectVO pvo : my_p_list){
-	        		ArrayList<MemberVO> m_info_list = service.getMyMemberInfo(pvo.getProjectNo());
-	        		for(MemberVO mvo : m_info_list){
-	        			my_m_userNo.add(mvo.getUserNo());
-	        		}
-	        	}
-                
-	        	ArrayList<UsersVO> my_u_list = new ArrayList<>(); 
-	        	for(int userNo : my_m_userNo){
-	        		UsersVO muvo = service.getUserInfo2(userNo);
-	        		if(!my_u_list.contains(muvo)){
-	        			my_u_list.add(muvo);
-	        		}
-	        	}
-	        	
-	        	System.out.println("my프젝리스트" + my_p_list + "my멤바리스트" + my_u_list);
-	        	
-	            model.addAttribute("my_p_list", my_p_list); // 소속된 프로젝트 리스트 
-	            model.addAttribute("my_u_list", my_u_list); // 소속된 프로젝트의 멤버 리스트 
-	        }//else
-           */
+	public String mailForm() {
 	        return "mailForm";
 	}
 	
@@ -123,9 +76,7 @@ public class MailController {
 	    		ArrayList<UsersVO> my_u_list = new ArrayList<>(); 
 	    		for(int userNo : my_m_userNo){
 	    			UsersVO muvo = service.getUserInfo2(userNo);
-	    			//if(!my_u_list.contains(muvo)){
 	    				my_u_list.add(muvo);
-	    			// }
 	    		}//for
 	    		map.put("my_u_list", my_u_list);
 	    	}//else
@@ -138,24 +89,19 @@ public class MailController {
 	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
 	public String sendMail(MailVO vo, HttpSession session, String p_no_list, String u_no_list) {
 		System.out.println("Send Mail접근");
-		System.out.println("넘겨온 값은 무엇이냐 : " + vo.toString());
 		
 		String userId = (String)session.getAttribute("loginId");
 		UsersVO uvo = service.getUserInfo(userId);
 		vo.setUserNo(uvo.getUserNo()); 
 		
 		if(p_no_list != ""){
-			System.out.println("프넘" + p_no_list);
 			String[] pArray = p_no_list.split(",");
 			for(int i=0; i < pArray.length; i++){
                 vo.setReceiveProject(Integer.parseInt(pArray[i]));				
-                System.out.println(vo.getReceiveProject());
-                System.out.println(vo.toString());
                 boolean result = service.sendMail(vo);
                 System.out.println(result);
 			}
 		}
-		
 
 		if(u_no_list != ""){
 			System.out.println("멤넘" + u_no_list);
@@ -168,7 +114,6 @@ public class MailController {
                 System.out.println(result);
 			}
 		}
-		
 		return "mailForm";
 	}
         
@@ -176,6 +121,7 @@ public class MailController {
 	// MailList 불러오기 
 	@RequestMapping(value = "mailList", method = RequestMethod.GET)
 	public String mailList(HttpSession session, Model model) {
+		
 		String userId = (String)session.getAttribute("loginId");
 		UsersVO uvo = service.getUserInfo(userId);
 		int userNo = uvo.getUserNo();
@@ -188,11 +134,10 @@ public class MailController {
 			UsersVO uvo2 = service.getUserInfo2(vo.getUserNo());
             umlist.add(uvo2.getUserName());
 		}
-		System.out.println(umlist);
 		
 		/* 프로젝트에게 온 메일리스트 불러오기 */
 		ArrayList<MailVO> pmlist = service.getProjectMailList(userNo);
-		System.out.println(pmlist);
+
 		/* 메일 송신자의 userName 가져오기 */
 		ArrayList<String> umlist2 = new ArrayList<>();
 		for(MailVO vo : pmlist){
@@ -202,13 +147,39 @@ public class MailController {
 		
 		/* 내가 보낸 메일 리스트 가져오기 */
 		ArrayList<MailVO> smlist = service.getMySendMailList(userNo);
-	    System.out.println(smlist);
-	    
+		ArrayList<MailVO> sendM = new ArrayList<>();
+		ArrayList<MailVO> sendP = new ArrayList<>();
+		
+		for(MailVO vo : smlist){
+		    if(vo.getReceiveProject() == 0){
+			   sendM.add(vo);    
+		    } else { 
+               sendP.add(vo);		    	
+		    }
+		}
+		
+		/* 메일 수신자의 projectNAme 가져오기 */
+		ArrayList<String> pnlist = new ArrayList<>();
+		for(MailVO vo : sendP){
+			int projectNo = vo.getReceiveProject();
+			pnlist.add(service.getProjectName(projectNo));
+		}
+
+		/* 메일 수신자의 userName 가져오기 */
+	    ArrayList<String> unlist = new ArrayList<>(); 
+	    for(MailVO vo : sendM){
+	    	int userNo2 = vo.getReceiveMember();
+	    	unlist.add(service.getUserName(userNo2));
+	    }
+		
 		model.addAttribute("mmlist", mmlist);
 		model.addAttribute("umlist", umlist);
 		model.addAttribute("pmlist", pmlist);
 		model.addAttribute("umlist2", umlist2);
-		model.addAttribute("smlist", smlist);
+		model.addAttribute("sendP", sendP); 
+		model.addAttribute("sendM", sendM);
+		model.addAttribute("pnlist", pnlist);
+		model.addAttribute("unlist", unlist);
 		
 		return "mailList";
 	}

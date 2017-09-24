@@ -29,4 +29,8 @@ public interface MailDAO {
 	public ArrayList<MailVO> getProjectMailList(int userNo); 
 	// MySendMailList
 	public ArrayList<MailVO> getMySendMailList(int userNo);
+	// ProjectName 가져오기 
+	public String getProjectName(int projectNo);
+	// UserName 가져오기 
+	public String getUserName(int userNo);
 }

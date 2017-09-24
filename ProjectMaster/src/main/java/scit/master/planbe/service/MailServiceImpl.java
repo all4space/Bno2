@@ -72,12 +72,15 @@ public class MailServiceImpl implements MailService {
 		return dao.getMySendMailList(userNo);
 	}
 
-	
+	@Override
+	public String getProjectName(int projectNo) {
+        return dao.getProjectName(projectNo);
+ 	}
 
-	
-
-
-
+	@Override
+	public String getUserName(int userNo) {
+		return dao.getUserName(userNo);
+	}
 
 }
 

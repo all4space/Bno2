@@ -79,10 +79,17 @@ public class MailDAOImpl implements MailDAO {
 		return mapper.getMySendMailList(userNo);
 	}
 
+	@Override
+	public String getProjectName(int projectNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getProjectName(projectNo);
+	}
 
-	
-
-
+	@Override
+	public String getUserName(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.getUserName(userNo);
+	}
 	
 }
 

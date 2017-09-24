@@ -67,6 +67,16 @@
     ORDER BY SENDDATE DESC 
 </select>
 
+<!-- ProjectName 가져오기 -->
+<select id="getProjectName" parameterType="int" resultType="String">
+    SELECT PROJECTNAME FROM PROJECT WHERE PROJECTNO = #{projectNo} 
+</select>
+
+<!-- UserName 가져오기 -->
+<select id="getUserName" parameterType="int" resultType="String">
+    SELECT USERNAME FROM USERS WHERE USERNO = #{userNo} 
+</select>
+
 </mapper>
 
 

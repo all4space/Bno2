@@ -28,6 +28,10 @@ public interface MailMapper {
 	public ArrayList<MailVO> getProjectMailList(int userNo);
 	// MySendMailList
 	public ArrayList<MailVO> getMySendMailList(int userNo);
+	// Project Name 가져오기 
+	public String getProjectName(int projectNo);
+	// User Name 가져오기 
+	public String getUserName(int userNo);
 	       
 }
 
