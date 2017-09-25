@@ -110,13 +110,13 @@
 						if(item.projectStatus=="NEW")
 						{
 							addRow2 += '<td class="center">';
-							addRow2 += '<span class="label label-success">'+item.projectStatus+'</span>';
+							addRow2 += '<span class="label label-warning">'+item.projectStatus+'</span>';
 							addRow2 += '</td>';
 						}
 						else if(item.projectStatus=="PROGRESS")
 						{
 							addRow2 += '<td class="center">';
-							addRow2 += '<span class="label label-warning">'+item.projectStatus+'</span>';
+							addRow2 += '<span class="label label-success">'+item.projectStatus+'</span>';
 							addRow2 += '</td>';
 						}
 						else if(item.projectStatus=="COMPLETE")
@@ -350,7 +350,7 @@ function history()  // historyList
 <!-- Side Menu -->
 	<div>
      <%@include file="sideMenu.jsp"%>
-    </div>	
+    </div>		
 			
 			<noscript>
 				<div class="alert alert-block span10">
@@ -358,15 +358,6 @@ function history()  // historyList
 					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
 				</div>
 			</noscript>
-    
-	<!-- start: Header -->
-	
-		<div class="container-fluid-full">
-		<div class="row-fluid">
-				
-			<!-- start: Main Menu -->
-			<!-- end: Main Menu -->
-			
 			
 			<!-- start: Content -->
 			<div id="content" class="span10">
@@ -404,11 +395,11 @@ function history()  // historyList
 				<p>Picture</p>
 				
 				<p>${userVo.userName}</p>
-						<a href = "/planbe/task/taskList" class="quick-button-small span1">
+						<a href = "/planbe/task/taskForm" class="quick-button-small span1">
 							<i class="icon-beaker"></i>
 							<p>Task</p>
 						</a>
-						<a href = "/planbe/calendar/calendarLIst" class="quick-button-small span1">
+						<a href = "/planbe/plan/planForm" class="quick-button-small span1">
 							<i class="icon-calendar"></i>
 							<p>Calendar</p>
 							<span class="notification red">8</span>

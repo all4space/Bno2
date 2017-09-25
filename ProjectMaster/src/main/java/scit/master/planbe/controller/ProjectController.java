@@ -55,7 +55,7 @@ public class ProjectController {
 		String userName =(String)session.getAttribute("loginId");
 		history.setCdSelect(code);//create update delete 직접줌
 		history.setProjectNo(projectList.getProjectNo()); //프젝넘버 히스토리 VO에 저장
-		history.setUserNo(usersService.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
+		history.setUserNo(usersService.getUserNo(userName)); // 유저넘버 히스토리 VO에 저장
 		
 		projectHistory(history, userName);
 		
@@ -140,7 +140,7 @@ public class ProjectController {
 	}*/
 	
 	@RequestMapping(value = "projectAdd", method = RequestMethod.POST)
-	public ModelAndView projectAdd(HttpSession session, UsersVO userVo, 
+	public String projectAdd(Model model, HttpSession session, UsersVO userVo, 
 			ProjectVO projectList, MemberVO memberVo, String memberList, String managerId) throws ParseException {
 		
 		String code = "a";
@@ -220,11 +220,11 @@ public class ProjectController {
 		
 		projectHistory(history, userName);
 		
-        ModelAndView mov = new ModelAndView("/newTask");
-		mov.addObject("MemberList", memberService.getMemberList(memberVo.getProjectNo()));
-		System.out.println("mov? " + mov.toString());
+		model.addAttribute("memberVo", memberService.getMemberList(memberVo.getProjectNo()));
+
+		System.out.println(memberService.getMemberList(memberVo.getProjectNo()));
 		
-		return mov;
+		return "forward:/task/newTaskForm";
 	}
 	
 	@RequestMapping(value = "projectUpdateForm", method = RequestMethod.GET)

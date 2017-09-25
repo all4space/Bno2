@@ -154,27 +154,20 @@
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>
 							  <tr>
-							  	<th>Favorite</th>
 								  <th>ProjectName</th>
 								  <th>Content</th>
 								  <th>StartDate</th>
 								  <th>DueDate</th>
 								  <th>Status</th>
 								  <th>Update/Delete</th>
+							  	  <th>Favorite</th>
 							  </tr>
 						  </thead>   
 						  
 						  <tbody>
 						  
 						  <c:forEach items = "${projectList}" var = "vo" varStatus="status">
-							<tr><c:choose>
-								<c:when test = "${member[status.index].favorite eq 'YES'}">
-									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)" checked="checked"></td>
-								</c:when>
-								<c:when test = "${member[status.index].favorite eq 'NO'}">
-									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)"></td>
-								</c:when>
-							</c:choose>
+							<tr>
 								<td><a href = /planbe/project/projectInfo?projectNo=${vo.projectNo}><button class = "btn btn-small btn-primary">${vo.projectName}</button></a></td>
 								<td>${vo.projectContent}</td>
 								<td>${vo.startDate}</td>
@@ -206,6 +199,14 @@
 										<i class="halflings-icon white trash" ></i> 
 									</a>
 								</td>
+							<c:choose>
+								<c:when test = "${member[status.index].favorite eq 'YES'}">
+									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)" checked="checked"></td>
+								</c:when>
+								<c:when test = "${member[status.index].favorite eq 'NO'}">
+									<td><input type = "checkbox" name="aaaa" value="${vo.projectNo}" onclick = "favorite(this)"></td>
+								</c:when>
+							</c:choose>
 								</tr>
 							</c:forEach>
 						</tbody>

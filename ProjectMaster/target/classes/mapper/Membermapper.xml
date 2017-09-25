@@ -15,7 +15,8 @@
 		#{projectNo},
 		#{userNo},
 		#{canWork},
-		#{mustWork}
+		#{mustWork},
+		'NO'
 	)
 </insert>
 
@@ -28,7 +29,8 @@
 		#{projectNo},
 		#{userNo},
 		#{canWork},
-		#{mustWork}
+		#{mustWork},
+		'NO'
 	)
 </insert>
 
@@ -47,5 +49,18 @@
 	select * from member where projectno=#{projectNo}
 </select>
 
+
+<!-- 즐겨찾기 추가 -->
+<update id = "favoriteAdd" parameterType = "MemberVO">
+	update member set favorite = 'YES' where projectno = #{projectNo} and userNo = #{userNo}
+</update>
+
+<!-- 즐겨찾기 삭제 -->
+<update id = "favoriteDelete" parameterType = "MemberVO">
+	update member set favorite = 'NO' where projectno = #{projectNo} and userNo = #{userNo}
+</update>
+<select id = "getFavorite" resultType = "MemberVO" parameterType = "int">
+select projectno, favorite from member where userno = #{userNo} order by projectNo asc
+</select>
 
 </mapper>

@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import scit.master.planbe.VO.HistoryVO;
+import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.PageNavigator;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
@@ -80,8 +81,10 @@ public class TaskController {
 	}
 	
 	//newTask.jsp로 이동
-	@RequestMapping(value = "newTaskForm", method = RequestMethod.GET)
-	public String newTaskForm(Model model,HttpSession session) {		
+	@RequestMapping(value = "newTaskForm")
+	public String newTaskForm(ArrayList<MemberVO> memberVo, Model model,HttpSession session) {		
+		
+		
 		
 		model.addAttribute("projectVO", ps.getProjectList((int)session.getAttribute("userno")));
 		model.addAttribute("projectList", ms.getProjectNo((String)session.getAttribute("loginId")));
@@ -109,7 +112,7 @@ public class TaskController {
 		TaskHistory(history, userName, taskVo.getTaskName());
 		
 		
-		return "redirect:taskForm";
+		return "redirect:newTaskForm";
 	}
 	
 
@@ -147,9 +150,9 @@ public class TaskController {
 			//content += projectDao.getProjectName(history.getProjectNo()) + "프로젝트의";
 			TaskVO vo = task.Search(taskVo);
 			
-			content += vo.getTaskName() + " Task 를";
-			content += historyService.getCdContent(history) + "햇엉 "; // 저장될 문자열 작성 CONTENT
-			content += "변경사항 : ";
+			content += vo.getTaskName() + " Task 를 ";
+			content += historyService.getCdContent(history) + " 햇엉  "; // 저장될 문자열 작성 CONTENT
+			content += " 변경사항 : ";
 		
 			
 			System.out.println("1111111" + taskVo.getTaskName());
@@ -157,26 +160,26 @@ public class TaskController {
 			
 				if(!(taskVo.getTaskName().equals(vo.getTaskName())))
 				{
-					content += "TaskName 변경 : " + vo.getTaskName() + " = >" + taskVo.getTaskName();
+					content += " TaskName 변경 : " + vo.getTaskName() + " = >" + taskVo.getTaskName();
 				}
 				if(!(taskVo.getTaskContent().equals(vo.getTaskContent())))
 				{
-					content += "TaskContent 변경 : " + vo.getTaskContent() + " = > " + taskVo.getTaskContent();
+					content += " TaskContent 변경 : " + vo.getTaskContent() + " = > " + taskVo.getTaskContent();
 				}
 				if(!(taskVo.getTaskPriority().equals(vo.getTaskPriority())))
 				{
-					content += "TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
+					content += " TaskPriority 변경 : " + vo.getTaskPriority() + " = > " + taskVo.getTaskPriority();
 				}
 				if(!(vo.getTotalTime() == vo.getDoneTime()))
 				{
 					if(taskVo.getDoneTime() == taskVo.getTotalTime())
 					{
 						taskVo.setTaskStatus("COMPLETE");
-						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "COMPLETE";
+						content += " TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + "COMPLETE";
 					}
 					else if(!(taskVo.getTaskStatus().equals(vo.getTaskStatus())))
 					{
-						content += "TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
+						content += " TaskStatus 변경 : " + vo.getTaskStatus() + " = > " + taskVo.getTaskStatus();
 						
 					}
 				}
@@ -189,13 +192,13 @@ public class TaskController {
 				}
 				if(!(taskVo.getStartDate().equals(vo.getStartDate())))
 				{
-					content += "TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
+					content += " TaskStartDate 변경 : " + vo.getStartDate() + " = > " + taskVo.getStartDate();
 				}
 				
 				
 				if(!(taskVo.getTotalTime() == vo.getTotalTime()))
 				{
-					content += "TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
+					content += " TaskTotalTime 변경 : " + vo.getTotalTime() + " = > " + taskVo.getTotalTime();
 					
 					if(!(taskVo.getDoneTime() == taskVo.getTotalTime()))
 					{
@@ -204,7 +207,7 @@ public class TaskController {
 				}
 				if(!(taskVo.getDoneTime() == vo.getDoneTime()))
 				{
-					content += "TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
+					content += " TaskDoneTime 변경 : " + vo.getDoneTime() + " = > " + taskVo.getDoneTime();
 					
 					if(!(taskVo.getDoneTime() == taskVo.getTotalTime()))
 					{
@@ -294,6 +297,22 @@ public class TaskController {
 			
 			return "progress";				
 		}
+		@RequestMapping(value = "projectMemberList", method = RequestMethod.POST)
+		@ResponseBody
+		public ArrayList<UsersVO> projectMemberList(int projectNo)
+		{
+			ArrayList<MemberVO> member = ms.getMemberList(projectNo);
+			ArrayList<UsersVO> users = new ArrayList<>();
+			for(int i =0; i < member.size(); i++)
+			{
+				
+				users.add(dao.getUserInfo(member.get(i).getUserNo()));
+			}
+			System.out.println("고고와 난데쓰까"+users.toString());
+			
+			return users;
+			
+		}
 		
 		
 		private void TaskHistory(HistoryVO history, String userName, String taskName) {
@@ -310,6 +329,8 @@ public class TaskController {
 			history.setLogContent(content); //CONTENT값 VO에 세팅
 			historyService.addHistory(history); //history 디비에 히스토리정보 저장
 		}
+		
+		
 }
 
 	

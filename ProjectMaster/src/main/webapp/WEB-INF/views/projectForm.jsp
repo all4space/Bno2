@@ -273,9 +273,9 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 								<label class="control-label" for="selectError3">Project State</label>
 								<div class="controls">
 								  <select id="projectState" name = "projectStatus">
-									<option>Waiting</option>
-									<option>Progress</option>
-									<option>Terminate</option>
+									<option>NEW</option>
+									<option>PROGRESS</option>
+									<option>COMPLETE</option>
 								  </select>
 								</div>
 							  </div>	

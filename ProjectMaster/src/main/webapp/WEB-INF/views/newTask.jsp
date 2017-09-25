@@ -54,10 +54,42 @@ function change(number){
 	var numberValue = number.value;
 	
 	$("#projectNo").attr("value",numberValue);		
-	
 }
 
-
+function member(project)
+{
+	var numberValue = project.value;
+	
+	$("#projectNo").attr("value",numberValue);	
+	
+	alert(project.value);
+	$.ajax
+	({
+		url :"/planbe/task/projectMemberList",
+		type :"post",
+		data :{"projectNo":project.value},
+		dataType:"json",
+		success:function(result)
+		{
+			$("#pms").empty();
+			
+			$(result).each(function(index, item){
+			var addRow = '<option>'
+						+ item.userId
+						+ '</option>';
+						
+			$("#pms").append(addRow);
+			
+			})
+			$("#pms").trigger("liszt:updated");
+		},
+		error : function()
+		{
+			alert("응안되!");
+		}
+	})
+}
+		
 
 
 </script>
@@ -256,13 +288,15 @@ function change(number){
             
       <span class="pull-right" id="projectNoList">
          	<label>ProjectName</label>
-         		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
+         		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:member(this)">
  							<option selected="selected">프로젝트 선택</option>
  					<c:forEach items="${projectVO}"	 var="project" >
  							<option value="${project.projectNo}">${project.projectName}</option>
  					</c:forEach>
-					        		
          		</select>
+ 					<select id = "pms" name ="pms">
+ 					</select>
+					        		
          	      		
          </span>   
             
