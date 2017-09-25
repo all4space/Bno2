@@ -26,7 +26,7 @@
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800&subset=latin,cyrillic-ext,latin-ext' rel='stylesheet' type='text/css'>
 	<link href="/planbe/resources/bootstrap/css/EasyTable.css" rel="stylesheet">
 	<link href="/planbe/resources/bootstrap/css/search.css" rel="stylesheet">
-	<link href="/planbe/resources/bootstrap/css/newTask.css" rel="stylesheet">
+	
 	<!-- end: CSS -->
 	
 
@@ -45,16 +45,23 @@
 	<!-- end: Favicon -->
 	
 </head>
-<!-- select box 선택 값 가져오기 -->
-<script>
-function change(number){
 
-	$("#projectNo").attr("value",number.value);		
+<script type="text/javascript">
+
+function change(number){
+	
+	
+	var numberValue = number.value;
+	
+	$("#projectNo").attr("value",numberValue);		
+	
 }
 
 
+
+
 </script>
-<!-- select box 선택 값 가져오기 -->
+
 
 <body>
 <!-- Head Menu -->
@@ -112,11 +119,11 @@ function change(number){
             <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
             
          <span class="pull-right" id="projectNoList">
-         	<label>ProjectNo</label>
+         	<label>ProjectName</label>
          		<select style="width:300px" id="select" name="projectNo" onchange="javascipt:change(this)">
  							<option selected="selected">프로젝트 선택</option>
  					<c:forEach items="${projectVO}"	 var="project" >
- 							<option value="${project.projectNo}">${project.projectNo} : ${project.projectName}</option>
+ 							<option value="${project.projectNo}">${project.projectName}</option>
  					</c:forEach>
 					        		
          		</select>
@@ -132,12 +139,12 @@ function change(number){
                 <div class="panel-body form-horizontal payment-form">
                 	
                   <table>
-                                   		
+                                  		
                   	<tr>
-                  		<th>ProjectNo</th>
+                  			<!-- projectNo  -->
                   		<td>
                     <div>
-                  		 <input type="text" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
+                  		 <input type="hidden" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
                     </div>  
                     	<td>         
                   	</tr>                
@@ -161,10 +168,10 @@ function change(number){
                      <th>Priority</th>
                      <td>
                          <select class="form-control" id="taskPriority" name="taskPriority">
-                         		<option>--선택--</option>
-                                <option>HIGH</option>
-                                <option>NORMAL</option>
-                                <option>LOW</option>
+                         		<option value="selected">--선택--</option>
+                                <option value="high">HIGH</option>
+                                <option value="normal">NORMAL</option>
+                                <option value="low">LOW</option>
                             </select>   
                        </td>                         
                     </tr>
@@ -248,11 +255,11 @@ function change(number){
             <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
             
       <span class="pull-right" id="projectNoList">
-         	<label>ProjectNo : ProjectName</label>
+         	<label>ProjectName</label>
          		<select style="width:150px" id="select" name="projectNo" onchange="javascipt:change(this)">
  							<option selected="selected">프로젝트 선택</option>
  					<c:forEach items="${projectVO}"	 var="project" >
- 							<option value="${project.projectNo}">${project.projectNo} : ${project.projectName}</option>
+ 							<option value="${project.projectNo}">${project.projectName}</option>
  					</c:forEach>
 					        		
          		</select>
@@ -268,16 +275,12 @@ function change(number){
                 <div class="panel-body form-horizontal payment-form">
                 	
                   <table>
-
-
-
-                                   		
-                                   		
-                  	<tr>
-                  		<th>ProjectNo</th>
+                                 		
+                  	<tr> <!-- projectNo  -->
+                  		
                   		<td>
                     <div>
-                  		 <input type="text" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
+                  		 <input type="hidden" class="projectNo" id="projectNo" name="projectNo" style="width:35px" readonly="readonly"/>
                     </div>  
                     	<td>         
                   	</tr>                
@@ -297,14 +300,14 @@ function change(number){
                       </td> 
                     </tr> 
                                     
-                    <tr>
+                   <tr>
                      <th>Priority</th>
                      <td>
                          <select class="form-control" id="taskPriority" name="taskPriority">
-                         		<option>--선택--</option>
-                                <option>HIGH</option>
-                                <option>NORMAL</option>
-                                <option>LOW</option>
+                                <option value="high">HIGH</option>
+                                <option value="normal">NORMAL</option>
+                                <option value="low">LOW</option>
+                                <option selected="selected" value="">--선택--</option>
                             </select>   
                        </td>                         
                     </tr>
@@ -313,10 +316,10 @@ function change(number){
                      <th>Status</th>
                      <td>
                          <select class="form-control" id="taskStatus" name="taskStatus">
-                         		<option>--선택--</option>
-                                <option>NEW</option>
-                                <option>PROGRESS</option>
-                                <option>COMPLETE</option>
+                         		<option selected="selected" value="">--선택--</option>
+                                <option value="new">NEW</option>
+                                <option value="progress">PROGRESS</option>
+                                <option value="complete">COMPLETE</option>
                             </select>   
                        </td>                         
                     </tr>

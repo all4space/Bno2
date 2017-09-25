@@ -105,9 +105,9 @@
                 	
                   <table>                
                     <tr>
-                      <th>ProjectNo</th>
+                  
                      <td>                                                              
-                         <input type="text" id="projectNo" name="projectNo" readonly="readonly" value="${updateTask.projectNo}" style="width:20px"> 
+                         <input type="hidden" id="projectNo" name="projectNo" readonly="readonly" value="${updateTask.projectNo}" style="width:20px"> 
                          <input type="hidden" id="memberNo" name="memberNo" readonly="readonly" value=" ${updateTask.memberNo}">  
                          <input type="hidden" id="taskNo" name="taskNo" readonly="readonly" value="${updateTask.taskNo}">    
 
@@ -290,9 +290,9 @@
                 	
                   <table>                
                     <tr>
-                      <th>ProjectNo</th>
+               
                      <td>                                                              
-                         <input type="text" id="projectNo" name="projectNo" readonly="readonly" value="${updateTask.projectNo}" style="width:20px"> 
+                         <input type="hidden" id="projectNo" name="projectNo" readonly="readonly" value="${updateTask.projectNo}" style="width:20px"> 
                          <input type="hidden" id="memberNo" name="memberNo" readonly="readonly" value=" ${updateTask.memberNo}">  
                          <input type="hidden" id="taskNo" name="taskNo" readonly="readonly" value="${updateTask.taskNo}">    
 

@@ -14,8 +14,8 @@
     ,#{taskcontent}
     ,#{taskpriority}
     ,#{taskstatus}
-    ,#{taskstartdate}
-    ,#{taskduedate}
+    ,#{startdate}
+    ,#{duedate}
     ,#{totaltime}
     ,#{donetime})
 </insert>
@@ -24,8 +24,20 @@
 <!-- 업무 리스트 출력하기 -->
 <select id="getList" parameterType="map" resultType="TaskVO">
 
-	select * from task	
+	select  t.projectno
+		   ,t.memberno
+		   ,t.taskno
+		   ,t.taskname
+		   ,t.taskcontent
+		   ,t.taskpriority
+		   ,t.taskStatus
+		   ,to_char(t.startdate,'yyyy-mm-dd')startdate
+		   ,to_char(t.duedate,'yyyy-mm-dd')duedate
+		   ,t.totaltime
+		   ,t.donetime
 	
+	from task	
+
 	<choose>
 		 
 	 <when test="searchtype == 'title'">
@@ -33,30 +45,30 @@
 	 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
-							and taskname LIKE '%'||#{searchword}||'%'
+							and t.taskname LIKE '%'||#{searchword}||'%'
 	 
 	 </when>
-	 
-	   <when test="target == 'HIGH'">
+
+   <when test="target == 'HIGH'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
-	 						and taskpriority LIKE '%'||#{target}||'%'
+	 						and t.taskpriority LIKE '%'||#{target}||'%'
 	 </when>
 	   <when test="target == 'NORMAL'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
-	   						and taskpriority LIKE '%'||#{target}||'%'
+	   						and t.taskpriority LIKE '%'||#{target}||'%'
 	 </when>
 	   <when test="target == 'LOW'">
 	   
 	   	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno} 
-	   						and taskpriority LIKE '%'||#{target}||'%'
+	   						and t.taskpriority LIKE '%'||#{target}||'%'
 	 </when>
 	  <when test="userno != null">
  	 	 t join member m on t.memberno=m.memberno
@@ -74,10 +86,19 @@
 
 <!-- 업무 검색하기 -->
 <select id="findTask" parameterType="TaskVO" resultType="TaskVO">
-	select projectno,memberno,taskno,taskname,taskcontent,taskpriority,taskStatus,
-				to_char(startdate,'yyyy-mm-dd')startdate,to_char(duedate,'yyyy-mm-dd')duedate
-				,totaltime,donetime
-	 from task where taskno=#{taskNo}
+	select projectno
+		   ,memberno
+		   ,taskno
+		   ,taskname
+		   ,taskcontent
+		   ,taskpriority
+		   ,taskStatus
+		   ,to_char(startdate,'yyyy-mm-dd')startdate
+		   ,to_char(duedate,'yyyy-mm-dd')duedate
+		   ,totaltime
+		   ,donetime
+	 from task 
+	 where taskno=#{taskNo}
 </select>
 
 <!-- 업무 수정하기 -->
@@ -110,42 +131,36 @@
 				t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
-							and taskname like '%'||#{searchword}||'%'
+							and t.taskname like '%'||#{searchword}||'%'
 			</when>
-			<when test="searchtype=='startdate'">
+			<when test="searchtype=='taskStatus'">
 			
 				t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
-							and taskstartdate == #{searchword}
+							and t.taskStatus == #{searchword}
 			</when>
-			<when test="searchtype=='duedate'">
 			
-				t join member m on t.memberno=m.memberno 
-					join users u on m.userno = u.userno
-						and u.userno=#{userno}
-							and duedate like '%'||#{searchword}||'%'
-			</when>
 			 <when test="target == 'HIGH'">
 			 
 			 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
-			 				and taskpriority LIKE '%'||#{target}||'%'
+			 				and t.taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
 	  		 <when test="target == 'NORMAL'">
 	  		 
 	  		 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
-	  		 				and taskpriority LIKE '%'||#{target}||'%'
+	  		 				and t.taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
 	   		 <when test="target == 'LOW'">
 	   		 
 	   		 	t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
-	   		 				and taskpriority LIKE '%'||#{target}||'%'
+	   		 				and t.taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
 	 		 <when test="userno != null">
 	 	 		t join member m on t.memberno=m.memberno 

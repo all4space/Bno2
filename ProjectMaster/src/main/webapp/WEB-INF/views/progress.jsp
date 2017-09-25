@@ -105,57 +105,9 @@ function change(number){
       <h1>${authority} ${loginId}님의 Progress</h1>
      </div>
       
-      <!-- 검색 창 만들기 -->
-      
-     	 <div class="searchProgress">
-                	<ul>                		
-                		<li>	
-                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
-                				<option value="Task" selected="selected">Task이름</option>
-                				 <option value="Task" selected="selected">--AllTask--</option> 
-                					<c:forEach items="${allList}" var="allList">
-                				<option value="${allList.taskNo}">${allList.taskName}</option>
-                				    </c:forEach>
-                				 <option value="allTask">--AllTask--</option>                   				                   			              				
-   	            			</select>
-  	                      	
-   	                     </li> 	 	
-                	</ul>
-         </div>
-         
       
       
-      <c:if test="${searchProgress != null }">
-        		 
-         		<!-- 그래프 시작 -->
-   
-         		
-    
-    </c:if>
-      
-    
-      
- 
-	 	
-	
-	 <!-- 검색 창 만들기 -->
-	 
-		
- 	
-</c:if>
-<!-- member인 경우  끝-->
-
-
-
-		<!-- member가 아닌 경우  시작-->
-       
-      <c:if test="${authority !='member'}">
-      <div class="userId">
-      <h1>${authority} ${loginId}님의 Progress</h1>
-    	</div>
-      
-      
-      <!-- 검색 창 만들기 -->
+       <!-- 검색 창 만들기 -->
       
    <div class="searchProgress">
                 	<ul>                		
@@ -308,6 +260,168 @@ function change(number){
         
     	
         
+      };
+       
+
+        </script>
+    	 
+
+
+	</c:if>
+
+    
+      
+ 
+	 	
+	
+	
+	 
+		
+ 	
+
+<!-- member인 경우  끝-->
+
+
+
+		<!-- member가 아닌 경우  시작-->
+       
+      <c:if test="${authority !='member'}">
+      <div class="userId">
+      <h1>${authority} ${loginId}님의 Progress</h1>
+    	</div>
+      
+      
+      <!-- 검색 창 만들기 -->
+      
+   <div class="searchProgress">
+                	<ul>                		
+                		<li>	
+                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
+                				<option value="Task" selected="selected">Task이름</option>               			 
+                					<c:forEach items="${allList}" var="allList">
+                				<option value="${allList.taskNo}">${allList.taskName}</option>
+                				    </c:forEach>
+                				 <option value="allTask">--AllTask--</option>                   				                   			              				
+   	            			</select>
+  	                      	
+   	                     </li> 	 	
+                	</ul>
+                	
+        
+         </div>
+        
+      
+        
+  		
+         
+         <!-- getChart 만들기 시작 -->
+      
+      
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+      
+       
+       	<c:if test="${searchProgress != null}">
+  		 <div id="top_x_div" style="width: 1800px; height: 400px;"></div>
+    	</c:if>
+    	
+    	
+    		<c:if test="${totalList != null}">    		
+    	 <div id="chart_div" style="width: 1300px; height: 600px;"></div>
+    		</c:if>
+    		
+    		
+  		
+         
+      <script>
+      
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.load('current', {packages:['corechart', 'scatter']});
+      google.charts.setOnLoadCallback(drawMultSeries);
+      google.charts.setOnLoadCallback(drawStuff);
+ 
+         
+      function drawMultSeries() {
+    
+    	 
+  	   	  
+    	  var data = new google.visualization.arrayToDataTable([
+              ['TaskName', 'Percentage'],
+              ['${searchProgress.taskName}',${searchProgress.doneTime/searchProgress.totalTime*100}]
+            ]);
+
+            var options = {
+              title: 'Chess opening moves',
+              width: 900,
+              legend: { position: 'none' },
+              chart: { title: '${authority} ${loginId}님의 ${searchProgress.taskName} Progress',
+                       subtitle: 'by percentage' },
+              bars: 'horizontal', // Required for Material Bar Charts.
+              axes: {
+                x: {
+                  0: { side: 'top', label: 'Percentage'} // Top x-axis.
+                }
+              },
+              bar: { groupWidth: "90%" }
+            };
+			
+            var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+            chart.draw(data, options);
+             
+      };     
+      
+      
+      
+      
+      
+      
+    function drawStuff() {
+
+    
+  	
+    		$.ajax({
+         		  url:"/planbe/task/getChart",
+         		  type:"post",
+         		  dataType:"json",
+         		  success:function(result){
+         			  
+         			  var data = google.visualization.arrayToDataTable([
+                          ['Progress(%)','Progress(%),TotalTime(Hours)'],
+                         	[5,6]
+                         	
+                          ],false);
+         			  
+       			 
+         			  $(result).each(function(index,item){
+         				 
+         				data.addRow([parseInt(item.doneTime/item.totalTime*100),item.totalTime]);
+        					
+         			  });
+         			  
+         			   var options = {
+                               title: '${authority} ${loginId}님의 Total Task Progress',
+                               hAxis: {title: 'Progress(%)', minValue: 0, maxValue: 100},
+                               vAxis: {title: 'TotalTime(Hours)', minValue: 0, maxValue: 50},
+                               legend: 'none'
+                             };
+             
+                 
+              
+
+                  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+
+                  chart.draw(data, options);
+         			  
+         			  
+         			  
+         		  },
+         		  error:function(){alert("에러 발생")}
+         	 		 });
+                 
+    		
+
+          
+                
       };
        
 

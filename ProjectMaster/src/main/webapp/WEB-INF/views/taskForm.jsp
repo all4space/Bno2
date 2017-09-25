@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
-
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/core" %> 
 <!DOCTYPE html>
 <html>
 <head>
@@ -53,7 +53,7 @@
     </div>
 	
 		<div class="container-fluid-full">
-		<div class="row-fluid">
+		<div class="row-fluid sortable"> 
 		
 <!-- Side Menu -->
 	<div>
@@ -67,9 +67,6 @@
 				</div>
 			</noscript>
 			
-			
-			<div class="row-fluid sortable">   
-
 					
 			<!-- start: Content -->
 			<div id="content" class="span10">
@@ -91,36 +88,23 @@
 			<c:if test="${authority != member}">
 			
 			<div class="title-1">
-			<legend><h1> ${authority} ${loginId}님의 Task</h1></legend>
+			<legend>${authority} ${loginId}님의 Task</legend>
 			</div>
 			
 
 	  <div class="container">
-	<div class="row">
+	<div class="row-fluid sortable"> 
 		
 													
-						<!-- 검색 창 만들기 시작 -->
 						
-						<div class="pull-right">
-                	<a href="/planbe/task/newTaskForm/"><button type="button" class="btn-success btn-circle btn-xl" value="new" >new</button></a>
-					<input type="button" class="btn-warning btn-circle btn-dl" value="Excel" id="excel"/>
+						
+				<div class="pull-right">
+                	<a href="/planbe/task/newTaskForm/"><button type="button" class="btn btn-small btn-primary" value="new" >new</button></a>
+					<input type="button" class="btn btn-small btn-success" value="Excel" id="excel"/>
+						<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-small btn-danger">progress</button></a>
                 </div>
               
-      <!-- 파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다. -->
-			<div title="Data Download" id="preparing-file-modal" style="display: none;">
-    			<div id="progressbar" style="width: 100%; height: 22px; margin-top: 20px;"></div>
-			</div>
-
-		<!-- 에러발생시 보여질 메세지 다이얼로그 입니다. -->
-			<div title="Error" id="error-modal" style="display: none;">
-    			<p>생성실패.</p>
-			</div>
-      
-                
-                
-                
-                
-                					
+            					
 <div class="search-bar">
     <div class="search row">    
         <div class="col-xs-8 col-xs-offset-2">
@@ -128,10 +112,9 @@
                 <div class="search">
                 	<ul>                		
                 		<li>	
-                			<select id="searchtype" name="searchtype" style="width:100px">
+                			<select id="searchtype" name="searchtype" style="width:150px">
                 				<option value="title">제목</option>
-                				<option value="startdate">시작일</option>
-                				<option value="deudate">종료일</option>               			              				
+                				<option value="taskStatus">업무 상태</option>              			              				
    	            			</select>
    	                      	<input type="text" id="searchword" name="searchword">
    	                      	<input type="button" id="searchbtn" value="검색">
@@ -161,7 +144,6 @@
 								<button type="button" class="btn btn-warning btn-filter" data-target="urgent" id="btnUrgent" name="btnOption" value="NORMAL">NORMAL</button>
 								<button type="button" class="btn btn-success btn-filter" data-target="disaster" id="btnDisaster" name="btnOption" value="LOW">LOW</button>
 								<button type="button" class="btn btn-all btn-filter" data-target="all" id="btnAll" name="btnOption" >all</button>
-								<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-progress btn-filter">progress</button></a>
 							</div>
 						</div>
 						
@@ -203,17 +185,12 @@
 										</td>
 										
 										<td>
-										<h3>TaskNo:</h3> 
-										<input type="text" name="taskNo" class="taskNo" value="${task.taskNo}" readonly="readonly" style="width:20px">								
+										<input type="hidden" name="taskNo" class="taskNo" value="${task.taskNo}" readonly="readonly" style="width:20px">								
 										</td>
 										
 										<td class="updateMedia" onclick="sendInfo(${task.taskNo})">
 																				
 											<div class="media">
-										
-												<a href="#" class="pull-left">
-													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
-												</a>
 												
 												<div class="media-body">
 												      <span class="media-meta pull-right">시작일: ${task.startDate}</span>	
@@ -295,7 +272,7 @@
        
       <c:if test="${authority == member}">
       
-      <div class="row-fluid sortable">  
+      
       
       <div class="userId">
       <h1>${authority} ${loginId}님의 Task</h1>
@@ -303,30 +280,17 @@
     
        
       <div class="container">
-	<div class="row">
+	<div class="row-fluid sortable">  
 		
 													
 						<!-- 검색 창 만들기 시작 -->
 						
-						<div class="pull-right">
-                	<a href="/planbe/task/newTaskForm/"><button type="button" class="btn-success btn-circle btn-xl" value="new" >new</button></a>
-					<input type="button" class="btn-warning btn-circle btn-dl" value="Excel" id="excel"/>
+					<div class="pull-right">
+                	<a href="/planbe/task/newTaskForm/"><button type="button" class="btn btn-small btn-primary" value="new" >new</button></a>
+					<input type="button" class="btn btn-small btn-success" value="Excel" id="excel"/>
+						<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-small btn-danger">progress</button></a>
                 </div>
-              
-      <!-- 파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다. -->
-			<div title="Data Download" id="preparing-file-modal" style="display: none;">
-    			<div id="progressbar" style="width: 100%; height: 22px; margin-top: 20px;"></div>
-			</div>
-
-		<!-- 에러발생시 보여질 메세지 다이얼로그 입니다. -->
-			<div title="Error" id="error-modal" style="display: none;">
-    			<p>생성실패.</p>
-			</div>
-      
-                
-                
-                
-                
+             
                 					
 <div class="search-bar">
     <div class="search row">    
@@ -335,10 +299,9 @@
                 <div class="search">
                 	<ul>                		
                 		<li>	
-                			<select id="searchtype" name="searchtype" style="width:100px">
-                				<option value="title">제목</option>
-                				<option value="startdate">시작일</option>
-                				<option value="deudate">종료일</option>               			              				
+                			<select id="searchtype" name="searchtype" style="width:150px">
+                				<option value="title">제목</option>       
+                				<option value="taskStatus">업무상태</option>          				             			              				
    	            			</select>
    	                      	<input type="text" id="searchword" name="searchword">
    	                      	<input type="button" id="searchbtn" value="검색">
@@ -364,11 +327,10 @@
 												
 							<div class="pull-right">
 							<div class="btn-group">
-								<button type="button"  class="btn btn-success btn-filter" data-target="good" id="btnGood" name="btnOption" value="good">good</button>
-								<button type="button" class="btn btn-warning btn-filter" data-target="urgent" id="btnUrgent" name="btnOption" value="urgent">urgent</button>
-								<button type="button" class="btn btn-danger btn-filter" data-target="disaster" id="btnDisaster" name="btnOption" value="disaster">disaster</button>
+								<button type="button"  class="btn btn-danger btn-filter" data-target="good" id="btnGood" name="btnOption" value="HIGH">HIGH</button>
+								<button type="button" class="btn btn-warning btn-filter" data-target="urgent" id="btnUrgent" name="btnOption" value="NORMAL">NORMAL</button>
+								<button type="button" class="btn btn-success btn-filter" data-target="disaster" id="btnDisaster" name="btnOption" value="LOW">LOW</button>
 								<button type="button" class="btn btn-all btn-filter" data-target="all" id="btnAll" name="btnOption" >all</button>
-								<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-progress btn-filter">progress</button></a>
 							</div>
 						</div>
 						
@@ -389,16 +351,16 @@
 										<td>
 											
 											<c:choose>
-															<c:when test="${task.taskStatus=='NEW'}">
-															  <span><h2 class="green">${task.taskStatus}</h2></span>
+															<c:when test="${task.taskStatus eq 'NEW'}">
+															<span class="green">${task.taskStatus}</span>
 															</c:when>
 															
-															<c:when test="${task.taskStatus=='PROGRESS'}">
-															  <span><h2 class="yellow">${task.taskStatus}</h2></span>
+															<c:when test="${task.taskStatus eq 'PROGRESS'}">
+															  <span class="yellow">${task.taskStatus}</span>
 															</c:when>
 															
-															<c:when test="${task.taskStatus=='COMPLETE'}">
-															  <span><h2 class="red">${task.taskStatus}</h2></span>
+															<c:when test="${task.taskStatus eq 'COMPLETE'}">
+															  <span class="red">${task.taskStatus}</span>
 															</c:when>
 															
 															<c:otherwise>
@@ -410,17 +372,14 @@
 										</td>
 										
 										<td>
-										<h3>TaskNo:</h3> 
-										<input type="text" name="taskNo" class="taskNo" value="${task.taskNo}" readonly="readonly" style="width:20px">								
+										
+										<input type="hidden" name="taskNo" class="taskNo" value="${task.taskNo}" readonly="readonly" style="width:20px">								
 										</td>
 										
 										<td class="updateMedia" onclick="sendInfo(${task.taskNo})">
 																				
 											<div class="media">
-										
-												<a href="#" class="pull-left">
-													<img src="https://s3.amazonaws.com/uifaces/faces/twitter/fffabs/128.jpg" class="media-photo">
-												</a>
+
 												
 												<div class="media-body">
 												      <span class="media-meta pull-right">시작일: ${task.startDate}</span>	
@@ -449,7 +408,9 @@
 														</c:choose>													
 													</h4>
 													<p class="summary">${task.taskContent}</p>
+														
 													 <span class="media-metas pull-right">종료일:${task.dueDate}</span>
+														
 												</div>
 											</div>
 										</td>
@@ -587,6 +548,10 @@
 		
 		<script src="/planbe/resources/bootstrap/js/taskForm.js"></script> <!-- table jquery 링크 -->
 		
+		<script src="/planbe/resources/bootstrap/js/newTask.js"></script> <!-- newTask  링크 -->
+		
+		
+		
 		<!-- 엑셀 다운로드 링크 -->
 		
 		
@@ -595,14 +560,19 @@
 		
 		<!-- 엑셀 다운로드 링크 -->
 		
-		<script>
-			function clickedCheck(clicked){
-			
-			$('#clicked.taskName').css("background-color","red");
-			}
-		</script>
-	
 		
+	
+		 <!-- 파일 생성중 보여질 진행막대를 포함하고 있는 다이얼로그 입니다. -->
+			<div title="Data Download" id="preparing-file-modal" style="display: none;">
+    			<div id="progressbar" style="width: 100%; height: 22px; margin-top: 20px;"></div>
+			</div>
+
+		<!-- 에러발생시 보여질 메세지 다이얼로그 입니다. -->
+			<div title="Error" id="error-modal" style="display: none;">
+    			<p>생성실패.</p>
+			</div>
+      
+                
 
 
 		

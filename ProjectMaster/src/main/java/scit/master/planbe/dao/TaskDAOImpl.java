@@ -57,7 +57,7 @@ public class TaskDAOImpl implements TaskDAO{
 		map.put("searchword", searchword);
 		map.put("target", target);
 		map.put("userno", userno);
-		
+	
 		return mapper.getList(map,rb);		
 	}
 

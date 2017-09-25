@@ -20,6 +20,19 @@
   border-radius: 40px;
   transition: background-color .3s ease;
 }
+
+.btn-circle.btn-pl {
+  width: 60px;
+  height: 60px;
+  padding: 40px 40px;
+  font-size: 10px;
+  line-height: 1.33;
+  border-radius: 40px;
+  transition: background-color .3s ease;
+}
+
+
+
 .search{
 	
 	margin:0;
