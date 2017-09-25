@@ -42,7 +42,118 @@
 	<!-- end: Favicon -->
 
 <script>
+
+/* receiver groupSelect */ 
+
+var group;
+
+function groupSelect(obj){
+ 
+	// ProjectList or MemberList 가져오기 
+	//alert("function In" + obj.value);
 	
+	group = obj.value;
+	
+	$.ajax({
+		url: "/planbe/mail/getSelectList",
+		type: "post",
+		data: {"group" : obj.value},
+		dataType: "json",
+		success: function(result){
+			
+			alert("success in");
+
+  			var all_p_list = result.all_p_list;
+  			var my_p_list = result.my_p_list;
+  			var all_u_list = result.all_u_list;
+  			var my_u_list = result.my_u_list;
+  			
+  			var addRow = "";
+  			
+		    $("#selectedList").empty();
+
+		    if(all_p_list != undefined) {
+	  			$(all_p_list).each(function(index, item) {
+					addRow += '<option value="'+item.projectNo+'">' + item.projectName + '</option>'; 
+				});
+  			} 
+  				
+  			if(all_u_list != undefined) {
+	  			$(all_u_list).each(function(index, item) {
+					addRow += '<option value="'+item.userNo+'">' + item.userName + '</option>';
+				});
+  			} 
+  			
+  			if(my_p_list != undefined) {
+	  			$(my_p_list).each(function(index, item) {
+					addRow += '<option value="'+item.projectNo+'">' + item.projectName + '</option>';
+				});
+  			} 
+  			
+  			if(my_u_list != undefined) {
+	  			$(my_u_list).each(function(index, item) {
+					addRow += '<option value="'+item.userNo+'">' + item.userName + '</option>';
+				});
+  			} 
+
+			$("#selectedList").append(addRow);
+		    $("#selectedList").trigger("liszt:updated");
+						
+		},
+		error : function(){
+			alert("에러뭐든");
+		}
+	}); 
+}//groupSelect  
+
+
+/* send Mail */
+function sendMail(){
+
+	alert(group);
+	
+	var p_no_list="";
+	var u_no_list="";
+	
+	var data = $("#selectedList").val();
+	
+	if(group == "project"){
+		// receiveProject = $("#selectedList :selected").text(); // 300304 
+	//	var data = $("#selectedList").val(); // 300,304
+		for(var i=0; i<data.length; i++){
+			p_no_list += data[i]+",";
+		}
+	}
+			
+	if(group == "member"){
+		for(var i=0; i<data.length; i++){
+			u_no_list += data[i]+",";
+		}
+	}
+			
+	var mailTitle = $("#mailTitle").val();
+	var mailContent = $("#mailContent").val();
+	
+//	var list = 	$("#receiveProject :selected").text();;
+	
+	$.ajax({	
+		url: "/planbe/mail/sendMail",
+		type: "post",
+		data: {
+			   "mailTitle": mailTitle, 
+			   "mailContent": mailContent, 
+			   "p_no_list" : p_no_list,
+			   "u_no_list" : u_no_list,
+			   "mailTag": $("#mailTag").val()
+		       },
+		success: function(result){
+			alert("success in");
+			if(result) location.href="/planbe/mail/mailList"; 
+		}
+		
+	}); 
+}
+				   
 	
 /* 메일 내용 확인하기 */	
 
@@ -69,7 +180,7 @@ function showContent(mailNo){
             	$("#msgHead").append(data);
             	
             	$("#msgBody").empty();		
-            	var data2 = "<blockquote>" + result.mailContent + "</blockquote>";
+            	var data2 = result.mailContent;
             	$("#msgBody").append(data2);
             	
    		    }); // for each 
@@ -254,49 +365,74 @@ function checkMail(){
 							
 						</div>
 						
-						<div class="content" id="msgBody">
-							<blockquote>
+						<div class="content" >
+							<blockquote id="msgBody">
 							${mmlist[0].mailContent}
 							</blockquote>
+						<div>
+						<hr style="color: gray;">
+					<!-- 	  <fieldset> -->
+							<div class="control-group">
+							  <label class="control-label" for="typeahead">Mail Title</label>
+							  <div class="controls">
+								<input type="text" class="span6 typeahead" id="mailTitle"  data-provide="typeahead" data-items="4" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
+								<p class="help-block">Start typing to activate auto complete!</p>
+							  </div>
+							</div>
+							  
+							  <div class="control-group">
+								<label class="control-label" for="selectError">Mail Tag</label>
+								<div class="controls">
+								  <select id="mailTag" data-rel="chosen">
+									<option>INFO</option>
+									<option>PROBLEM</option>
+									<option>TASK</option>
+								    <option>PLAN</option>
+								  </select>
+								</div>
+							  </div>
+							  
+							  <div class="control-group">
+								<label class="control-label" for="selectError">Receiver Group</label>
+								<div class="controls">
+								  <select id="groupSelectList" name="" data-rel="chosen" onchange="javascript:groupSelect(this)">
+									<option value="all">ALL</option>
+									<option value="project">PROJECT</option>
+									<option value="member">MEMBER</option>
+								  </select>
+								</div>
+							  </div>
+							  
+							  <div class="control-group">
+								<label class="control-label" for="selectError1">Receiver</label>
+								<div class="controls">
+								  <select id="selectedList" name="selectedList" multiple data-rel="chosen">
+								  </select>
+								</div>
+							  </div>
+							    
+							   
+							<div class="control-group hidden-phone">
+							  <label class="control-label" for="textarea2">Mail Content</label>
+							  <div class="controls">
+								<textarea class="cleditor" id="mailContent" rows="3"></textarea>
+							  </div>
+							</div>
+							<div class="actions">
+							  <button type="submit" class="btn btn-primary" onclick="sendMail()">Send Mail</button>
+							  <button type="reset" class="btn">Cancel</button>
+							  <button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button>
+							</div>
+							
 						</div>
-						<!-- 
-						<div class="attachments">
-							<ul>
-								<li>
-									<span class="label label-important">zip</span> <b>bootstrap.zip</b> <i>(2,5MB)</i>
-									<span class="quickMenu">
-										<a href="#" class="glyphicons search"><i></i></a>
-										<a href="#" class="glyphicons share"><i></i></a>
-										<a href="#" class="glyphicons cloud-download"><i></i></a>
-									</span>
-								</li>
-								<li>
-									<span class="label label-info">txt</span> <b>readme.txt</b> <i>(7KB)</i>
-									<span class="quickMenu">
-										<a href="#" class="glyphicons search"><i></i></a>
-										<a href="#" class="glyphicons share"><i></i></a>
-										<a href="#" class="glyphicons cloud-download"><i></i></a>
-									</span>
-								</li>
-								<li>
-									<span class="label label-success">xls</span> <b>spreadsheet.xls</b> <i>(984KB)</i>
-									<span class="quickMenu">
-										<a href="#" class="glyphicons search"><i></i></a>
-										<a href="#" class="glyphicons share"><i></i></a>
-										<a href="#" class="glyphicons cloud-download"><i></i></a>
-									</span>
-								</li>
-							</ul>		
-						</div>
-						 -->
+					
 					<!-- 	<form class="replyForm"method="post" action=""> -->
 
 							<fieldset>
 							<!-- 	<textarea tabindex="3" class="input-xlarge span12" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea> -->
 
-								<div class="actions">
 									
-									<button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button>
+								<!-- 	<button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button> -->
 									
 								</div>
 
@@ -309,6 +445,8 @@ function checkMail(){
 				</div>
 						
 			</div>
+			
+			
 			
 	</div><!--/.fluid-container-->
 	

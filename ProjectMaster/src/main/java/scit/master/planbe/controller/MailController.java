@@ -87,8 +87,10 @@ public class MailController {
 
 	// SendMail
 	@RequestMapping(value = "sendMail", method = RequestMethod.POST)
-	public String sendMail(MailVO vo, HttpSession session, String p_no_list, String u_no_list) {
+	@ResponseBody
+	public boolean sendMail(MailVO vo, HttpSession session, String p_no_list, String u_no_list) {
 		System.out.println("Send Mail접근");
+		boolean result=false; 
 		
 		String userId = (String)session.getAttribute("loginId");
 		UsersVO uvo = service.getUserInfo(userId);
@@ -98,7 +100,7 @@ public class MailController {
 			String[] pArray = p_no_list.split(",");
 			for(int i=0; i < pArray.length; i++){
                 vo.setReceiveProject(Integer.parseInt(pArray[i]));				
-                boolean result = service.sendMail(vo);
+                result = service.sendMail(vo);
                 System.out.println(result);
 			}
 		}
@@ -110,11 +112,11 @@ public class MailController {
                 vo.setReceiveMember(Integer.parseInt(uArray[i]));				
                 System.out.println(vo.getReceiveMember());
                 System.out.println(vo.toString());
-                boolean result = service.sendMail(vo);
+                result = service.sendMail(vo);
                 System.out.println(result);
 			}
 		}
-		return "mailForm";
+		return result;
 	}
         
 	
