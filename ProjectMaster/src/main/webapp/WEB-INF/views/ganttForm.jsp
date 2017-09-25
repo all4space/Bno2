@@ -178,7 +178,7 @@ function drawTaskList(GanttList,UserNameList){
 function checkList(taskNo){
 	var answer = confirm("Really do you want modify or remove at the task?");
 	if(answer){
-		alert("I will transfer for the task page. <br> You can modify / remove it at there!");
+		alert("I will transfer for the task page. You can modify / remove it at there!");
 		location.href="/planbe/task/updateTaskForm?taskNo="+taskNo;
 	}else{
 		return;

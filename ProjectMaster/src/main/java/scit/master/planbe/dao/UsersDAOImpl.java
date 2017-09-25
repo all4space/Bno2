@@ -75,6 +75,12 @@ public UsersVO getUserInfo(int userNo) {
 	return mapper.getUserInfo(userNo);
 	}
 
+@Override
+public int modify(UsersVO vo) {
+	UsersMapper mapper = Sqlsession.getMapper(UsersMapper.class);
+	return mapper.modify(vo);
+}
+
 }
 
 

@@ -85,7 +85,13 @@ public class UsersServiceImpl implements UsersService{
 		
 	}
 
-	
+	@Override
+	public boolean modify(UsersVO vo) {
+		if(dao.modify(vo) == 1){
+			return true; 
+		}
+		return false;
+	}
 }
 
 

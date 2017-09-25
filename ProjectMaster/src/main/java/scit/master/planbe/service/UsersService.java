@@ -15,4 +15,5 @@ public interface UsersService {
 	public int getUserNo(String userId);
 	public ArrayList<UsersVO> getUserVo(String groupName);
 	public UsersVO getUserInfo(int userNo);
+	public boolean modify(UsersVO vo);
 }

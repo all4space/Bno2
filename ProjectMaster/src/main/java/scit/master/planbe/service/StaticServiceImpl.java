@@ -80,7 +80,7 @@ public class StaticServiceImpl implements StaticService{
 
 	@Override
 	public ArrayList<TaskVO> efficienty(ProjectVO vo) {
-		System.out.println("service데스 "+ vo);
+		/*System.out.println("service데스 "+ vo);*/
 		return dao.efficienty(vo);
 	}
 	

@@ -17,4 +17,5 @@ public interface UsersMapper {
 	public ArrayList<UsersVO> getMemberList(int projectNo);
 	public ArrayList<UsersVO> getUserVo(String groupName);
 	public UsersVO getUserInfo(int userNo);
+	public int modify(UsersVO vo);
 }

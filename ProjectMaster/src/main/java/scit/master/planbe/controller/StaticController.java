@@ -86,9 +86,9 @@ public class StaticController {
 			}
 		}
 		
-		
+	/*	
 		System.out.println("ts2"+taskandnameList);
-		System.out.println("effi"+ newlist);
+		System.out.println("effi"+ newlist);*/
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("taskList", taskList);
 		map.put("usersNamelist", taskandnameList);

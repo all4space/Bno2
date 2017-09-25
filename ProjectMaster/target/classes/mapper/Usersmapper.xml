@@ -44,7 +44,10 @@
 <select id = "getUserInfo" resultType = "UsersVO" parameterType = "int">
 	select * from users where userno = #{userNo}
 </select>
-
+<!--Modify UserInfo  -->
+<update id="modify" parameterType="UsersVO">
+	UPDATE Users SET username = #{userName} , userpwd = #{userPwd}, groupname = #{groupName} WHERE userno = #{userNo} and userId = #{userId}
+</update>
 </mapper>
 
 

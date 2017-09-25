@@ -1,6 +1,7 @@
 package scit.master.planbe.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpSession;
 
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import scit.master.planbe.VO.HistoryVO;
@@ -180,5 +182,28 @@ public class UsersController {
 	public ArrayList<HistoryVO> historyList(int userNo)
 	{
 		return historyService.getHistoryList(userNo);
+	}
+	
+	// 프로필 폼으로 이동
+	@RequestMapping(value = "profileForm", method = RequestMethod.GET)
+	public ModelAndView profileForm(HttpSession session) {
+		int userNo = (int) session.getAttribute("userno");
+		ModelAndView mav = new ModelAndView("/profileForm") ;
+		UsersVO vo = service.getUserInfo(userNo);
+		String id = "'"+vo.getUserId()+"'";String pwd = "'"+vo.getUserPwd()+"'"; String name = "'"+vo.getUserName()+"'"; String groupname = "'"+vo.getGroupName()+"'"; String Authority = "'"+vo.getAuthority()+"'";
+		HashMap<String,String> map = new HashMap<>();
+		map.put("userId", id);
+		map.put("userName", name);
+		map.put("groupName",groupname);
+		map.put("Authority",Authority);
+		map.put("pwd", pwd);
+		mav.addObject("userVO", map);
+		return mav;
+	}
+	
+	@RequestMapping(value = "modify", method = RequestMethod.POST)
+	public String modify(UsersVO vo) {
+		service.modify(vo);
+		return "redirect:/";
 	}
 }

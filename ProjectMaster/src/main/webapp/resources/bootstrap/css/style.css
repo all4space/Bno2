@@ -1668,10 +1668,15 @@ input[type="button"].btn-block {
 .btn-modify:hover,
 .btn-modify:focus,
 .btn-modify:active {
-	background-color : #3a6a96 ;
-	border-color: #3a6a96;
+	background-color : #fc9476 ;
+	border-color: #fc9476;
 }
-
+.btn-backToCancel:hover,
+.btn-backToCancel:focus,
+.btn-backToCancel:active {
+	background-color: #3a6a96;
+	border-color : #3a6a96;
+}
 
 .btn.disabled:hover,
 .btn[disabled]:hover,

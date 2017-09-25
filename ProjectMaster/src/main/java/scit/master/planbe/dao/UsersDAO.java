@@ -15,4 +15,5 @@ public interface UsersDAO {
 	public int getUserNo(String userId);
 	public ArrayList<UsersVO> getUserVo(String groupName);
 	public UsersVO getUserInfo(int userNo);
+	public int modify(UsersVO vo); // 회원 정보 수정
 }
