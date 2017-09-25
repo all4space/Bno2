@@ -100,9 +100,9 @@ function change(number){
 
 		<!-- member인 경우  시작-->
        
-      <c:if test="${authority =='member'}">
+      <c:if test="${Authority =='member'}">
       <div class="userId">
-      <h1>${authority} ${loginId}님의 Progress</h1>
+      <h1>${Authority} ${loginId}님의 Progress</h1>
      </div>
       
       
@@ -138,12 +138,12 @@ function change(number){
       
        
        	<c:if test="${searchProgress != null}">
-  		<div id="chart_div1"></div>
+  		<div id="chart_div1" style="width: 800px; height: 600px; margin:0px 0 0 180px"></div>
     	</c:if>
     	
     	
     		<c:if test="${totalList != null}">    		
-    	<div id="chart_div2" style="width: 800px; height: 600px;"></div>
+    	<div id="chart_div2" style="width: 800px; height: 600px; margin:0px 0 0 50px"></div>
     		</c:if>
     		
     		
@@ -285,9 +285,9 @@ function change(number){
 
 		<!-- member가 아닌 경우  시작-->
        
-      <c:if test="${authority !='member'}">
+      <c:if test="${Authority !='member'}">
       <div class="userId">
-      <h1>${authority} ${loginId}님의 Progress</h1>
+      <h1>${Authority} ${loginId}님의 Progress</h1>
     	</div>
       
       
@@ -322,12 +322,12 @@ function change(number){
       
        
        	<c:if test="${searchProgress != null}">
-  		 <div id="top_x_div" style="width: 1800px; height: 400px;"></div>
+  		 <div id="top_x_div" style="width: 1800px; height: 400px; margin:0px 0 0 180px;" ></div>
     	</c:if>
     	
     	
     		<c:if test="${totalList != null}">    		
-    	 <div id="chart_div" style="width: 1300px; height: 600px;"></div>
+    	 <div id="chart_div" style="width: 1300px; height: 600px; margin:0px 0 0 50px"></div>
     		</c:if>
     		
     		
@@ -347,7 +347,7 @@ function change(number){
   	   	  
     	  var data = new google.visualization.arrayToDataTable([
               ['TaskName', 'Percentage'],
-              ['${searchProgress.taskName}',${searchProgress.doneTime/searchProgress.totalTime*100}]
+              ['${searchProgress.taskName}',${(searchProgress.doneTime/searchProgress.totalTime)*100}]
             ]);
 
             var options = {

@@ -14,8 +14,8 @@
     ,#{taskcontent}
     ,#{taskpriority}
     ,#{taskstatus}
-    ,#{startdate}
-    ,#{duedate}
+    ,#{taskstartdate}
+    ,#{taskduedate}
     ,#{totaltime}
     ,#{donetime})
 </insert>
@@ -48,6 +48,8 @@
 							and t.taskname LIKE '%'||#{searchword}||'%'
 	 
 	 </when>
+	 
+	 	
 
    <when test="target == 'HIGH'">
 	   
@@ -133,14 +135,7 @@
 						and u.userno=#{userno}
 							and t.taskname like '%'||#{searchword}||'%'
 			</when>
-			<when test="searchtype=='taskStatus'">
-			
-				t join member m on t.memberno=m.memberno 
-					join users u on m.userno = u.userno
-						and u.userno=#{userno}
-							and t.taskStatus == #{searchword}
-			</when>
-			
+		
 			 <when test="target == 'HIGH'">
 			 
 			 	t join member m on t.memberno=m.memberno 
