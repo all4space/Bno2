@@ -103,7 +103,11 @@ public class MailDAOImpl implements MailDAO {
 		return mapper.checkMail(mailNo);
 	}
 
-	
+	@Override
+	public int deleteMail(int mailNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.deleteMail(mailNo);
+	}
 	
 }
 

@@ -36,6 +36,8 @@ public interface MailMapper {
 	public MailVO getMailInfo(int mailNo);
 	// Check Mail
 	public int checkMail(int mailNo);
+	// Delete Mail
+	public int deleteMail(int mailNo);
 	       
 }
 

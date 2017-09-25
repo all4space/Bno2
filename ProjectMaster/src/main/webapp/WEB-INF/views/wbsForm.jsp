@@ -615,7 +615,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
  
 /* Send Mail 테스트 */
    function sendMail(){
-	   location.href="/planbe/mail/mailForm";  
+	   location.href="/planbe/mail/mailList";  
    }
 
  

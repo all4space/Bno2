@@ -50,8 +50,6 @@ var group;
 function groupSelect(obj){
  
 	// ProjectList or MemberList 가져오기 
-	//alert("function In" + obj.value);
-	
 	group = obj.value;
 	
 	$.ajax({
@@ -118,8 +116,6 @@ function sendMail(){
 	var data = $("#selectedList").val();
 	
 	if(group == "project"){
-		// receiveProject = $("#selectedList :selected").text(); // 300304 
-	//	var data = $("#selectedList").val(); // 300,304
 		for(var i=0; i<data.length; i++){
 			p_no_list += data[i]+",";
 		}
@@ -133,8 +129,6 @@ function sendMail(){
 			
 	var mailTitle = $("#mailTitle").val();
 	var mailContent = $("#mailContent").val();
-	
-//	var list = 	$("#receiveProject :selected").text();;
 	
 	$.ajax({	
 		url: "/planbe/mail/sendMail",
@@ -150,20 +144,18 @@ function sendMail(){
 			alert("success in");
 			if(result) location.href="/planbe/mail/mailList"; 
 		}
-		
 	}); 
 }
+		
 				   
-	
 /* 메일 내용 확인하기 */	
 
 var mail_no; 
 
 function showContent(mailNo){
 	alert("메일 확인");
-	alert(mailNo);
-	
-	mail_no = mailNo;
+	//alert(mailNo);
+    mail_no = mailNo;
 	
 	$.ajax({
   		url: "/planbe/mail/getMailInfo",
@@ -171,7 +163,6 @@ function showContent(mailNo){
   		data: {"mailNo" : mailNo},
   		datatype: "json",
   		success: function(result) {
-            alert("success에 들어옴");	
             
             $(result).each(function(index, item) {
             	$("#msgHead").empty();		
@@ -182,7 +173,6 @@ function showContent(mailNo){
             	$("#msgBody").empty();		
             	var data2 = result.mailContent;
             	$("#msgBody").append(data2);
-            	
    		    }); // for each 
 		}// success
     });
@@ -190,13 +180,20 @@ function showContent(mailNo){
   			
             
 /* 메일 확인 체크하기  */
-function checkMail(){
+function checkMail(mailNo){
 	alert("체크 메일");
-	location.href="/planbe/mail/checkMail?mailNo=" + mail_no; 
+	location.href="/planbe/mail/checkMail?mailNo=" + mailNo; 
 }
  
-
- 
+/* 메일 삭제하기 */ 
+function deleteMail(){
+    alert("메일 삭제");
+    if(mail_no == undefined){
+    	  var no = $("#hiddenNo").val(); 
+    	  mail_no = no;
+    }	
+    location.href="/planbe/mail/deleteMail?mailNo=" + mail_no; 
+}
 </script>
 		
 </head>
@@ -239,102 +236,140 @@ function checkMail(){
 			<div class="row-fluid">
 				
 				<div class="span7">
+				    <!-- 개인 단위로 받은 메일 리스트 -->
 					<h1>Private Inbox</h1>
 					
 					<ul class="messagesList">
 					<c:forEach items="${mmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${umlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							<span class="from">
+							 <c:choose>
+								 <c:when test="${vo.checkMail == 'NO'}">
+								   <i class='icon-check-empty' onclick='checkMail(${vo.mailNo})'></i>
+								 </c:when>
+								 <c:when test="${vo.checkMail == 'YES'}">
+								   <i class='icon-check'></i>
+								 </c:when>
+							 </c:choose>
+							 ${umlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
                              <c:choose>
-				  			 <c:when test="${vo.mailTag == 'INFO'}">
-      							<span class="label label-info">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'TASK'}">
-				  				 <span class="label label-success">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
-				  				 <span class="label label-important">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:otherwise>
-				  				<span class="label label-warning">${vo.mailTag}</span>
-				  			 </c:otherwise>
+					  			 <c:when test="${vo.mailTag == 'INFO'}">
+	      							<span class="label label-info">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'TASK'}">
+					  				 <span class="label label-success">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+					  				 <span class="label label-important">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:otherwise>
+					  				<span class="label label-warning">${vo.mailTag}</span>
+					  			 </c:otherwise>
 						     </c:choose>		
 						     ${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
                     </c:forEach>
 					</ul>
 					
-					
+					<!-- 개인이 소속된 프로젝트 단위로 받은 메일 리스트  -->
 					<h1>Project Inbox</h1>
 					
 					<ul class="messagesList">
-					
 					<c:forEach items="${pmlist}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${umlist2[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							<span class="from">
+							 <c:choose>
+								 <c:when test="${vo.checkMail == 'NO'}">
+								   <i class='icon-check-empty' onclick='checkMail(${vo.mailNo})'></i>
+								 </c:when>
+								 <c:when test="${vo.checkMail == 'YES'}">
+								   <i class='icon-check'></i>
+								 </c:when>
+							 </c:choose>
+							 ${umlist2[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
                              <c:choose>
-				  			 <c:when test="${vo.mailTag == 'INFO'}">
-      							<span class="label label-info">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'TASK'}">
-				  				 <span class="label label-success">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
-				  				 <span class="label label-important">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:otherwise>
-				  				<span class="label label-warning">${vo.mailTag}</span>
-				  			 </c:otherwise>
+					  			 <c:when test="${vo.mailTag == 'INFO'}">
+	      							<span class="label label-info">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'TASK'}">
+					  				 <span class="label label-success">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+					  				 <span class="label label-important">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:otherwise>
+					  				<span class="label label-warning">${vo.mailTag}</span>
+					  			 </c:otherwise>
 						     </c:choose>									
 							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>
 					</ul>
 					
+					<!-- 개인 단위로 보낸 메일 리스트  -->
 					<h1>Private Outbox</h1>
 					
 					<ul class="messagesList">
 					<c:forEach items="${sendM}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${unlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							<span class="from">
+                             <c:choose>
+								 <c:when test="${vo.checkMail == 'NO'}">
+								   <i class='icon-check-empty'></i>
+								 </c:when>
+								 <c:when test="${vo.checkMail == 'YES'}">
+								   <i class='icon-check'></i>
+								 </c:when>
+							 </c:choose>							 
+							${unlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
 							 <c:choose>
-				  			 <c:when test="${vo.mailTag == 'INFO'}">
-      							<span class="label label-info">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'TASK'}">
-				  				 <span class="label label-success">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
-				  				 <span class="label label-important">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:otherwise>
-				  				<span class="label label-warning">${vo.mailTag}</span>
-				  			 </c:otherwise>
+					  			 <c:when test="${vo.mailTag == 'INFO'}">
+	      							<span class="label label-info">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'TASK'}">
+					  				 <span class="label label-success">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+					  				 <span class="label label-important">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:otherwise>
+					  				<span class="label label-warning">${vo.mailTag}</span>
+					  			 </c:otherwise>
 						     </c:choose>		
 							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
 					</c:forEach>	
 					</ul>	
 					
+					<!-- 프로젝트 단위로 보낸 메일 리스트  -->
 					<h1>Project Outbox</h1>
 					
 					<ul class="messagesList">
 					<c:forEach items="${sendP}" var="vo" varStatus="status">
 						<li>
-							<span class="from"><span class="glyphicons star"><i></i></span>${pnlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							<span class="from">
+							<c:choose>
+								 <c:when test="${vo.checkMail == 'NO'}">
+								   <i class='icon-check-empty'></i>
+								 </c:when>
+								 <c:when test="${vo.checkMail == 'YES'}">
+								   <i class='icon-check'></i>
+								 </c:when>
+							 </c:choose>	 
+							 ${pnlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
 							 <c:choose>
-				  			 <c:when test="${vo.mailTag == 'INFO'}">
-      							<span class="label label-info">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'TASK'}">
-				  				 <span class="label label-success">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
-				  				 <span class="label label-important">${vo.mailTag}</span>
-				  			 </c:when>
-				  			 <c:otherwise>
-				  				<span class="label label-warning">${vo.mailTag}</span>
-				  			 </c:otherwise>
+					  			 <c:when test="${vo.mailTag == 'INFO'}">
+	      							<span class="label label-info">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'TASK'}">
+					  				 <span class="label label-success">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:when test="${vo.mailTag == 'PROBLEM'}">
+					  				 <span class="label label-important">${vo.mailTag}</span>
+					  			 </c:when>
+					  			 <c:otherwise>
+					  				<span class="label label-warning">${vo.mailTag}</span>
+					  			 </c:otherwise>
 						     </c:choose>		
 							${vo.mailTitle}</span><span class="date"><b>${vo.sendDate}</b></span>
 						</li>
@@ -355,8 +390,9 @@ function checkMail(){
 				<div class="span5 noMarginLeft">
 					
 					<div class="message dark">
-						
+						<!-- 메일 확인 디폴트 : 개인 단위로 받은 메일의 최신 메일 -->
 						<div class="header" id="msgHead">
+						    <input type="hidden" id="hiddenNo" value="${mmlist[0].mailNo}">
 							<h1>${mmlist[0].mailTitle}</h1>
 						<%-- 	<div class="from"><i class="halflings-icon user"></i> <b>${umlist[0]}</b></div> --%>
 							<div class="date"><i class="halflings-icon time"></i> <b>${mmlist[0].sendDate}</b></div>
@@ -370,8 +406,9 @@ function checkMail(){
 							${mmlist[0].mailContent}
 							</blockquote>
 						<div>
-						<hr style="color: gray;">
-					<!-- 	  <fieldset> -->
+						
+						<hr style="background-color : silver;">
+						
 							<div class="control-group">
 							  <label class="control-label" for="typeahead">Mail Title</label>
 							  <div class="controls">
@@ -410,43 +447,28 @@ function checkMail(){
 								  </select>
 								</div>
 							  </div>
-							    
 							   
-							<div class="control-group hidden-phone">
-							  <label class="control-label" for="textarea2">Mail Content</label>
-							  <div class="controls">
-								<textarea class="cleditor" id="mailContent" rows="3"></textarea>
-							  </div>
-							</div>
-							<div class="actions">
-							  <button type="submit" class="btn btn-primary" onclick="sendMail()">Send Mail</button>
-							  <button type="reset" class="btn">Cancel</button>
-							  <button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button>
-							</div>
+							 <div class="control-group hidden-phone">
+							   <label class="control-label" for="textarea2">Mail Content</label>
+							   <div class="controls">
+								 <textarea class="cleditor" id="mailContent" rows="3"></textarea>
+							   </div>
+							 </div>
+							 
+							 <div class="actions">
+							   <button type="submit" class="btn btn-primary" onclick="sendMail()">Send Mail</button>
+							   <button type="reset" class="btn">Cancel</button>
+							   <button tabindex="3" type="button" class="btn btn-success" onclick="deleteMail()">Delete Mail</button>
+							 </div>
 							
 						</div>
-					
-					<!-- 	<form class="replyForm"method="post" action=""> -->
-
-							<fieldset>
-							<!-- 	<textarea tabindex="3" class="input-xlarge span12" id="message" name="body" rows="12" placeholder="Click here to reply"></textarea> -->
-
-									
-								<!-- 	<button tabindex="3" type="button" class="btn btn-success" onclick="checkMail()">Check message</button> -->
-									
-								</div>
-
-							</fieldset>
-<!-- 
-						</form>	 -->
+						</div>
 						
 					</div>	
 					
 				</div>
 						
 			</div>
-			
-			
 			
 	</div><!--/.fluid-container-->
 	

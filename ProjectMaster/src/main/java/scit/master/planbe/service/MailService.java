@@ -36,5 +36,7 @@ public interface MailService {
 	public MailVO getMailInfo(int mailNo);
 	// Check Mail 
 	public boolean checkMail(int mailNo);
+	// Delete Mail
+	public boolean deleteMail(int mailNo); 
 }
 	

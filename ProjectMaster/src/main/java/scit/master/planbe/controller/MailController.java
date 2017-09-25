@@ -204,4 +204,12 @@ public class MailController {
 	    return "forward:/mail/mailList";
 	}
 	
+	// deleteMail  
+	@RequestMapping(value = "deleteMail", method = RequestMethod.GET)
+	public String  deleteMail(int mailNo) {
+		System.out.println("메일삭제");
+	    System.out.println(Integer.toString(mailNo));  
+	    service.deleteMail(mailNo);
+	    return "forward:/mail/mailList";
+	}
 }

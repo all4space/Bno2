@@ -93,8 +93,11 @@ public class MailServiceImpl implements MailService {
 		return false;
 	}
 
-
-	
+	@Override
+	public boolean deleteMail(int mailNo) {
+		if(dao.deleteMail(mailNo) == 1) return true;
+		return false;
+	}
 
 }
 
