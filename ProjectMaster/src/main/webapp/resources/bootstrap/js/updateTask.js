@@ -10,8 +10,7 @@ $(function(){
 		var totalTime = $('input[name=totalTime]').val();
 		var doneTime = $('input[name=doneTime]').val();
 		
-		alert(totalTime);
-		alert(doneTime);
+		
 		
 		
 		var startDate1 = startDate.split("-");

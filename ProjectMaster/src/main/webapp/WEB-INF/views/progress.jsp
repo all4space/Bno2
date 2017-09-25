@@ -354,15 +354,23 @@ function change(number){
               title: 'Chess opening moves',
               width: 900,
               legend: { position: 'none' },
+             
               chart: { title: '${authority} ${loginId}님의 ${searchProgress.taskName} Progress',
                        subtitle: 'by percentage' },
               bars: 'horizontal', // Required for Material Bar Charts.
               axes: {
                 x: {
-                  0: { side: 'top', label: 'Percentage'} // Top x-axis.
+                  
+                	minValue: 0, maxValue: 100,
+                	0: { side: 'top', label: 'Percentage'}, // Top x-axis.
+                
                 }
+                
               },
-              bar: { groupWidth: "90%" }
+              
+            
+              bar: { groupWidth: "100%" }
+             
             };
 			
             var chart = new google.charts.Bar(document.getElementById('top_x_div'));
@@ -386,22 +394,26 @@ function change(number){
          		  success:function(result){
          			  
          			  var data = google.visualization.arrayToDataTable([
-                          ['Progress(%)','Progress(%),TotalTime(Hours)'],
-                         	[5,6]
-                         	
-                          ],false);
+                          ]);
          			  
+    				  data.addColumn('number','Progress(%)');
+    				  data.addColumn('number','Progress(%)&TotalTime(Hours)');
+    				
        			 
          			  $(result).each(function(index,item){
          				 
-         				data.addRow([parseInt(item.doneTime/item.totalTime*100),item.totalTime]);
+         				data.addRow([parseInt((item.doneTime/item.totalTime)*100),item.totalTime]);
         					
          			  });
          			  
          			   var options = {
                                title: '${authority} ${loginId}님의 Total Task Progress',
                                hAxis: {title: 'Progress(%)', minValue: 0, maxValue: 100},
+                            	   	
+                           
                                vAxis: {title: 'TotalTime(Hours)', minValue: 0, maxValue: 50},
+                            	   		
+                               				
                                legend: 'none'
                              };
              

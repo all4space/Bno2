@@ -40,10 +40,13 @@ public class TaskDAOImpl implements TaskDAO{
 		map.put("userno",userVO.getUserNo());
 		
 		
-		System.out.println(taskVo.getStartDate());
+		
 		
 		Taskmapper mapper = Sqlsession.getMapper(Taskmapper.class);
+		System.out.println(taskVo);
 		 mapper.Insert(map);
+		 
+	
 				
 	}
 
