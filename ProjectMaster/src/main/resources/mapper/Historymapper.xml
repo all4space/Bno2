@@ -27,7 +27,7 @@
 </insert>
 
 <select id = "getHistoryList" parameterType = "int" resultType = "HistoryVO">
-	select * from history where userno = #{userNo}
+	select * from history where userno = #{userNo} order by logtime desc
 </select>
 
 </mapper>

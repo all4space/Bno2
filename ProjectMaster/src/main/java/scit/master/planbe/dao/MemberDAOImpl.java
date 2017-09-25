@@ -51,4 +51,19 @@ public class MemberDAOImpl implements MemberDAO {
 		MemberMapper mapper = Sqlsession.getMapper(MemberMapper.class);
 		return mapper.getMemberList(projectNo);
 	}
+	@Override
+	public boolean favoriteAdd(MemberVO memberVo) {
+		MemberMapper mapper = Sqlsession.getMapper(MemberMapper.class);
+		return mapper.favoriteAdd(memberVo);
+	}
+	@Override
+	public boolean favoriteDelete(MemberVO memberVo) {
+		MemberMapper mapper = Sqlsession.getMapper(MemberMapper.class);
+		return mapper.favoriteDelete(memberVo);
+	}
+	@Override
+	public ArrayList<MemberVO> getFavorite(int userNo) {
+		MemberMapper mapper = Sqlsession.getMapper(MemberMapper.class);
+		return mapper.getFavorite(userNo);
+	}
 }

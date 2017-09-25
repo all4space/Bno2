@@ -13,6 +13,9 @@ public interface MemberService {
 	public HashMap<String,Object> getProjectList(String userId);
 	public ArrayList<Integer> getProjectNo(String userId);
 	public ArrayList<MemberVO> getMemberList(int projectNo);
+	public boolean favoriteAdd(MemberVO memberVo);
+	public boolean favoriteDelete(MemberVO memberVo);
+	public ArrayList<MemberVO> getFavorite(int userNo);
 
 
 }

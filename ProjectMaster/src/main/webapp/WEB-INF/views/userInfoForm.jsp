@@ -106,26 +106,26 @@
 						  addRow2 += '<td>'+item.startDate+'</td>';
 						  addRow2 += '<td class="center">'+item.dueDate+'</td>';
 						 
-						if(item.projectStatus=="Progress")
+						  alert(item.projectStatus);
+						if(item.projectStatus=="NEW")
 						{
 							addRow2 += '<td class="center">';
 							addRow2 += '<span class="label label-success">'+item.projectStatus+'</span>';
 							addRow2 += '</td>';
 						}
-						else if(item.projectStatus=="Waiting")
+						else if(item.projectStatus=="PROGRESS")
 						{
 							addRow2 += '<td class="center">';
 							addRow2 += '<span class="label label-warning">'+item.projectStatus+'</span>';
 							addRow2 += '</td>';
 						}
-						else if(item.projectStatus=="Terminate")
+						else if(item.projectStatus=="COMPLETE")
 						{
 							addRow2 += '<td class="center">';
 							addRow2 += '<span class="label label-important">'+item.projectStatus+'</span>';
 							addRow2 += '</td>';
 						}
 						
-						  addRow2 += '</td>';                                        
 						  addRow2 += '</tr>';                                   
 						
 						  $("#ListList").append(addRow2);
@@ -153,7 +153,7 @@ function history()  // historyList
 			
 			var addRow1 = '<div class="box span12">';
 			addRow1 += '<div class="box-header">';
-			addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>Project List</h2>';
+			addRow1 += '<h2><i class="halflings-icon glass"></i><span class="break"></span>History List</h2>';
 			addRow1 += '<div class="box-icon">';
 			addRow1 += '<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>';
 			addRow1 += '<a href="#" class="btn-minimize"><i 	class="halflings-icon white chevron-up"></i></a>';
@@ -161,7 +161,7 @@ function history()  // historyList
 			addRow1 += '</div>';
 			addRow1 += '</div>';
 			addRow1 += '<div class="box-content">';
-			addRow1 += '<table class="table table-bordered table-striped table-condensed">';
+			addRow1 += '<table class="table table-striped table-bordered bootstrap-datatable datatable">';
 			addRow1 += '<thead>';
 			addRow1 += '<tr>';
 			addRow1 += '<th>LogTime</th>';
@@ -310,7 +310,7 @@ function history()  // historyList
 	
 	
 	
-/* 	function userInfo() // 여기 유저정보 뽑아내야됨
+ 	function userInfo() // 여기 유저정보 뽑아내야됨
 	{
 		alert("B");
 		$.ajax
@@ -324,7 +324,7 @@ function history()  // historyList
 				$(result).each(function(index, item){
 					var addRow = item.projectName;
 					
-					$("#userInfo").append(addRow);
+					$("#test").append(addRow);
 				})
 			},
 			error : function()
@@ -332,7 +332,7 @@ function history()  // historyList
 				alert("error");
 			}
 		})
-	} */
+	} 
 	
 </script>
 </head>

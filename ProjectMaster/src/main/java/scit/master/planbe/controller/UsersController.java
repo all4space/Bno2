@@ -141,10 +141,24 @@ public class UsersController {
         }
         return "redirect:/";
 	}
+	
+	// 유저정보
+	@RequestMapping(value = "userInfo", method = RequestMethod.GET)
+	public String userInfo(int userNo, Model model)
+	{
+		
+		model.addAttribute("userVo", service.getUserInfo(userNo));
+		
+		
+		return "userInfoForm";
+	}
+	
+	
 	//유저 정보 페이지로 이동
 	
+	
 	@RequestMapping(value = "userInfoForm", method = RequestMethod.GET)
-	public String userInfo(int userNo, Model model)
+	public String userInfoForm(int userNo, Model model)
 	{
 		
 		model.addAttribute("userVo", service.getUserInfo(userNo));
