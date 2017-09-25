@@ -61,11 +61,12 @@ public class StaticController {
 			for (UsersVO usersVO : usersNamelist) {
 				if(taskVO.getMemberNo() == usersVO.getUserNo()){
 					TaskVO2 taskAndname = new TaskVO2(taskVO.getProjectNo(),
-							taskVO.getMemberNo(),taskVO.getTaskNo(),
+							usersVO.getUserNo(),taskVO.getTaskNo(),
 							taskVO.getTaskName(),usersVO.getUserName(),
 							taskVO.getTotalTime(),taskVO.getDoneTime());
 						taskandnameList.add(taskAndname);
-				}
+				}else{continue;}
+				break;
 			}
 		}
 		
@@ -76,8 +77,8 @@ public class StaticController {
 			for(UsersVO usersVO : usersNamelist){
 				if(taskVO.getMemberNo() == usersVO.getUserNo()){
 					TaskVO task = new TaskVO(taskVO.getProjectNo(),taskVO.getMemberNo(),
-										   0,taskVO.getTaskName(),usersVO.getUserName(),
-										   null,"complete",taskVO.getStartDate(),
+										   taskVO.getTaskNo(),taskVO.getTaskName(),usersVO.getUserName(),
+										   taskVO.getTaskPriority(),taskVO.getTaskStatus(),taskVO.getStartDate(),
 										   taskVO.getDueDate(),taskVO.getTotalTime(),
 										   taskVO.getDoneTime());
 					newlist.add(task);

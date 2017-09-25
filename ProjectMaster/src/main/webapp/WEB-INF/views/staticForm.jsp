@@ -66,7 +66,7 @@ $(function(){
 		  		data : { "pnoList" : result },
 		  		datatype: "json",
 		  		success: function(result) {
-		  			alert("성공~!"); 
+		  			/* alert("성공~!");  */
 		  			var projectList = result.projectList;
 		  			var percent = result.taskList;
 			  		setEfficiency(projectList, percent);
@@ -160,6 +160,7 @@ $(function(){
 		var betweenDay = (due.getTime() - now.getTime())/1000/60/60/24 ;
 		if(startDate != undefined){
 			var start = new Date(startDate);
+			console.log("s : " + startDate + " / d" + dueDate );
 			betweenDay = (start.getTime() - due.getTime())/1000/60/60/24;
 			return Math.abs(Math.floor(betweenDay));
 		}
@@ -193,7 +194,7 @@ $(function(){
 	function progressOfTask(projectNo){
 		
 			
-		alert("task 진입 :" + projectNo.value );
+		 alert("task 진입 :" + projectNo.value ); 
 		$.ajax({
 	  		url: "/planbe/static/getTaskList",
 	  		type : "post",
@@ -295,10 +296,11 @@ $(function(){
 	
 	/* 랭킹 테스트 */
     function whoIsBest(t_list){
-	   
+    $("#Progress").empty();
 	   var NoArray = []; 
        var NameArray = []; 
-       
+       console.log("djel" + t_list);
+       /*memberNo 와 userName을 저장한다 배열에  */
        for(var i=0; i<t_list.length; i++){
     	   if(!NoArray.contains(t_list[i].memberNo)){
               NoArray.push(t_list[i].memberNo);
@@ -308,6 +310,8 @@ $(function(){
      /*   alert(NoArray); // 3,5,2 */ 	    
       //   alert(NameArray);
      
+     
+     /* memberNo 모은 배열에 정보를 넣는다. */
        var objArray = [];
        for(var i=0; i < NoArray.length; i++){
     	   // if(!NoArray.contains(t_list[i].memberNo)){
@@ -325,6 +329,7 @@ $(function(){
      /*   alert(objArray[0].m_no); // 3 */
        
        for(var i=0; i<t_list.length; i++){
+    	   console.log("시간" + t_list[i].doneTime +"과"+ t_list[i].totalTime);
     	   var doneTime = t_list[i].doneTime.toFixed(2);
       	   var totalTime = t_list[i].totalTime.toFixed(2); 
       	   var rat = (doneTime/totalTime).toFixed(2)*100;
@@ -365,11 +370,12 @@ $(function(){
     }//function 
 	
     function makeEfficienty(efficienty){
-    	
+    	$("#efficienty_chart").empty();
     	$(efficienty).each(function(index,item){
     		var x= howlong(item.dueDate,item.startDate);
     		var y= howlong(item.taskPriority,item.startDate);
-    		var percent = x/y * 100;
+    		var per = x/y * 100;
+    		var percent = Math.round(per);
     		console.log("우왕 : "+ x + " // " + y + " // " + percent);
     		
     		var oneBar = '<div class="singleBar" style = "margin: 10px 10px 10px 10px">';
@@ -462,7 +468,7 @@ $(function(){
 					</div> -->
 <!-- 팀원의 업무 진행도-->	<div class="box-content">
 							<div class="widget blue span5" onTablet="span6" onDesktop="span5">
-									<h2><span class="glyphicons globe"><i></i></span> Job efficiency ranking by team member</h2>
+									<h2><span class="glyphicons globe"><i></i></span> Job efficiency ranking by member</h2>
 										<hr>
 										<div class="content">
 											<div id = "Progress" class="verticalChart">
@@ -473,7 +479,7 @@ $(function(){
 									<!-- </div>/span -->											
 							</div>
 <!-- 완료 업무 효율도  -->			<div class="widget red span5" onTablet="span6" onDesktop="span5">
-										<h2><span class="glyphicons globe"><i></i></span> 보류 </h2>
+										<h2><span class="glyphicons globe"><i></i></span> 수행 완료된 업무의 효율도  </h2>
 										<hr>
 										<div class="content">
 											<div id = "efficienty_chart" class="verticalChart">

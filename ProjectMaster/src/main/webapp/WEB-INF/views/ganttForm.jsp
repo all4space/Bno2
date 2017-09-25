@@ -45,7 +45,7 @@
 <script type = "text/javascript" src="/planbe/resources/js/jquery-3.2.1.min.js"></script>
 <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>	
 </head>
-<style type="text/css"> #chart_div { overflow-y: scroll; height: 500px; } </style> 
+<style type="text/css"> #chart_div { overflow-y: scroll; height: 400px; } </style> 
 <script>
 
 
@@ -87,12 +87,9 @@ function drawChart(GanttList, date) {
   });// for each 
   
   var options = {
-    height: listSize*40,
+    height: listSize*80,
     gantt: {
-      trackHeight: 30,
-      backgroundColor: {
-    	  					fill : 'green'
-				      }
+      trackHeight: 40,
     }
   };
 
@@ -109,7 +106,7 @@ function drawChart(GanttList, date) {
 			button += '<input type = "button" class="btn btn-week" onclick="Gantt('+projectNo+','+date[2]+')" value = "week">';
 		 $(".btn-group").html(button);
 		
- 		var address = ["'/planbe/project/projectUpdateForm?projectNo="+projectNo,"'/planbe/wbs/wbsForm?projectNo="+projectNo+"'"];
+ 		var address = ["'/planbe/project/projectUpdateForm?projectNo="+projectNo+"'","'/planbe/wbs/fromGantt?projectNo="+projectNo+"'"];
 		var button2 = '<button class="btn btn-large btn-primary" onclick= "location.href ='+address[0]+'">Modify Of Project</button>'
 			button2 += '<button class="btn btn-large btn-warning" onclick= "location.href ='+address[1]+'"> View as「 WBS 」</button>';
 		$(".btn_group2").html(button2);
@@ -156,9 +153,10 @@ function drawTaskList(GanttList,UserNameList){
 					oneTask +='<td>'+item.taskContent+'</td>';
 					oneTask +='<td class="center">'+item.startDate+'</td>';
 					oneTask +='<td class="center">'+item.dueDate+'</td>';
+					
 					if(item.taskStatus == 'new'||item.taskStatus == 'NEW'){
 						oneTask +='<td class="center"><span class="label label-warning">'+item.taskStatus+'</span></td>'
-					}else if(item.taskStatus == 'done'){
+					}else if(item.taskStatus == 'progress' || item.taskStatus == 'PROGRESS'){
 						oneTask +='<td class="center"><span class="label label-success">'+item.taskStatus+'</span></td>'
 					}else if(item.taskStatus == 'complete'||item.taskStatus == 'COMPLETE'){
 						oneTask +='<td class="center"><span class="label label-important">'+item.taskStatus+'</span></td>'
@@ -265,15 +263,15 @@ function checkList(taskNo){
 										<td class="center">${project.projectContent}</td>
 										<td class="center">
 								<c:choose>
-						  			<c:when test="${project.projectStatus == 'Waiting'}">
+						  			<c:when test="${project.projectStatus == 'new' || project.projectStatus == 'NEW'}">
 										<span class="label label-warning">${project.projectStatus}</span>
 						  			</c:when>
-						  			<c:when test="${project.projectStatus == 'Progress'}">
+						  			<c:when test="${project.projectStatus == 'Progress' || project.projectStatus == 'PROGRESS'}">
 						  				<span class="label label-success">${project.projectStatus}</span>
 						  			</c:when>
-						  			<c:otherwise>
+						  			<c:when test="${project.projectStatus == 'complete'|| project.projectStatus == 'COMPLETE' }">
 						  				<span class="label label-important">${project.projectStatus}</span>
-						  			</c:otherwise>
+						  			</c:when>
 								</c:choose>						  		
 										</td>
 										<td class="center">${project.startDate}</td>

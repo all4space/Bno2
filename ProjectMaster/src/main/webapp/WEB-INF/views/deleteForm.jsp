@@ -66,6 +66,8 @@
 			  var result = confirm("정말 탈퇴?");
 			    if(result) {
 			       document.fm.submit();
+			    }else{
+			    	return;
 			    }
 		  })
    });
@@ -96,7 +98,7 @@
 						<a href="index.jsp"><i class="halflings-icon home"></i></a>
 						<a href="#"><i class="halflings-icon cog"></i></a>
 					</div>
-					<h2>Create your account</h2>
+					<h2>Select your account to delete</h2>
 					<form class="form-horizontal" name="fm" action="delete" method="post">
 						<fieldset>
 							

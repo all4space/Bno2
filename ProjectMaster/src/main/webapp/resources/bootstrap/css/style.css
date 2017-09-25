@@ -1665,6 +1665,13 @@ input[type="button"].btn-block {
   border-color: #3a6a96;
 }
 
+.btn-modify:hover,
+.btn-modify:focus,
+.btn-modify:active {
+	background-color : #3a6a96 ;
+	border-color: #3a6a96;
+}
+
 
 .btn.disabled:hover,
 .btn[disabled]:hover,

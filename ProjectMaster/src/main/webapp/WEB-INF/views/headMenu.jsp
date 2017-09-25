@@ -317,7 +317,7 @@ function newMessage(taskList){
 								<li class="dropdown-menu-title">
  									<span>Account Settings</span>
 								</li>
-								<li><a href="#"><i class="halflings-icon user"></i> Profile</a></li>
+								<li><a href="/planbe/users/profileForm"><i class="halflings-icon user"></i> Profile</a></li>
 								<c:if test="${userName != null}">
 								<li><a href="/planbe/users/logout"><i class="halflings-icon off"></i> Logout</a></li>
 								</c:if>

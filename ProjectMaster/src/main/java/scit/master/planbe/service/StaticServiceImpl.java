@@ -75,12 +75,12 @@ public class StaticServiceImpl implements StaticService{
 			}
 		}
 		/*System.out.println("re"+userNameList);*/
-		return dao.taskOfusersName(dao.usernoGetMember(memberNoList));
+		return userNameList;
 	}
 
 	@Override
 	public ArrayList<TaskVO> efficienty(ProjectVO vo) {
-		/*System.out.println("service데스 "+ vo);*/
+		System.out.println("service데스 "+ vo);
 		return dao.efficienty(vo);
 	}
 	

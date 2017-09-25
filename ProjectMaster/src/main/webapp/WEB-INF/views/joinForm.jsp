@@ -179,7 +179,7 @@
 								 
 								 <div title="Authority"> 
 		                         <label><input type="radio" name="authority" value="cto" id="cto" checked="checked"/> CTO</label>
-		                         <label><input type="radio" name="authority" value="manager"/> Manager</label>
+		                         <!-- <label><input type="radio" name="authority" value="manager"/> Manager</label> -->
 		                         <label><input type="radio" name="authority" value="member"/> Member</label>
 		                         </div>
 		                         

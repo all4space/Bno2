@@ -48,7 +48,10 @@
 </select>
 
 <select id="efficienty" parameterType = "ProjectVO" resultType = "TaskVO"> <!--taskContent에다가 userName넣어야지 ^^~  -->
-	SELECT distinct t.projectNo,t.memberNo,t.taskName,to_char(h.logTime,'yyyy/mm/dd')as taskPriority,to_char(t.startDate,'yyyy/mm/dd')as startDate,t.dueDate,t.doneTime,t.totalTime FROM task t, history h WHERE t.taskStatus = 'complete' AND t.projectNo = #{projectNo}
+	SELECT distinct t.projectNo,t.memberNo,t.taskName,to_char(h.logTime,'yyyy/mm/dd')as taskPriority,to_char(t.startDate,'yyyy/mm/dd')as startDate,
+	to_char(t.dueDate,'yyyy/mm/dd')as dueDate,t.doneTime,t.totalTime 
+	FROM task t, history h 
+	WHERE t.taskStatus = 'COMPLETE' and t.projectNo = #{projectNo} and h.logcontent like '% > COMPLETE%' AND h.projectNo = #{projectNo}
 </select>
 
 </mapper>

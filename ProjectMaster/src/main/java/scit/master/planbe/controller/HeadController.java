@@ -11,7 +11,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
-import org.springframework.web.bind.support.SessionStatus;
 
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.service.HeadServiceImpl;
@@ -35,7 +34,6 @@ public class HeadController {
 			int percent =  (int) Math.round((donetime / totalTime) * 100);
 			taskVO.setDoneTime(percent);
 		}
-		request.setAttribute("taskCount", service.getTaskCount(userNo));
 		HashMap<String,Object> map = new HashMap<>();
 		map.put("taskList", taskList );
 		map.put("taskCount", service.getTaskCount(userNo));
