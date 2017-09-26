@@ -53,7 +53,7 @@
     </div>
 	
 		<div class="container-fluid-full">
-	
+		<div class="row-fluid"> 
 		
 <!-- Side Menu -->
 	<div>
@@ -93,6 +93,8 @@
 			
 
 	  <div class="container">
+	<div> 
+		
 													
 						
 						
@@ -104,19 +106,24 @@
               
             					
 <div class="search-bar">
-   
+    <div class="search row">    
+        <div class="col-xs-8 col-xs-offset-2">
+		    <div class="input-group">
                 <div class="search">
-           			
-	  				<div>
+                	<ul>                		
+                		<li>	
                 			<select id="searchtype" name="searchtype" style="width:150px">
-                				<option value="title">제목</option>            			              				
+                				<option value="title">제목</option>             			              				
    	            			</select>
    	                      	<input type="text" id="searchword" name="searchword">
    	                      	<input type="button" id="searchbtn" value="검색">
-					</div>
+   	                     </li> 	 	
+                	</ul>
                 </div>
              
-       
+            </div>
+        </div>
+	</div>
 </div>
 
 																	
@@ -292,7 +299,7 @@
                 	<ul>                		
                 		<li>	
                 			<select id="searchtype" name="searchtype" style="width:150px">
-                				<option value="title">제목</option>               				             			              				
+                				<option value="title">제목</option>         				             			              				
    	            			</select>
    	                      	<input type="text" id="searchword" name="searchword">
    	                      	<input type="button" id="searchbtn" value="검색">

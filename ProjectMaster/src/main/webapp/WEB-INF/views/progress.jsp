@@ -130,7 +130,7 @@ function change(number){
         
   		
          
-         <!-- getChart 만들기 시작 -->
+        <!-- getChart 만들기 시작 -->
       
       
        <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
@@ -138,196 +138,12 @@ function change(number){
       
        
        	<c:if test="${searchProgress != null}">
-  		<div id="chart_div1" style="width: 800px; height: 600px; margin:0px 0 0 180px"></div>
+  		 <div id="top_x_div" style="width: 1800px; height: 400px; margin:0px 0 0 260px;" ></div>
     	</c:if>
     	
     	
-    		<c:if test="${totalList != null}">    		
-    	<div id="chart_div2" style="width: 800px; height: 600px; margin:0px 0 0 50px"></div>
-    		</c:if>
-    		
-    		
-  		
-         
-      <script>
-      
-      google.charts.load('current', {packages: ['corechart', 'bar']});
-      google.charts.load('current', {packages:['corechart', 'scatter']});
-      google.charts.setOnLoadCallback(drawMultSeries);
-      google.charts.setOnLoadCallback(drawStuff);
- 
-         
-      function drawMultSeries() {
-    
-  	   	  
-    	   var data = google.visualization.arrayToDataTable([
-    	        ['Genre', 'Fantasy & Sci Fi', 'Romance', 'Mystery/Crime', 'General',
-    	         'Western', 'Literature', { role: 'annotation' } ],   	       
-    	        ['${searchProgress.taskName}', 28, 19, 29, 30, 12, 13, '']
-    	      ]);
-
-    	   var options_fullStacked = {
-    		          isStacked: 'percent',
-    		          height: 550
-    		          ,
-    		          legend: {position: 'top', maxLines: 3},
-    		          vAxis: {
-    		            minValue: 0,
-    		            ticks: [0, .3, .6, .9, 1]
-    		          }
-    		        };
-    		    
-
-            var chart = new google.visualization.ColumnChart(
-              document.getElementById('chart_div1'));
-
-            chart.draw(data, options_fullStacked);
-             
-      };     
-
-    
- 
-      function drawStuff() {
-		
- 	  
-        var chartDiv = document.getElementById('chart_div2');
-
-        var data = new google.visualization.DataTable();
-        data.addColumn('number', 'Student ID');
-        data.addColumn('number', 'Hours Studied');
-        data.addColumn('number', 'Final');
-
-        data.addRows([
-          [0, 0, 67],  [1, 1, 88],   [2, 2, 77],
-          [3, 3, 93],  [4, 4, 85],   [5, 5, 91],
-          [6, 6, 71],  [7, 7, 78],   [8, 8, 93],
-          [9, 9, 80],  [10, 10, 82], [11, 0, 75],
-          [12, 5, 80], [13, 3, 90],  [14, 1, 72],
-          [15, 5, 75], [16, 6, 68],  [17, 7, 98],
-          [18, 3, 82], [19, 9, 94],  [20, 2, 79],
-          [21, 2, 95], [22, 2, 86],  [23, 3, 67],
-          [24, 4, 60], [25, 2, 80],  [26, 6, 92],
-          [27, 2, 81], [28, 8, 79],  [29, 9, 83]
-        ]);
-
-        var materialOptions = {
-          chart: {
-            title: 'Students\' Final Grades',
-            subtitle: 'based on hours studied'
-          },
-          width: 1200,
-          height: 600,
-          series: {
-            0: {axis: 'hours studied'},
-            1: {axis: 'final grade'}
-          },
-          axes: {
-            y: {
-              'hours studied': {label: 'Hours Studied'},
-              'final grade': {label: 'Final Exam Grade'}
-            }
-          }
-        };
-
-        var classicOptions = {
-          width: 1200,
-          series: {
-            0: {targetAxisIndex: 0},
-            1: {targetAxisIndex: 1}
-          },
-          title: 'Students\' Final Grades - based on hours studied',
-
-          vAxes: {
-            // Adds titles to each axis.
-            0: {title: 'Hours Studied'},
-            1: {title: 'Final Exam Grade'}
-          }
-          
-          
-          
-        };
-        
-        drawMaterialChart();
-        
-        function drawMaterialChart() {
-            var materialChart = new google.charts.Scatter(chartDiv);
-            materialChart.draw(data, google.charts.Scatter.convertOptions(materialOptions));
-            
-          }
-        
-
-    
-        
-    	
-        
-      };
-       
-
-        </script>
-    	 
-
-
-	</c:if>
-
-    
-      
- 
-	 	
-	
-	
-	 
-		
- 	
-
-<!-- member인 경우  끝-->
-
-
-
-		<!-- member가 아닌 경우  시작-->
-       
-      <c:if test="${Authority !='member'}">
-      <div class="userId">
-      <h1>${Authority} ${loginId}님의 Progress</h1>
-    	</div>
-      
-      
-      <!-- 검색 창 만들기 -->
-      
-   <div class="searchProgress">
-                	<ul>                		
-                		<li>	
-                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
-                				<option value="Task" selected="selected">Task이름</option>               			 
-                					<c:forEach items="${allList}" var="allList">
-                				<option value="${allList.taskNo}">${allList.taskName}</option>
-                				    </c:forEach>
-                				 <option value="allTask">--AllTask--</option>                   				                   			              				
-   	            			</select>
-  	                      	
-   	                     </li> 	 	
-                	</ul>
-                	
-        
-         </div>
-        
-      
-        
-  		
-         
-         <!-- getChart 만들기 시작 -->
-      
-      
-       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
-       
-      
-       
-       	<c:if test="${searchProgress != null}">
-  		 <div id="top_x_div" style="width: 1800px; height: 400px; margin:0px 0 0 180px;" ></div>
-    	</c:if>
-    	
-    	
-    		<c:if test="${totalList != null}">    		
-    	 <div id="chart_div" style="width: 1300px; height: 600px; margin:0px 0 0 50px"></div>
+    		<c:if test="${totalList != null}">    		  
+    	      <div id="series_chart_div" style="width: 1300px; height: 600px; margin:0px 0 0 50px"></div>
     		</c:if>
     		
     		
@@ -393,36 +209,205 @@ function change(number){
          		  dataType:"json",
          		  success:function(result){
          			  
-         			  var data = google.visualization.arrayToDataTable([
-                          ]);
-         			  
-    				  data.addColumn('number','Progress(%)');
-    				  data.addColumn('number','Progress(%)&TotalTime(Hours)');
-    				
-       			 
-         			  $(result).each(function(index,item){
-         				 
-         				data.addRow([parseInt((item.doneTime/item.totalTime)*100),item.totalTime]);
+                
+                  var data = google.visualization.arrayToDataTable([                                                          
+                    ]);
+                  
+                  data.addColumn('string','TaskName');
+				  data.addColumn('number','Progress(%)');
+				  data.addColumn('number','TotalTime(h)');
+                  
+                  
+                  $(result).each(function(index,item){
+    				  
+       				
+    				  data.addRow([item.taskName,parseInt((item.doneTime/item.totalTime)*100),item.totalTime]);
         					
          			  });
+                  
+
+                    var options = {
+                      title: '${Authority} ${loginId}님의Total Task Progress',
+                      hAxis: {title: 'Progress(%)'},
+                      vAxis: {title: 'TotalTime(hours)'},
+                      bubble: {textStyle: {fontSize: 11}}
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+                    chart.draw(data, options);
          			  
-         			   var options = {
-                               title: '${authority} ${loginId}님의 Total Task Progress',
-                               hAxis: {title: 'Progress(%)', minValue: 0, maxValue: 100},
-                            	   	
-                           
-                               vAxis: {title: 'TotalTime(Hours)', minValue: 0, maxValue: 50},
-                            	   		
-                               				
-                               legend: 'none'
-                             };
-             
+         			  
+         			  
+         		  },
+         		  error:function(){alert("에러 발생")}
+         	 		 });
                  
+    		
+
+          
+                
+      };
+       
+
+        </script>
+    	 
+    	 
+    	 
+    	 <!-- 전체 업무 차트 가져오기 끝 -->
+
+
+	</c:if>
+
+    
+      
+ 
+	 	
+	
+	
+	 
+		
+ 	
+
+<!-- member인 경우  끝-->
+
+
+
+		<!-- member가 아닌 경우  시작-->
+       
+      <c:if test="${Authority !='member'}">
+      <div class="userId">
+      <h1>${Authority} ${loginId}님의 Progress</h1>
+    	</div>
+      
+      
+      <!-- 검색 창 만들기 -->
+      
+   <div class="searchProgress">
+                	<ul>                		
+                		<li>	
+                			<select id="searchProgressType"  style="width:100px"  onchange="javascipt:change(this)">
+                				<option value="Task" selected="selected">Task이름</option>               			 
+                					<c:forEach items="${allList}" var="allList">
+                				<option value="${allList.taskNo}">${allList.taskName}</option>
+                				    </c:forEach>
+                				 <option value="allTask">--AllTask--</option>                   				                   			              				
+   	            			</select>
+  	                      	
+   	                     </li> 	 	
+                	</ul>
+                	
+        
+         </div>
+        
+      
+        
+  		
+         
+         <!-- getChart 만들기 시작 -->
+      
+      
+       <script type="text/javascript" src="https://www.gstatic.com/charts/loader.js"></script>
+       
+      
+       
+       	<c:if test="${searchProgress != null}">
+  		 <div id="top_x_div" style="width: 1800px; height: 400px; margin:0px 0 0 260px;" ></div>
+    	</c:if>
+    	
+    	
+    		<c:if test="${totalList != null}">    		  
+    	      <div id="series_chart_div" style="width: 1300px; height: 600px; margin:0px 0 0 50px"></div>
+    		</c:if>
+    		
+    		
+  		
+         
+      <script>
+      
+      google.charts.load('current', {packages: ['corechart', 'bar']});
+      google.charts.load('current', {packages:['corechart', 'scatter']});
+      google.charts.setOnLoadCallback(drawMultSeries);
+      google.charts.setOnLoadCallback(drawStuff);
+ 
+         
+      function drawMultSeries() {
+    
+    	 
+  	   	  
+    	  var data = new google.visualization.arrayToDataTable([
+              ['TaskName', 'Percentage'],
+              ['${searchProgress.taskName}',${(searchProgress.doneTime/searchProgress.totalTime)*100}]
+            ]);
+
+            var options = {
+              title: 'Chess opening moves',
+              width: 900,
+              legend: { position: 'none' },
+             
+              chart: { title: '${authority} ${loginId}님의 ${searchProgress.taskName} Progress',
+                       subtitle: 'by percentage' },
+              bars: 'horizontal', // Required for Material Bar Charts.
+              axes: {
+                x: {
+                  
+                	minValue: 0, maxValue: 100,
+                	0: { side: 'top', label: 'Percentage'}, // Top x-axis.
+                
+                }
+                
+              },
               
+            
+              bar: { groupWidth: "100%" }
+             
+            };
+			
+            var chart = new google.charts.Bar(document.getElementById('top_x_div'));
+            chart.draw(data, options);
+             
+      };     
+      
+      
+      
+      
+      
+      
+    function drawStuff() {
 
-                  var chart = new google.visualization.ScatterChart(document.getElementById('chart_div'));
+    
+  	
+    		$.ajax({
+         		  url:"/planbe/task/getChart",
+         		  type:"post",
+         		  dataType:"json",
+         		  success:function(result){
+         			  
+                
+                  var data = google.visualization.arrayToDataTable([                                                          
+                    ]);
+                  
+                  data.addColumn('string','TaskName');
+				  data.addColumn('number','Progress(%)');
+				  data.addColumn('number','TotalTime(h)');
+                  
+                  
+                  $(result).each(function(index,item){
+    				  
+       				
+    				  data.addRow([item.taskName,parseInt((item.doneTime/item.totalTime)*100),item.totalTime]);
+        					
+         			  });
+                  
 
-                  chart.draw(data, options);
+                    var options = {
+                      title: '${Authority} ${loginId}님의Total Task Progress',
+                      hAxis: {title: 'Progress(%)'},
+                      vAxis: {title: 'TotalTime(hours)'},
+                      bubble: {textStyle: {fontSize: 11}}
+                    };
+
+                    var chart = new google.visualization.BubbleChart(document.getElementById('series_chart_div'));
+                    chart.draw(data, options);
          			  
          			  
          			  
