@@ -13,8 +13,48 @@
 $(function(){
 	if('${sessionScope.loginId}' != ''){
 		task();
+		
+		history();
 	}
 })
+/* history 불러오기 */
+
+function history()
+{
+	$.ajax({
+  		url: "/planbe/head/getHistory",
+  		type: "post",
+  		datatype: "json",
+  		success: function(result) {
+  			
+  		alert("history 진입ㅇ했니 ? ??")
+  		
+  		$(result).each(function(index, item){
+			var addRow = '<li>';
+			addRow += '<a href ="#">';
+			addRow += '<span class = "icon green"><i class = "icon-comment-alt">';
+			addRow += '</i>';
+			addRow += '</span>';
+			addRow += '<span class = "message">';
+			addRow += item.logContent;
+			addRow += '</span>';
+			addRow += '<span class = "time">'+item.logTime+'</span>';
+			addRow += '</a>';
+			addRow += '</li>';
+						
+			$("#history").append(addRow);
+			
+			})
+			$("#history").trigger("liszt:updated");
+  		
+  		}, // success,
+  		error: function() 
+  		{	
+  			alert("코딩할떄가 제일 행복해요");	
+  		}
+	})
+}
+
 /* TASK 불러오기 */	
 	function task(){
 		$.ajax({
@@ -100,95 +140,45 @@ function newMessage(taskList){
 				</a>
 				<a class="brand" href="/planbe/"><span>PROOO</span></a>
 								
+								
+								
+								
+								
 				<!-- start: Header Menu -->
 				<div class="nav-no-collapse header-nav">
-					<ul class="nav pull-right">
+					<ul class="nav pull-right" >
+					
+					
+					
+					
+					
 						<li class="dropdown hidden-phone">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#" >
 								<i class="icon-bell"></i>
 								<span class="badge red">
 								7 </span>
 							</a>
-							<ul class="dropdown-menu notifications">
+							
+							
+							<ul class="dropdown-menu notifications" id = "history">
 								<li class="dropdown-menu-title">
  									<span>You have 11 notifications</span>
 									<a href="#refresh"><i class="icon-repeat"></i></a>
 								</li>	
-                            	<li>
-                                    <a href="#">
-										<span class="icon blue"><i class="icon-user"></i></span>
-										<span class="message">New user registration</span>
-										<span class="time">1 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon green"><i class="icon-comment-alt"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">7 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon green"><i class="icon-comment-alt"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">8 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon green"><i class="icon-comment-alt"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">16 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon blue"><i class="icon-user"></i></span>
-										<span class="message">New user registration</span>
-										<span class="time">36 min</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon yellow"><i class="icon-shopping-cart"></i></span>
-										<span class="message">2 items sold</span>
-										<span class="time">1 hour</span> 
-                                    </a>
-                                </li>
-								<li class="warning">
-                                    <a href="#">
-										<span class="icon red"><i class="icon-user"></i></span>
-										<span class="message">User deleted account</span>
-										<span class="time">2 hour</span> 
-                                    </a>
-                                </li>
-								<li class="warning">
-                                    <a href="#">
-										<span class="icon red"><i class="icon-shopping-cart"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">6 hour</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon green"><i class="icon-comment-alt"></i></span>
-										<span class="message">New comment</span>
-										<span class="time">yesterday</span> 
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="icon blue"><i class="icon-user"></i></span>
-										<span class="message">New user registration</span>
-										<span class="time">yesterday</span> 
-                                    </a>
-                                </li>
-                                <li class="dropdown-menu-sub-footer">
-                            		<a>View all notifications</a>
+                            	
+								
+                                <li>
+                            		<a class="dropdown-menu-sub-footer" href = "#">View all historys</a>
 								</li>	
 							</ul>
+							
+							
+							
 						</li>
+						
+						
+						
+						
 						<!-- start: Notifications Dropdown -->
 						<li class="dropdown hidden-phone">
 							<a class="btn dropdown-toggle" id = "taskprogress_badge" data-toggle="dropdown" href="#">
@@ -207,6 +197,15 @@ function newMessage(taskList){
 								</li>	
 							</ul>
 						</li>
+						
+						
+						
+						
+						
+						
+						
+						
+						
 						<!-- end: Notifications Dropdown -->
 						<!-- start: Message Dropdown -->
 						<li class="dropdown hidden-phone">

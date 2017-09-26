@@ -12,8 +12,10 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.service.HeadServiceImpl;
+import scit.master.planbe.service.HistoryServiceImpl;
 
 @RequestMapping("/head")
 @Controller
@@ -21,6 +23,9 @@ public class HeadController {
 
 	@Autowired
 	HeadServiceImpl service;
+	
+	@Autowired
+	HistoryServiceImpl historyService;
 	
 	@RequestMapping(value = "getTask", method = RequestMethod.POST)
 	@ResponseBody
@@ -39,5 +44,19 @@ public class HeadController {
 		map.put("taskCount", service.getTaskCount(userNo));
 		System.out.println("안녕히가세요 컨트롤러 였습니다.");
 		return map;
+	}
+	
+	@RequestMapping(value = "getHistory", method = RequestMethod.POST)
+	@ResponseBody
+	public ArrayList<HistoryVO> getHistory(HttpSession session, HttpServletRequest request) {
+		
+		System.out.println("여기는 히스토리 컨트롤입니다..");
+		
+		int userNo = (int) session.getAttribute("userno");
+		ArrayList<HistoryVO> history = historyService.getHistory(userNo);
+				
+		System.out.println(history.toString());
+		
+		return history;
 	}
 }

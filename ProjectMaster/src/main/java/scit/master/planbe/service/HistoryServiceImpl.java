@@ -32,4 +32,8 @@ public class HistoryServiceImpl implements HistoryService{
 	public ArrayList<HistoryVO> getHistoryList(int userNo) {
 		return dao.getHistoryList(userNo);
 	}
+	@Override
+	public ArrayList<HistoryVO> getHistory(int userNo) {
+		return dao.getHistory(userNo);
+	}
 }

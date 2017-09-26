@@ -13,6 +13,8 @@ public interface HistoryDAO {
 	public void addHistory(HistoryVO history);
 
 	public ArrayList<HistoryVO> getHistoryList(int userNo);
+
+	public ArrayList<HistoryVO> getHistory(int userNo);
 	
 		
 }

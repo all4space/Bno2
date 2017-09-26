@@ -30,4 +30,9 @@
 	select * from history where userno = #{userNo} order by logtime desc
 </select>
 
+<select id = "getHistory" parameterType = "int" resultType = "HistoryVO">
+	select h.projectno, h.logtime, h.logcontent  from history h, member m where m.projectno = h.projectno and m.userno = #{userno} order by h.logtime desc
+</select>	
+
+
 </mapper>
