@@ -28,43 +28,70 @@ $(document).ready(function(){
         selectable: true,
         eventLimit: true, // allow "more" link when too many events
         events:  
-        	/*[{          title: 'asdf',
+        			/*[{  title: 'asdf',
                             start: '2017-09-20', // will be parsed
                             end :  '2017-09-21'}],*/
    
         function(start, end,callback) {
         	
-        
-        	
-            $.ajax({
+      
+        	// 개인 plan List 가져오기
+           $.ajax({
                 url: '/planbe/plan/getList',
                 type: "POST",
                 dataType: "json",
                 success: function(result) {
-                	
+             	
                     var events = [];
-                    $(result).each(function() {
-                       events.push({
-                            title: $(this).attr('title'),
-                            startTime: $(this).attr('startTime'),
-                            start: $(this).attr('startDate'), // will be parsed
-                            endTime: $(this).attr('endTime'),
-                            end: $(this).attr('endDate'),
-                            content: $(this).attr('content'),
-                            calno: $(this).attr('calNo')
-                                               
-                        });
-                       
+                 // Calendar DB에서 Plan 데이터 가져오기
+                    $.each(result.planList, function(index,value){
+                  
+                    	 events.push({
+                             
+                     	    title: $(this).attr('title'),
+                             startTime: $(this).attr('startTime'),
+                             start: $(this).attr('startDate'), // will be parsed
+                             endTime: $(this).attr('endTime'),
+                             end: $(this).attr('endDate'),
+                             content: $(this).attr('content'),
+                             calno: $(this).attr('calNo'),
+                             backgroundColor: '#B22222',
+                             number:'0'
+                                                
+                         });
+                    	 
+                    	  
+                         
                     });
                     
-                
+                    // Task DB에서  데이터 가져오기
+                    $.each(result.TaskList, function(index,value){
+                    	
+                    	 events.push({
+                             
+                     	    title: $(this).attr('taskName'),                       
+                             start: $(this).attr('startDate'), // will be parsed                             
+                             end: $(this).attr('dueDate'),
+                             content: $(this).attr('taskContent'),
+                             backgroundColor: '#228B22',
+                             number:'1'
+                           
+                                               
+                         });
+                  	 
+                    });
+              
                    callback(events);
                    
-                 
-                }
-            });
+                	
+                } // success function()
+          
+           
+            });// ajax
+            
+        
         },
-
+        eventColor: '#FFFFFF',
         	
         dayClick: function(date, jsEvent, view) {
         	       	
@@ -104,13 +131,15 @@ $(document).ready(function(){
        },
        
        eventClick:function(event){
-    	  
-    	  
-    		if (event.title != null) {
-				
+    	   
+    	  if (event.number == '0') {
+			
+    		  
+			
     			 $("#summary").attr("value",event.title);
       		   
-        		 
+    			
+    			 
       		   var clock=(event.startTime).toString().split(" ")
       		   var realClock=clock[1].split(":")
       		   var time=realClock[0]+":"+realClock[1]
@@ -119,8 +148,7 @@ $(document).ready(function(){
       		   
       		   var endtime=null;
       		   var endDate =null;    
-      		   
-      		   
+      	
       			   
       			   var endclock=(event.endTime).toString().split(" ")
           		   var realendClock=endclock[1].split(":")
@@ -141,8 +169,15 @@ $(document).ready(function(){
       		   $("#description").attr("value",event.content);
       		   $("#schduleForm").modal("show");
     			
-			}
-    	   	
+			
+    	  }else if (event.number == '1') {
+    		  
+    		 
+    		  
+    		  
+    		  location.href="/planbe/task/updateTaskForm";
+    		  
+		}
     		
     	   	
 		}

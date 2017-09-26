@@ -2,19 +2,22 @@ package scit.master.planbe.controller;
 
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import scit.master.planbe.VO.PlanVO;
+import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.service.PlanServiceImpl;
+import scit.master.planbe.service.TaskServiceImpl;
 
 @RequestMapping("/plan")
 @Controller
@@ -23,12 +26,15 @@ public class PlanController {
 	@Autowired
 	PlanServiceImpl service;
 	
+	@Autowired
+	TaskServiceImpl ts;
+	
 	// Plan 페이지 불러오기 
 	@RequestMapping(value ="planForm", method = RequestMethod.GET)
 	public String planForm(Model model, HttpSession session) {		
 		int userNo=(int)session.getAttribute("userno");
 		model.addAttribute("userNo", userNo);
-		model.addAttribute("getList", service.getList());
+		
 		return "planForm";
 	}
 	
@@ -71,19 +77,29 @@ public class PlanController {
 				}
 				
 				
-				// 일정 리스트 가져오기
+				// 일정 리스트 가져오기(calendar DB에서 가져오기// 개인 plan)
 				
 			
 				@RequestMapping(value ="getList", method = RequestMethod.POST)
 				@ResponseBody
-				public ArrayList<PlanVO> getList(Model model) {
-					ArrayList<PlanVO>list=new ArrayList<>();
-					list=service.getList();
+				public HashMap<String,Object> getList(Model model,HttpSession session) {
 					
-					return list;
+					ArrayList<PlanVO>list=new ArrayList<>();
+					ArrayList<TaskVO>taskList=new ArrayList<>();
+					
+					HashMap<String,Object>map=new HashMap<>();
+					
+						list=service.getList(); 
+						
+						int userno = (int) session.getAttribute("userno");	
+						taskList=ts.getTotalList(userno); 
+						
+						map.put("planList", list);
+						map.put("TaskList", taskList);
+					
+				
+					return map;
 				}	
-				
-
-				
+			
 	
 }

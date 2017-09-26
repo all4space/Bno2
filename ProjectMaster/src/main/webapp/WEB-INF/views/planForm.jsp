@@ -131,11 +131,19 @@
   	
   	
   	
+  
+  	
+  	
+  	
+  	
   	//$('#basicExample').timepicker();
   	
     
     
 	</script>
+	
+	
+
 	
 
 	
@@ -179,20 +187,39 @@
 			</ul>
 			
 			<div>
-				<a href="/planbe/plan/pdfForm"><input type="button" id="excel" class="pull-right" value="PDF"/></a>
+				<span><h1>${Authority} ${loginId}님의 Calendar</h1></span>
 			</div>
+			
+			
+			
 
 			<div class="row-fluid sortable">
 				<div class="box span12">
 				  <div class="box-header" data-original-title>
 					  <h2><i class="halflings-icon white calendar"></i><span class="break"></span>Calendar</h2>
 				  </div>
+				  
 				 
-				
-
+					<!-- calendar 시작-->
+																
 						<div id="calendar" class="span9"></div>
-
-						<div class="clearfix"></div>
+				
+					
+					<!-- calendar 끝-->
+					
+					
+				
+					
+					
+						<div class="clearfix">
+							<div>								
+							<p><font><h2>${Authority} ${loginId}님의 TaskList</h2></font></p><br>
+													
+							<p><font><h2>${Authority} ${loginId}님의 PlanList</h2></font></p>
+							</div>
+							
+							
+						</div>
 					
 			
 					
