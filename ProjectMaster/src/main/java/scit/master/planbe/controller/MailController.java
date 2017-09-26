@@ -129,59 +129,66 @@ public class MailController {
 		int userNo = uvo.getUserNo();
 		
 		/* 개인에게 온 메일리스트 가져오기  */
-		ArrayList<MailVO> mmlist = service.getMemberMailList(userNo);
+		ArrayList<MailVO> m_mail_list = service.getMemberMailList(userNo);
 		/* 메일 송신자의 userName 가져오기 */
-		ArrayList<String> umlist = new ArrayList<>();
-		for(MailVO vo : mmlist){
+		ArrayList<String> u_name_list = new ArrayList<>();
+		for(MailVO vo : m_mail_list){
 			UsersVO uvo2 = service.getUserInfo2(vo.getUserNo());
-            umlist.add(uvo2.getUserName());
+            u_name_list.add(uvo2.getUserName());
 		}
 		
-		/* 프로젝트에게 온 메일리스트 불러오기 */
-		ArrayList<MailVO> pmlist = service.getProjectMailList(userNo);
+		/* 프로젝트에게 온 메일리스트 가져오기 */
+		ArrayList<MailVO> p_mail_list = service.getProjectMailList(userNo);
+        ArrayList<String> p_name_list = new ArrayList<>();
+        ArrayList<String> u_name_list2 = new ArrayList<>();
 
-		/* 메일 송신자의 userName 가져오기 */
-		ArrayList<String> umlist2 = new ArrayList<>();
-		for(MailVO vo : pmlist){
+        /* 메일 송신자가 지정한 projectName & 메일 송신자의 userName 가져오기 */
+		for(MailVO vo : p_mail_list){
+			int projectNo = vo.getReceiveProject();
+			p_name_list.add(service.getProjectName(projectNo));
 			UsersVO uvo2 = service.getUserInfo2(vo.getUserNo());
-            umlist2.add(uvo2.getUserName());
+			u_name_list2.add(uvo2.getUserName());
 		}
+
 		
 		/* 내가 보낸 메일 리스트 가져오기 */
-		ArrayList<MailVO> smlist = service.getMySendMailList(userNo);
-		ArrayList<MailVO> sendM = new ArrayList<>();
-		ArrayList<MailVO> sendP = new ArrayList<>();
+		ArrayList<MailVO> send_mail_list = service.getMySendMailList(userNo);
+		ArrayList<MailVO> send_to_M = new ArrayList<>();
+		ArrayList<MailVO> send_to_P = new ArrayList<>();
 		
-		for(MailVO vo : smlist){
+		for(MailVO vo : send_mail_list){
 		    if(vo.getReceiveProject() == 0){
-			   sendM.add(vo);    
+			   send_to_M.add(vo);    
 		    } else { 
-               sendP.add(vo);		    	
+               send_to_P.add(vo);		    	
 		    }
 		}
 		
-		/* 메일 수신자의 projectNAme 가져오기 */
-		ArrayList<String> pnlist = new ArrayList<>();
-		for(MailVO vo : sendP){
+		/* 메일 수신자의 projectName 가져오기 */
+		ArrayList<String> p_name_list2 = new ArrayList<>();
+		for(MailVO vo : send_to_P){
 			int projectNo = vo.getReceiveProject();
-			pnlist.add(service.getProjectName(projectNo));
+			p_name_list2.add(service.getProjectName(projectNo));
 		}
 
 		/* 메일 수신자의 userName 가져오기 */
-	    ArrayList<String> unlist = new ArrayList<>(); 
-	    for(MailVO vo : sendM){
+	    ArrayList<String> u_name_list3 = new ArrayList<>(); 
+	    for(MailVO vo : send_to_M){
 	    	int userNo2 = vo.getReceiveMember();
-	    	unlist.add(service.getUserName(userNo2));
+	    	u_name_list3.add(service.getUserName(userNo2));
 	    }
 		
-		model.addAttribute("mmlist", mmlist);
-		model.addAttribute("umlist", umlist);
-		model.addAttribute("pmlist", pmlist);
-		model.addAttribute("umlist2", umlist2);
-		model.addAttribute("sendP", sendP); 
-		model.addAttribute("sendM", sendM);
-		model.addAttribute("pnlist", pnlist);
-		model.addAttribute("unlist", unlist);
+		model.addAttribute("m_mail_list", m_mail_list);
+		model.addAttribute("u_name_list", u_name_list);
+		
+		model.addAttribute("p_mail_list", p_mail_list);
+		model.addAttribute("p_name_list", p_name_list);
+		model.addAttribute("u_name_list2", u_name_list2);
+		
+		model.addAttribute("send_to_M", send_to_M);
+		model.addAttribute("send_to_P", send_to_P); 
+		model.addAttribute("u_name_list3", u_name_list3);
+		model.addAttribute("p_name_list2", p_name_list2);
 		
 		return "mailList";
 	}
@@ -189,10 +196,18 @@ public class MailController {
 	// getMailInfo 불러오기 
 	@RequestMapping(value = "getMailInfo", method = RequestMethod.POST)
 	@ResponseBody
-	public MailVO getMailInfo(int mailNo) {
+	public HashMap<String, Object> getMailInfo(int mailNo) {
 		System.out.println("메일인포");
-	    System.out.println(Integer.toString(mailNo));  
-	    return service.getMailInfo(mailNo);
+		System.out.println(Integer.toString(mailNo));  
+        
+		HashMap<String, Object> map = new HashMap<>();
+		MailVO vo = service.getMailInfo(mailNo);
+        String writer = service.getUserName(vo.getUserNo());
+		
+        map.put("mail", vo);
+		map.put("writer", writer);
+	    
+		return map;
 	}
 	
 	// checkMail  

@@ -164,16 +164,21 @@ function showContent(mailNo){
   		datatype: "json",
   		success: function(result) {
             
-            $(result).each(function(index, item) {
+  			var mail = result.mail;
+  			var writer = result.writer; 
+  			
+          //  $(mail).each(function(index, item) {
             	$("#msgHead").empty();		
-            	var data = "<h1>" + result.mailTitle + "</h1>"
-                         + "<div class='date'><i class='halflings-icon time'></i> <b>" + result.sendDate + "</b></div>";
+            	var data = "<h1>" + mail.mailTitle + "</h1>"
+            	         + "<div class='from'><i class='halflings-icon user'></i> <b>" + writer + "</b></div>"
+                         + "<div class='date'><i class='halflings-icon time'></i> <b>" + mail.sendDate + "</b></div>";
             	$("#msgHead").append(data);
             	
             	$("#msgBody").empty();		
-            	var data2 = result.mailContent;
+            	var data2 = mail.mailContent;
             	$("#msgBody").append(data2);
-   		    }); // for each 
+            	
+   		   // }); // for each 
 		}// success
     });
 }
@@ -240,7 +245,7 @@ function deleteMail(){
 					<h1>Private Inbox</h1>
 					
 					<ul class="messagesList">
-					<c:forEach items="${mmlist}" var="vo" varStatus="status">
+					<c:forEach items="${m_mail_list}" var="vo" varStatus="status">
 						<li>
 							<span class="from">
 							 <c:choose>
@@ -251,7 +256,7 @@ function deleteMail(){
 								   <i class='icon-check'></i>
 								 </c:when>
 							 </c:choose>
-							 ${umlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							 ${u_name_list[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
                              <c:choose>
 					  			 <c:when test="${vo.mailTag == 'INFO'}">
 	      							<span class="label label-info">${vo.mailTag}</span>
@@ -275,7 +280,7 @@ function deleteMail(){
 					<h1>Project Inbox</h1>
 					
 					<ul class="messagesList">
-					<c:forEach items="${pmlist}" var="vo" varStatus="status">
+					<c:forEach items="${p_mail_list}" var="vo" varStatus="status">
 						<li>
 							<span class="from">
 							 <c:choose>
@@ -286,7 +291,7 @@ function deleteMail(){
 								   <i class='icon-check'></i>
 								 </c:when>
 							 </c:choose>
-							 ${umlist2[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							 ${u_name_list2[status.index]}  <span class="label label">${p_name_list[status.index]}</span></span><span class="title" onclick="showContent(${vo.mailNo})">
                              <c:choose>
 					  			 <c:when test="${vo.mailTag == 'INFO'}">
 	      							<span class="label label-info">${vo.mailTag}</span>
@@ -310,7 +315,7 @@ function deleteMail(){
 					<h1>Private Outbox</h1>
 					
 					<ul class="messagesList">
-					<c:forEach items="${sendM}" var="vo" varStatus="status">
+					<c:forEach items="${send_to_M}" var="vo" varStatus="status">
 						<li>
 							<span class="from">
                              <c:choose>
@@ -321,7 +326,7 @@ function deleteMail(){
 								   <i class='icon-check'></i>
 								 </c:when>
 							 </c:choose>							 
-							${unlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							${u_name_list3[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
 							 <c:choose>
 					  			 <c:when test="${vo.mailTag == 'INFO'}">
 	      							<span class="label label-info">${vo.mailTag}</span>
@@ -345,7 +350,7 @@ function deleteMail(){
 					<h1>Project Outbox</h1>
 					
 					<ul class="messagesList">
-					<c:forEach items="${sendP}" var="vo" varStatus="status">
+					<c:forEach items="${send_to_P}" var="vo" varStatus="status">
 						<li>
 							<span class="from">
 							<c:choose>
@@ -356,7 +361,7 @@ function deleteMail(){
 								   <i class='icon-check'></i>
 								 </c:when>
 							 </c:choose>	 
-							 ${pnlist[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
+							 ${p_name_list2[status.index]}</span><span class="title" onclick="showContent(${vo.mailNo})">
 							 <c:choose>
 					  			 <c:when test="${vo.mailTag == 'INFO'}">
 	      							<span class="label label-info">${vo.mailTag}</span>
@@ -392,10 +397,10 @@ function deleteMail(){
 					<div class="message dark">
 						<!-- 메일 확인 디폴트 : 개인 단위로 받은 메일의 최신 메일 -->
 						<div class="header" id="msgHead">
-						    <input type="hidden" id="hiddenNo" value="${mmlist[0].mailNo}">
-							<h1>${mmlist[0].mailTitle}</h1>
-						<%-- 	<div class="from"><i class="halflings-icon user"></i> <b>${umlist[0]}</b></div> --%>
-							<div class="date"><i class="halflings-icon time"></i> <b>${mmlist[0].sendDate}</b></div>
+						    <input type="hidden" id="hiddenNo" value="${m_mail_list[0].mailNo}">
+							<h1>${m_mail_list[0].mailTitle}</h1>
+							<div class="from"><i class="halflings-icon user"></i> <b>${u_name_list[0]}</b></div>
+							<div class="date"><i class="halflings-icon time"></i> <b>${m_mail_list[0].sendDate}</b></div>
 							
 							<div class="menu"></div>
 							
@@ -403,7 +408,7 @@ function deleteMail(){
 						
 						<div class="content" >
 							<blockquote id="msgBody">
-							${mmlist[0].mailContent}
+							${m_mail_list[0].mailContent}
 							</blockquote>
 						<div>
 						
