@@ -27,7 +27,6 @@ function history()
   		datatype: "json",
   		success: function(result) {
   			
-  		alert("history 진입ㅇ했니 ? ??")
   		
   		$(result).each(function(index, item){
 			var addRow = '<li>';
@@ -50,7 +49,6 @@ function history()
   		}, // success,
   		error: function() 
   		{	
-  			alert("코딩할떄가 제일 행복해요");	
   		}
 	})
 }
@@ -160,18 +158,16 @@ function newMessage(taskList){
 							</a>
 							
 							
-							<ul class="dropdown-menu notifications" id = "history">
+							<ul class="dropdown-menu notifications">
 								<li class="dropdown-menu-title">
  									<span>You have 11 notifications</span>
 									<a href="#refresh"><i class="icon-repeat"></i></a>
 								</li>	
-                            	
-								
+                            	<div id="history"></div>
                                 <li>
                             		<a class="dropdown-menu-sub-footer" href = "#">View all historys</a>
 								</li>	
 							</ul>
-							
 							
 							
 						</li>
