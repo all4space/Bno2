@@ -456,7 +456,7 @@ function historyList()
 							<p>Calendar</p>
 							<span class="notification red">8</span>
 						</a>
-						<a href = "/planbe/email/sendEmail" class="quick-button span2">
+						<a href = "/planbe/mail/mailList" class="quick-button span2">
 							<i class="icon-envelope"></i>
 							<p>E-mail</p>
 						</a>
@@ -472,13 +472,13 @@ function historyList()
 						<br><br>
 					</div>	
 			</div><!--/row-->
+					<div id = "test"></div>
 		</div>
 		</div>
 		
 					<!-- //고고뗴 -->
 					
 					
-					<div id = "test"></div>
 							<div class="row-fluid">
 				
 			</div>
