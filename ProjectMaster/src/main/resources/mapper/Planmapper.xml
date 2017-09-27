@@ -6,6 +6,7 @@
 <mapper namespace="scit.master.planbe.dao.PlanMapper">
 
 
+
 <!-- 일정 생성하기 -->
 <insert id="insertPlan" parameterType="PlanVO">
 	insert into calendar values(
