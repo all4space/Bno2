@@ -11,6 +11,8 @@ $(function(){
 		var dueDate=$('input[name=dueDate]').val();	
 		var totalTime = $('input[name=totalTime]').val();
 		var doneTime = $('input[name=doneTime]').val();
+		
+	
 	
 		
 		var startDate1 = startDate.split("-");
@@ -23,8 +25,13 @@ $(function(){
 		var intDueDate = parseInt(dueDate2);
 		
 		
+		
+		
 		if (projectName == "") {
 			alert("프로젝트 이름을 선택해 주세요")
+			return false;
+		}else if (!$('#pms > option:selected').val()) {
+			alert("멤버를 지정해주세요");
 			return false;
 		}else if (taskName.length <=0) {
 			alert("업무이름을 입력하세요");

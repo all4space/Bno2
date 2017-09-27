@@ -64,8 +64,8 @@ public class TaskServiceImpl implements TaskService{
 
 	//업무 생성하기
 	@Override
-	public void Insert(TaskVO task,UsersVO user) {
-		taskDao.Insert(task,user);				
+	public void Insert(TaskVO task,int userno) {
+		taskDao.Insert(task,userno);				
 	}
 
 	@Override

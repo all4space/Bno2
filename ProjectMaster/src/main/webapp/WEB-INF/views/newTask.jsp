@@ -62,7 +62,7 @@ function member(project)
 	
 	$("#projectNo").attr("value",numberValue);	
 	
-	alert(project.value);
+
 	$.ajax
 	({
 		url :"/planbe/task/projectMemberList",
@@ -71,17 +71,17 @@ function member(project)
 		dataType:"json",
 		success:function(result)
 		{
+			
 			$("#pms").empty();
 			
+		
+			
 			$(result).each(function(index, item){
-			var addRow = '<option>'
-						+ item.userId
-						+ '</option>';
-						
+			var addRow  = '<option value='+item.userNo+'>'+item.userId+'</option>';
+			
 			$("#pms").append(addRow);
 			
 			})
-			$("#pms").trigger("liszt:updated");
 		},
 		error : function()
 		{
@@ -142,13 +142,13 @@ function member(project)
 	
 	<!-- Member 인 경우 -->
        
-      <c:if test="${authority == 'member'}">
+      <c:if test="${Authority == 'member'}">
       
    <form action="/planbe/task/newTask" method="POST">	     
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
+            <legend><h1>${Authority} ${loginId}님의 NewTask</h1></legend>
             
          <span class="pull-right" id="projectNoList">
          	<label>ProjectName</label>
@@ -278,13 +278,13 @@ function member(project)
 
 <!-- member가 아닌 경우 시작 -->
 
-	      <c:if test="${authority != 'member'}">
+	      <c:if test="${Authority != 'member'}">
       
    <form action="/planbe/task/newTask" method="POST">	     
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${authority} ${loginId}님의 NewTask</h1></legend>
+            <legend><h1>${Authority} ${loginId}님의 NewTask</h1></legend>
             
       <span class="pull-right" id="projectNoList">
          	<label>ProjectName</label>
@@ -294,8 +294,11 @@ function member(project)
  							<option value="${project.projectNo}">${project.projectName}</option>
  					</c:forEach>
          		</select>
- 					<select id = "pms" name ="pms">
- 					</select>
+         		<label>memberName</label>
+ 					<select style="width:100px" id="pms" name="pms">
+ 			
+         			</select>
+ 					
 					        		
          	      		
          </span>   
@@ -338,10 +341,10 @@ function member(project)
                      <th>Priority</th>
                      <td>
                          <select class="form-control" id="taskPriority" name="taskPriority">
+                                <option selected="selected" value="">--선택--</option>
                                 <option value="high">HIGH</option>
                                 <option value="normal">NORMAL</option>
                                 <option value="low">LOW</option>
-                                <option selected="selected" value="">--선택--</option>
                             </select>   
                        </td>                         
                     </tr>

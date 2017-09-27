@@ -163,15 +163,15 @@
 										<td>
 											
 											<c:choose>
-															<c:when test="${task.taskStatus=='NEW'}">
+															<c:when test="${task.taskStatus eq 'NEW'}">
 															  <span><h2 class="green">${task.taskStatus}</h2></span>
 															</c:when>
 															
-															<c:when test="${task.taskStatus=='PROGRESS'}">
+															<c:when test="${task.taskStatus eq 'PROGRESS'}">
 															  <span><h2 class="yellow">${task.taskStatus}</h2></span>
 															</c:when>
 															
-															<c:when test="${task.taskStatus=='COMPLETE'}">
+															<c:when test="${task.taskStatus eq 'COMPLETE'}">
 															  <span><h2 class="red">${task.taskStatus}</h2></span>
 															</c:when>
 															
@@ -199,15 +199,15 @@
 														${task.taskName}
 																												
 														<c:choose>
-															<c:when test="${task.taskPriority=='HIGH'}">
+															<c:when test="${task.taskPriority eq 'HIGH'}">
 															  <span class="pull-right red">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='NORMAL'}">
+															<c:when test="${task.taskPriority eq 'NORMAL'}">
 															  <span class="pull-right yellow">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='LOW'}">
+															<c:when test="${task.taskPriority eq 'LOW'}">
 															  <span class="pull-right green">${task.taskPriority}</span>
 															</c:when>
 															
@@ -387,15 +387,15 @@
 														${task.taskName}
 																												
 														<c:choose>
-															<c:when test="${task.taskPriority=='HIGH'}">
+															<c:when test="${task.taskPriority eq 'HIGH'}">
 															  <span class="pull-right red">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='NORMAL'}">
+															<c:when test="${task.taskPriority eq 'NORMAL'}">
 															  <span class="pull-right yellow">${task.taskPriority}</span>
 															</c:when>
 															
-															<c:when test="${task.taskPriority=='LOW'}">
+															<c:when test="${task.taskPriority eq 'LOW'}">
 															  <span class="pull-right green">${task.taskPriority}</span>
 															</c:when>
 															

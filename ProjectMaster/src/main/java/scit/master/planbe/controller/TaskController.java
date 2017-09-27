@@ -1,6 +1,7 @@
 package scit.master.planbe.controller;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -8,6 +9,7 @@ import javax.servlet.http.HttpSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -16,6 +18,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.PageNavigator;
+import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
 import scit.master.planbe.dao.UsersDAOImpl;
@@ -59,6 +62,8 @@ public class TaskController {
 		PageNavigator navi = new PageNavigator(currentPage, totalRecordCount, 5);
 		model.addAttribute("taskList",task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage())); 
 		model.addAttribute("result", navi);
+		
+		System.out.println(task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage()));
 		return "taskForm";				
 	}
 	
@@ -76,7 +81,8 @@ public class TaskController {
 	@ResponseBody
 	@RequestMapping(value="getChart", method= RequestMethod.POST)
 	public ArrayList<TaskVO> getChart(Model model,HttpSession session) {
-		int userno = (int) session.getAttribute("userno");		
+		int userno = (int) session.getAttribute("userno");	
+		
 		return task.getTotalList(userno);
 	}
 	
@@ -84,25 +90,30 @@ public class TaskController {
 	@RequestMapping(value = "newTaskForm")
 	public String newTaskForm(ArrayList<MemberVO> memberVo, Model model,HttpSession session) {		
 		
-		
-		
+	
 		model.addAttribute("projectVO", ps.getProjectList((int)session.getAttribute("userno")));
 		model.addAttribute("projectList", ms.getProjectNo((String)session.getAttribute("loginId")));
-		System.out.println(ms.getProjectNo((String)session.getAttribute("loginId")));
+		
+	
 		return "newTask";
 	}
 	
 	//새로운 업무 생성하기.
 	@RequestMapping(value = "newTask", method = RequestMethod.POST)
-	public String newTask(TaskVO taskVo,Model model,HttpSession session) {
+	public String newTask(TaskVO taskVo,Model model,HttpSession session,int pms) {
 		
 		String code = "a";
 		
-		UsersVO userVO=dao.idCheck((String)session.getAttribute("loginId"));
-		task.Insert(taskVo,userVO);
 		
-		System.out.println("new TaksVo : "+taskVo.toString());
-		System.out.println("nnew userVo : " + userVO.toString());
+		UsersVO userVO=dao.idCheck((String)session.getAttribute("loginId"));
+		
+		if (pms == userVO.getUserNo()) {
+			task.Insert(taskVo,userVO.getUserNo());
+		}else if (pms != userVO.getUserNo()) {
+			task.Insert(taskVo,pms);
+		}
+		
+
 		
 		String userName =(String)session.getAttribute("loginId");
 		history.setCdSelect(code);//create update delete 직접줌
@@ -111,8 +122,8 @@ public class TaskController {
 		
 		TaskHistory(history, userName, taskVo.getTaskName());
 		
-		
-		return "redirect:newTaskForm";
+
+		return "redirect:taskForm";
 	}
 	
 
@@ -121,6 +132,7 @@ public class TaskController {
 		public String updateTaskForm(TaskVO taskVo,Model model) {		
 			
 			model.addAttribute("updateTask", task.Search(taskVo)); 
+			
 		
 			return "updateTask";
 		}
@@ -229,6 +241,8 @@ public class TaskController {
 		
 				
 			task.updateTask(taskVo);
+			
+			
 				
 			return "redirect:taskForm";
 		}
@@ -299,7 +313,7 @@ public class TaskController {
 		}
 		@RequestMapping(value = "projectMemberList", method = RequestMethod.POST)
 		@ResponseBody
-		public ArrayList<UsersVO> projectMemberList(int projectNo)
+		public ArrayList<UsersVO> projectMemberList(int projectNo,Model model)
 		{
 			ArrayList<MemberVO> member = ms.getMemberList(projectNo);
 			ArrayList<UsersVO> users = new ArrayList<>();
@@ -309,6 +323,8 @@ public class TaskController {
 				users.add(dao.getUserInfo(member.get(i).getUserNo()));
 			}
 			System.out.println("고고와 난데쓰까"+users.toString());
+			
+			
 			
 			return users;
 			

@@ -211,15 +211,27 @@
 				
 					
 					
-						<div class="clearfix">
-							<div>								
-							<p><font><h2>${Authority} ${loginId}님의 TaskList</h2></font></p><br>
-													
-							<p><font><h2>${Authority} ${loginId}님의 PlanList</h2></font></p>
-							</div>
+					
+					
+					
+				
 							
-							
-						</div>
+				<section class="calendar-page-side-section" >
+                 
+                    
+                           <ul>
+                              <div>
+                             <h2><span style="background-color:#228B22">${Authority} ${loginId}님의 TaskList</span></h2>
+                              </div>
+                              
+                           </ul>
+                         
+                           <ul>
+                              <div>
+                              <h2><span style="background-color:#B22222">${Authority} ${loginId}님의 PlanList</span></h2>
+                             </div>
+                           </ul>
+                          
 					
 			
 					

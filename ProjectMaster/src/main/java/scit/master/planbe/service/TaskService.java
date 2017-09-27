@@ -23,7 +23,7 @@ public ArrayList<TaskVO> Month(TaskVO task);//월별 업무 리스트
 
 public TaskVO Search(TaskVO taskVo);//업무  검색
 
-public void Insert(TaskVO task, UsersVO userVO);//업무생성.
+public void Insert(TaskVO task, int userno);//업무생성.
 
 public void DownLoad(TaskVO task);//다운로드.
 

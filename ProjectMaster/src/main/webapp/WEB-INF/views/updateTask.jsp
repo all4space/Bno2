@@ -86,13 +86,13 @@
 			
 		<!-- admin인 경우 -->
 			
-			<c:if test="${loginId == 'admin'}">
+			<c:if test="${Authority == member}">
 			
  <form  action="/planbe/task/updateTask" method="POST" name="form">	     
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${authority} ${loginId}님의 UpdateTask</h1></legend>  
+            <legend><h1>${Authority} ${loginId}님의 UpdateTask</h1></legend>  
         </div>
         <!-- panel preview -->
       
@@ -133,19 +133,19 @@
                      <td>
                          <select  id="taskPriority" name="taskPriority">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskPriority =='HIGH'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'HIGH'}">
                          	  		<option>--선택--</option>
                          	  		<option selected>HIGH</option>
                          	  		<option>NORMAL</option>
                          	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='NORMAL'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'NORMAL'}">
                          	  		<option>--선택--</option>
                          	  		<option >HIGH</option>
                          	  		<option selected>NORMAL</option>
                          	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='LOW'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'LOW'}">
                          	  		<option>--선택--</option>
                          	  		<option>HIGH</option>
                          	  		<option>NORMAL</option>
@@ -167,19 +167,19 @@
                      <td>
                          <select  id="taskStatus" name="taskStatus">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskStatus =='NEW'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'NEW'}">
                          	  		<option>--선택--</option>
                          	  		<option selected>NEW</option>
                          	  		<option>PROGRESS</option>
                          	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='PROGRESS'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'PROGRESS'}">
                          	  		<option>--선택--</option>
                          	  		<option >NEW</option>
                          	  		<option selected>PROGRESS</option>
                          	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='COMPLETE'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'COMPLETE'}">
                          	  		<option>--선택--</option>
                          	  		<option>NEW</option>
                          	  		<option>PROGRESS</option>
@@ -271,13 +271,13 @@
 		
 	<!-- admin이 아닌 경우 -->
        
-      <c:if test="${loginId !='admin'}">
+      <c:if test="${Authority != member}">
       
    <form  action="/planbe/task/updateTask" method="POST" name="form">	     
      <div class="container">
 	<div class="row">
         <div class="col-sm-12">
-            <legend><h1>${authority} ${loginId}님의 UpdateTask</h1></legend>  
+            <legend><h1>${Authority} ${loginId}님의 UpdateTask</h1></legend>  
         </div>
         <!-- panel preview -->
       
@@ -318,19 +318,19 @@
                      <td>
                          <select  id="taskPriority" name="taskPriority">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskPriority =='HIGH'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'HIGH'}">
                          	  		<option>--선택--</option>
                          	  		<option selected>HIGH</option>
                          	  		<option>NORMAL</option>
                          	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='NORMAL'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'NORMAL'}">
                          	  		<option>--선택--</option>
                          	  		<option >HIGH</option>
                          	  		<option selected>NORMAL</option>
                          	  		<option>LOW</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskPriority =='LOW'}">
+                         	  <c:when test="${updateTask.taskPriority eq 'LOW'}">
                          	  		<option>--선택--</option>
                          	  		<option>HIGH</option>
                          	  		<option>NORMAL</option>
@@ -352,19 +352,19 @@
                      <td>
                          <select  id="taskStatus" name="taskStatus">
                          	<c:choose>
-                         	  <c:when test="${updateTask.taskStatus =='NEW'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'NEW'}">
                          	  		<option>--선택--</option>
                          	  		<option selected>NEW</option>
                          	  		<option>PROGRESS</option>
                          	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='PROGRESS'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'PROGRESS'}">
                          	  		<option>--선택--</option>
                          	  		<option >NEW</option>
                          	  		<option selected>PROGRESS</option>
                          	  		<option>COMPLETE</option>
                          	  </c:when>
-                         	  <c:when test="${updateTask.taskStatus =='COMPLETE'}">
+                         	  <c:when test="${updateTask.taskStatus eq 'COMPLETE'}">
                          	  		<option>--선택--</option>
                          	  		<option>NEW</option>
                          	  		<option>PROGRESS</option>
