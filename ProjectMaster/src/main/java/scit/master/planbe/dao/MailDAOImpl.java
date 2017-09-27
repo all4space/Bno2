@@ -108,6 +108,11 @@ public class MailDAOImpl implements MailDAO {
 		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
 		return mapper.deleteMail(mailNo);
 	}
+	@Override
+	public ArrayList<MailVO> mailList(int userNo) {
+		MailMapper mapper = Sqlsession.getMapper(MailMapper.class);
+		return mapper.mailList(userNo);
+	}
 	
 }
 

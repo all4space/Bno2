@@ -98,6 +98,10 @@ public class MailServiceImpl implements MailService {
 		if(dao.deleteMail(mailNo) == 1) return true;
 		return false;
 	}
+	@Override
+	public ArrayList<MailVO> mailList(int userNo) {
+		return dao.mailList(userNo);
+	}
 
 }
 

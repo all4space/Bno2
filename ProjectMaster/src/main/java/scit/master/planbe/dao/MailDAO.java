@@ -39,4 +39,6 @@ public interface MailDAO {
 	public int checkMail(int mailNo);
 	// Delete Mail
 	public int deleteMail(int mailNo);
+	// Haed Mail
+	public ArrayList<MailVO> mailList(int userNo);
 }

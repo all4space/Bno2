@@ -95,6 +95,11 @@
     DELETE FROM MAIL WHERE MAILNO = #{mailNo}     
 </update>
 
+<!-- HaedMail -->
+<select id = "mailList" parameterType = "int" resultType="MailVO">
+	select distinct m.userNo, m.sendDate, m.mailtitle, m.mailcontent from mail m , member b, users u where m.checkmail='NO' and (#{userNo} = m.receivemember or (m.receiveproject = b.projectno and #{userNo} = b.userno))   
+</select>
+
 </mapper>
 
 
