@@ -8,6 +8,12 @@
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>Head Menu</title>
 </head>
+<style>
+.bg-black:before{
+	background-color: blue;
+}
+</style>
+
 <script>
 
 $(function(){
@@ -15,8 +21,47 @@ $(function(){
 		task();
 		
 		history();
+		
+		mail();
 	}
 })
+
+/* Mail 불러 오기 */
+
+function mail()
+{
+	$.ajax({
+		url : "/planbe/head/getMail",
+		type: "post",
+		datatype: "json",
+		success: function(result)
+		{
+			var m_list = result.mailList;
+			var u_name = result.userName; 
+			
+			$(m_list).each(function(index, item)
+			{
+				var addRow = '<li class="bg-black">';
+				addRow += '<span class="header">';
+				addRow += '<span class="from">'+u_name[index]+'</span>';
+				addRow += '<span class="time">'+item.sendDate+'</span>';
+				addRow += '</span>';
+				addRow += '<span class="message">'+item.mailContent+'</span>';
+                addRow += '</li>';
+				
+				$("#mail").append(addRow);
+			})
+			$("#mail").trigger("liszt:updated");
+		},
+		error: function()
+		{
+			alert("협업하자~ 다투지말고~");
+		}
+		
+	})
+}
+
+ 
 /* history 불러오기 */
 
 function history()
@@ -122,6 +167,22 @@ function newMessage(taskList){
 			
 			}
  	}
+ 	
+ 	function mailtwo(){
+ 		jQuery(document).ready(function($){
+ 			
+ 			if($('.messagesList').width()) {
+ 				
+ 				if(jQuery.browser.version.substring(0, 2) == "8.") {
+
+ 					$('ul.messagesList li:nth-child(2n+1)').addClass('odd');
+ 					
+ 				}
+ 				
+ 			}
+ 			
+ 		});	
+ 	}
 </script>
 <body>
 
@@ -203,7 +264,7 @@ function newMessage(taskList){
 						
 						
 						
-						
+								
 						
 						
 						
@@ -221,86 +282,7 @@ function newMessage(taskList){
  									<span>You have 9 messages</span>
 									<a href="#refresh"><i class="icon-repeat"></i></a>
 								</li>	
-                            	<li>
-                                    <a href="#">
-										<span class="avatar"><img src="/planbe/resources/bootstrap/img/avatar.jpg" alt="Avatar"></span>
-										<span class="header">
-											<span class="from">
-										    	Dennis Ji
-										     </span>
-											<span class="time">
-										    	6 min
-										    </span>
-										</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>  
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="avatar"><img src="/planbe/resources/bootstrap/img/avatar.jpg" alt="Avatar"></span>
-										<span class="header">
-											<span class="from">
-										    	Dennis Ji
-										     </span>
-											<span class="time">
-										    	56 min
-										    </span>
-										</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>  
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="avatar"><img src="/planbe/resources/bootstrap/img/avatar.jpg" alt="Avatar"></span>
-										<span class="header">
-											<span class="from">
-										    	Dennis Ji
-										     </span>
-											<span class="time">
-										    	3 hours
-										    </span>
-										</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>  
-                                    </a>
-                                </li>
-								<li>
-                                    <a href="#">
-										<span class="avatar"><img src="/planbe/resources/bootstrap/img/avatar.jpg" alt="Avatar"></span>
-										<span class="header">
-											<span class="from">
-										    	Dennis Ji
-										     </span>
-											<span class="time">
-										    	yesterday
-										    </span>
-										</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>  
-                                    </a>
-                                </li>
-                                <li>
-                                    <a href="#">
-										<span class="avatar"><img src="/planbe/resources/bootstrap/img/avatar.jpg" alt="Avatar"></span>
-										<span class="header">
-											<span class="from">
-										    	Dennis Ji
-										     </span>
-											<span class="time">
-										    	Jul 25, 2012
-										    </span>
-										</span>
-                                        <span class="message">
-                                            Lorem ipsum dolor sit amet consectetur adipiscing elit, et al commore
-                                        </span>  
-                                    </a>
-                                </li>
+								<div id="mail"></div>
 								<li>
                             		<a class="dropdown-menu-sub-footer">View all messages</a>
 								</li>	
