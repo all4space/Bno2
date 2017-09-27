@@ -55,8 +55,6 @@ public class PlanController {
 		// 일정 수정하기
 		@RequestMapping(value ="updatePlan", method = RequestMethod.POST)
 		public String updatePlan(PlanVO planVO,Model model) {
-				System.out.println(planVO);
-				System.out.println("왔업?");
 				service.updatePlan(planVO);
 				
 			return "redirect:planForm";
@@ -88,14 +86,17 @@ public class PlanController {
 					ArrayList<TaskVO>taskList=new ArrayList<>();
 					
 					HashMap<String,Object>map=new HashMap<>();
+					int userno = (int) session.getAttribute("userno");	
 					
-						list=service.getList(); 
+						list=service.getList(userno); 
 						
-						int userno = (int) session.getAttribute("userno");	
 						taskList=ts.getTotalList(userno); 
 						
 						map.put("planList", list);
 						map.put("TaskList", taskList);
+						
+						
+						System.out.println(service.getList(userno));
 					
 				
 					return map;

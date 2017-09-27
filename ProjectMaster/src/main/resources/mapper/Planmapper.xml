@@ -45,17 +45,18 @@
 
 <!-- 일정 리스트 가져오기 -->
 
-<select id="getList" resultType="PlanVO">
-	select calNo
-	,userNo
-	,to_char(startDate,'YYYY-MM-DD') as startDate
-	,startTime
-	,to_char(endDate,'YYYY-MM-DD') as endDate
-	,endTime
-	,title
-	,content 
-	from calendar
-	order by calNo asc
+<select id="getList" parameterType="int" resultType="PlanVO">
+	select c.calNo
+	,c.userNo
+	,to_char(c.startDate,'YYYY-MM-DD') as startDate
+	,c.startTime
+	,to_char(c.endDate,'YYYY-MM-DD') as endDate
+	,c.endTime
+	,c.title
+	,c.content 
+	from calendar c join users u on u.userno=c.userno
+			and c.userno=#{userNo}
+	order by c.calNo asc
 		
 		
 		

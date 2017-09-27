@@ -17,7 +17,7 @@ public interface PlanService {
 	
 	public void deletePlan(int calNo); // 일정 삭제하기
 	
-	public ArrayList<PlanVO>getList();// 일정 리스트 가져오기
+	public ArrayList<PlanVO>getList(int userno);// 일정 리스트 가져오기
 	
 	
 	

@@ -57,6 +57,8 @@ $(document).ready(function(){
                              calno: $(this).attr('calNo'),
                              backgroundColor: '#B22222',
                              number:'0'
+                            	 
+                           
                                                 
                          });
                     	 
@@ -69,18 +71,24 @@ $(document).ready(function(){
                     	
                     	 events.push({
                              
-                     	    title: $(this).attr('taskName'),                       
+                     	     title: $(this).attr('taskName'),                       
                              start: $(this).attr('startDate'), // will be parsed                             
                              end: $(this).attr('dueDate'),
                              content: $(this).attr('taskContent'),
+                             projectNo:$(this).attr('projectNo'),
+                             memberNo:$(this).attr('memberNo'),
+                             taskNo:$(this).attr('taskNo'),
+                             taskPriority:$(this).attr('taskPriority'),
+                             totalTime:$(this).attr('totalTime'),
+                             doneTime:$(this).attr('doneTime'),
                              backgroundColor: '#228B22',
                              number:'1'
-                           
-                                               
+                                             
                          });
                   	 
                     });
-              
+                    
+                  console.log(events)
                    callback(events);
                    
                 	
@@ -172,10 +180,24 @@ $(document).ready(function(){
 			
     	  }else if (event.number == '1') {
     		  
-    		 
+    		  var projectNo = event.projectNo;
+    		  var memberNo = event.memberNo;
+    		  var taskNo = event.taskNo;
+    		  var taskName = event.title;
+    		  var taskContent = event.taskContent;
+    		  var taskPriority = event.taskPriority;
+    		  var taskStatus = event.taskStatus;
+    		  var startDate = event.start;
+    		  var dueDate = event.end;
+    		  var totalTime = event.totalTime;
+    		  var doneTime = event.doneTime;
     		  
+    		  location.href="/planbe/task/updateTaskForm?projectNo="+projectNo+"&memberNo="+memberNo+"&taskNo="+taskNo+"&taskName="+taskName
+    		  														+"&taskContent="+taskContent+"&taskPriority="+taskPriority
+    		  														+"&taskStatus="+taskStatus+"&startDate="+startDate+"&dueDate="+dueDate
+    		  														+"&totalTime="+totalTime+"&doneTime"+doneTime;
     		  
-    		  location.href="/planbe/task/updateTaskForm";
+    		
     		  
 		}
     		

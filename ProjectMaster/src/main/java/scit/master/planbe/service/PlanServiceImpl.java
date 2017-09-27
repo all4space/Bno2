@@ -51,8 +51,8 @@ public class PlanServiceImpl implements PlanService{
 
 	// 일정 리스트 가져오기
 	@Override
-	public ArrayList<PlanVO> getList() {
-		return 	dao.getList();
+	public ArrayList<PlanVO> getList(int userno) {
+		return 	dao.getList(userno);
 	}
 	
 }

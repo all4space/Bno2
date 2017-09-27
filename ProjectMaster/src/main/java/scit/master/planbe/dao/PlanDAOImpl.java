@@ -51,9 +51,9 @@ public class PlanDAOImpl implements PlanDAO {
 
 	// 일정 리스트 가져오기
 	@Override
-	public ArrayList<PlanVO> getList() {
+	public ArrayList<PlanVO> getList(int userno) {
 		PlanMapper mapper = Sqlsession.getMapper(PlanMapper.class);
-		return mapper.getList();
+		return mapper.getList(userno);
 	}  
 	
 	
