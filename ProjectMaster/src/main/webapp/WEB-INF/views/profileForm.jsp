@@ -112,7 +112,7 @@ function setUserInfo(){
 						<a href="#"><i class="halflings-icon cog"></i></a>
 					</div>
 					<h2>Modify your account to information</h2>
-					<form class="form-horizontal" name="fm" action="modify" method="post">
+					<form class="form-horizontal" name="fm" action="/planbe/users/modify" method="post">
 						<fieldset>
 							
 							<div class="input-prepend" title="UserId">
@@ -146,7 +146,7 @@ function setUserInfo(){
 								
 							<div class="button-join">	
 							    <center>
-								<button type="button" class="btn btn-modify" id="modify">Modify</button>
+								<button type="submit" class="btn btn-modify" id="modify">Modify</button>
 								<button class="btn btn-backToCancel" onclick = "location.href='/planbe/'">cancel</button>
 							    </center>
 							</div>

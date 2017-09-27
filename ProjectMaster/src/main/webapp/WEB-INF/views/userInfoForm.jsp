@@ -41,6 +41,7 @@
 	<link rel="shortcut icon" href="img/favicon.ico">
 	<!-- end: Favicon -->
 	
+	
 <script>	
 	function ProjectList() //그룹이름에 따른 멤버 리스트 select ver
 	{
@@ -385,11 +386,11 @@ function historyList()
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.html">Home</a>
+					<a href="/planebe/">Home</a>
 					<i class="icon-angle-right"></i> 
 				</li>
 				<li>
-					<i class="icon-eye-open"></i>
+					<i class="halflings-icon info-sign wihte"></i>
 					<a href="#">User InforMation</a>
 				</li>
 			</ul>
@@ -400,72 +401,75 @@ function historyList()
 				<div class="box span12">
 					
 					<div class="box-header">
-						<h2><i class="halflings-icon info-sign"></i><span class="break"></span>User Infomation</h2>
+						<h2><i class="halflings-icon info-sign wihte"></i><span class="break"></span>User Infomation</h2>
 						<div class="box-icon">
-							<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 						</div>
 					</div>
 				
 				
-						<table class="table table-bordered table-striped">
+						<table>
 							<tr>
-								<td>Star Rating</td>
+							
+								<td><font size = 4>&nbsp;&nbsp;&nbsp;User Name</font></td>
+								<p></p>
 								<td>
-									<span class="rating">
-				                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
-				                    </span>
+									<p style="font-weight: bold"><font size = 4>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${userVo.userName}</font></p>
 								</td>
 							</tr>
 							<tr>
-								<td>Popover</td>
+								<td><font size = 4>&nbsp;&nbsp;&nbsp;User Id</font></td>
+								<p></p>
 								<td>
-									<a href="#" class="btn btn-danger" data-rel="popover" data-content="And here's some amazing content. It's very engaging. right?" title="A Title">Hover for popover</a>
+									<p style="font-weight: bold"><font size = 4>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${userVo.userId}</font></p>
 								</td>
 							</tr>
 							<tr>
-								<td>Dialog</td>
+								<td><font size = 4>&nbsp;&nbsp;&nbsp;Group Name</font></td>
+								<p></p>
 								<td>
-									<a href="#" class="btn btn-info btn-setting">Click for dialog</a>
+									<p style="font-weight: bold"><font size = 4>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${userVo.groupName}</font></p>
 								</td>
 							</tr>
 							<tr>
-								<td>Tooltip</td>
+								<td><font size = 4>&nbsp;&nbsp;&nbsp;Authority</font></td>
+								<p></p>
 								<td>
-									<a href="#" title="Tooltip, you can change the position." data-rel="tooltip" class="btn btn-warning">Hover for tooltip</a>
+									<p style="font-weight: bold"><font size = 4>&nbsp;&nbsp;&nbsp;:&nbsp;&nbsp;&nbsp;${userVo.authority}</font></p>
 								</td>
+								<p></p>
 							</tr>
+							
 						</table>
 				
-				
-						<a class="quick-button-small span1">
+						<br>
+						<a class="quick-button span2">
 							<i class="icon-beaker" onclick = "ProjectList()"></i>
 							<p>Projects</p>
 						</a>
-						<a href = "/planbe/task/taskForm" class="quick-button-small span1">
+						<a href = "/planbe/task/taskForm" class="quick-button span2">
 							<i class="icon-barcode"></i>
 							<p>Task</p>
 						</a>
-						<a href = "/planbe/plan/planForm" class="quick-button-small span1">
+						<a href = "/planbe/plan/planForm" class="quick-button span2">
 							<i class="icon-calendar"></i>
 							<p>Calendar</p>
 							<span class="notification red">8</span>
 						</a>
-						<a href = "/planbe/email/sendEmail" class="quick-button-small span1">
+						<a href = "/planbe/email/sendEmail" class="quick-button span2">
 							<i class="icon-envelope"></i>
 							<p>E-mail</p>
 						</a>
-							<a class="quick-button-small span1">
+							<a class="quick-button span2">
 							<i class="icon-dashboard" onclick = "historyList()"></i>
 							<p>History</p>
 						</a>
-						<a class="quick-button-small span1">
+						<!-- <a class="quick-button span2">
 							<i class="icon-thumbs-up" onclick = "timeLine()"></i>
 							<p>TimeLine</p>
-						</a>
-						
+						</a> -->
 						<div class="clearfix"></div>
+						<br><br>
 					</div>	
 			</div><!--/row-->
 		</div>
@@ -474,84 +478,9 @@ function historyList()
 					<!-- //고고뗴 -->
 					
 					
-					<div id = "test">
-			</div>
-			
+					<div id = "test"></div>
 							<div class="row-fluid">
 				
-				
-				<div class="span5 noMarginLeft">
-					
-					<div class="dark">
-					
-					<h1>Timeline</h1>
-					
-					<div class="timeline">
-						
-					    <div class="timeslot">
-					    	
-							<div class="task">
-					    		<span>
-									<span class="type">appointment</span>
-									<span class="details">
-										Dennis Ji at Bootstrap Metro Dashboard HQ
-									</span>
-									<span>
-										remaining time
-										<span class="remaining">
-											3h 38m 15s
-										</span>	
-									</span> 
-								</span>
-								<div class="arrow"></div>
-							</div>							
-							<div class="icon">
-								<i class="icon-map-marker"></i>
-							</div>
-							<div class="time">
-								3:43 PM
-							</div>	
-								
-					    </div>
-					
-						<div class="clearfix"></div>
-						
-						<div class="timeslot alt">
-					    	
-							<div class="task">
-					    		<span>
-									<span class="type">phone call</span>
-									<span class="details">
-										Dennis Ji
-									</span>
-									<span>
-										remaining time
-										<span class="remaining">
-											3h 38m 15s
-										</span>	
-									</span>
-								</span>
-								<div class="arrow"></div>
-							</div>
-							<div class="icon">
-								<i class="icon-phone"></i>
-							</div>
-							<div class="time">
-								3:43 PM
-							</div>	
-								
-					    </div>
-					
-					
-					
-					
-						
-					    
-					</div>
-				</div>
-				
-				</div>	
-						
 			</div>
 			
 	<!-- start: JavaScript-->
