@@ -31,6 +31,8 @@ import scit.master.planbe.service.TaskService;
 @Controller
 public class TaskController {
 	
+	
+	
 	private int CODENO = 2; // 히스토리시 테스크값은 2번
 	HistoryVO history = new HistoryVO(); //히스토리 개체
 	

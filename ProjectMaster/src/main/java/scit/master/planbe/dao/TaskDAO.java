@@ -8,6 +8,8 @@ import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
 
 public interface TaskDAO {
+	
+	
 	public void Insert(TaskVO taskVo,int userno); // 업무 생성
 	public ArrayList<TaskVO> getList(String searchtype,String searchword,String target,int userno, int startRecord, int countPerPage);//업무 리스트 출력하기
 	public TaskVO findTask(TaskVO taskVo); // 업무 찾기

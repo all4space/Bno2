@@ -8,6 +8,8 @@ import scit.master.planbe.VO.TaskVO;
 
 public interface PlanService {
 	
+	
+	
 
 	public void insertPlan(PlanVO planVO); // 일정 생성하기
 	

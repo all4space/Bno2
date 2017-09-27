@@ -23,6 +23,8 @@ import scit.master.planbe.service.TaskServiceImpl;
 @Controller
 public class PlanController {
 	
+	
+	
 	@Autowired
 	PlanServiceImpl service;
 	

@@ -6,86 +6,88 @@
 <mapper namespace="scit.master.planbe.dao.ProjectMapper">
 
 <select id = "getMemberNo" parameterType="UsersVO" resultType="MemberVO">
-	SELECT memberno from member where userno=(select userno from users where userid = #{userId} and username = #{userName}) 
+   SELECT memberno from member where userno=(select userno from users where userid = #{userId} and username = #{userName}) 
 </select>
 
 <select id="taskSerialize" resultType="TaskVO" parameterType="MemberVO">
-	SELECT * FROM task where memberno = #{memberNo}
+   SELECT * FROM task where memberno = #{memberNo}
 </select>
+
+
 
 <!-- 그룹네임 가져오기 -->
 <select id = "groupNameList" resultType = "UsersVO">
-	select distinct groupname from users order by groupname
+   select distinct groupname from users order by groupname
 </select>
 
 <!-- 멤버 가져오기 -->
 <select id = "groupManagerList" resultType = "UsersVO" parameterType = "string">
-	select userId from users where groupname = #{groupName}
+   select userId from users where groupname = #{groupName}
 </select>
 
 <!-- 매니저뺴고 멤버 다른방법은 없나??? -->
 <select id = "groupMemberList" resultType = "UsersVO" parameterType = "UsersVO">
-	select userId from users where groupname = #{groupName} and userId != #{userId}
+   select userId from users where groupname = #{groupName} and userId != #{userId}
 </select>
 
 <!-- Project_seq 얻어와랏 -->
 
 <select id = "getProjectSeq" resultType ="int">
-	select projectno from (select * from project order by projectno desc) where rownum = 1
-	
+   select projectno from (select * from project order by projectno desc) where rownum = 1
+   
 </select>
 
 <!-- 프로젝트 생성 -->
 <insert id = "projectAdd" parameterType="ProjectVO">
 
-	insert into project values
-	(
-		project_seq.nextval,
-		#{userNo},
-		#{projectName},
-		#{projectContent},
-		#{projectStatus},
-		to_date(#{startDate},'yyyy/mm/dd'),
-		to_date(#{dueDate},'yyyy/mm/dd')
-	)
+   insert into project values
+   (
+      project_seq.nextval,
+      #{userNo},
+      #{projectName},
+      #{projectContent},
+      #{projectStatus},
+      to_date(#{startDate},'yyyy/mm/dd'),
+      to_date(#{dueDate},'yyyy/mm/dd')
+   )
 </insert>
 
 <!-- 프로젝트 가져오기 (1개)  -->
 <select id = "getProject" parameterType="int" resultType="ProjectVO">
-	SELECT projectno, userno, projectname, projectcontent, projectstatus, to_char(startdate,'yyyy,mm,dd')as startDate,
-	to_char(duedate,'yyyy,mm,dd')as dueDate FROM PROJECT WHERE projectNo = #{projectNo}
+   SELECT projectno, userno, projectname, projectcontent, projectstatus, to_char(startdate,'yyyy,mm,dd')as startDate,
+   to_char(duedate,'yyyy,mm,dd')as dueDate FROM PROJECT WHERE projectNo = #{projectNo}
 </select>
 <select id = "getProjectList" resultType = "ProjectVO" parameterType="int">
-	select p.projectno, p.projectname, p.projectcontent, p.userno, to_char(p.startDate,'yyyy-mm-dd') as startDate, to_char(p.dueDate, 'yyyy-mm-dd') as dueDate, p.projectStatus from project p, member m where m.projectno = p.projectno and m.userno = #{userno} order by p.projectNo asc
+   select p.projectno, p.projectname, p.projectcontent, p.userno, to_char(p.startDate,'yyyy-mm-dd') as startDate, to_char(p.dueDate, 'yyyy-mm-dd') as dueDate, p.projectStatus from project p, member m where m.projectno = p.projectno and m.userno = #{userno} order by p.projectNo asc
 </select>
 <!-- projectMODIFY -->
 <update id = "projectUpdate" parameterType = "ProjectVO">
-	update project set projectName = #{projectName}, projectContent = #{projectContent}, projectstatus = #{projectStatus},
-	startDate = to_date(#{startDate}, 'yyyy-mm-dd'), duedate = to_date(#{dueDate}, 'yyyy-mm-dd') where projectNo = #{projectNo}
+   update project set projectName = #{projectName}, projectContent = #{projectContent}, projectstatus = #{projectStatus},
+   startDate = to_date(#{startDate}, 'yyyy-mm-dd'), duedate = to_date(#{dueDate}, 'yyyy-mm-dd') where projectNo = #{projectNo}
 </update>
 
 <!-- ProejctINfo -->
 <select id = "getProjectInfo" resultType = "ProjectVO" parameterType = "int">
-	select * from project where projectno = #{projectNo}
+   select * from project where projectno = #{projectNo}
 </select>
 <!-- 그룹네임 불러오기 로그인 아이디로-->
 <select id = "getGroupName" parameterType = "String" resultType = "String">
-	select groupname from users where userid = #{userId}
+   select groupname from users where userid = #{userId}
 </select>
 
 <!-- 프로젝트 삭제 -->
 <delete id = "projectDelete" parameterType = "int">
-	delete from project where projectno = #{projectNo}
+   delete from project where projectno = #{projectNo}
 </delete>
 
 <!-- 프젝넘버 멤버리스트-->
 <select id = "getMemberList" parameterType = "int" resultType = "MemberVO">
-	select * from member where projectno=#{projectNo}
+   select * from member where projectno=#{projectNo}
 </select>
 
 <!-- 프젝넘버 프젝네임 -->
 <select id = "getProjectName" parameterType = "int" resultType = "string">
-	select projectName from project where projectNo=#{projectNo}
+   select projectName from project where projectNo=#{projectNo}
 </select>
 
 </mapper>

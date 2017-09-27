@@ -10,6 +10,8 @@ import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
 
 public interface TaskService {
+	
+	
 
 public ArrayList<TaskVO> getList(String searchtype,String searchword, String target, int userno, int startRecord, int countPerPage);//업무 리스트 출력하기
 
