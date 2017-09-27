@@ -205,6 +205,8 @@ public class UsersController {
 	
 	@RequestMapping(value = "modify", method = RequestMethod.POST)
 	public String modify(UsersVO vo) {
+		
+		System.out.println("service : " + vo.toString());
 		service.modify(vo);
 		return "redirect:/";
 	}

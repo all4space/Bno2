@@ -46,7 +46,7 @@
 </select>
 <!--Modify UserInfo  -->
 <update id="modify" parameterType="UsersVO">
-	UPDATE Users SET username = #{userName} , userpwd = #{userPwd}, groupname = #{groupName} WHERE userno = #{userNo} and userId = #{userId}
+	UPDATE Users SET username = #{userName} , userpwd = #{userPwd}, groupname = #{groupName} WHERE userId = #{userId}
 </update>
 </mapper>
 
