@@ -56,9 +56,8 @@
 	   getWbs(fromGantt);
    } 
  });
-	 
- 
- 
+
+/*=======================================================================================================================================*/ 
 
 /* start : WBS 트리 생성 */
 
@@ -79,8 +78,8 @@ function AddNamespace(){
  var options;
  var proname;
  
- var jj; 
- var array2;
+ // var jj; 
+ // var array2;
  
 function drawSimpleNodeChart(p_name, t_list, m_list) {
     
@@ -117,28 +116,25 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
      
     var init = x;
     
-    jj = j;
+  //   jj = j;
     
     $(t_list).each(function(index, item) {  
           var z = 0;
           for(var i = init+1; i < init+y+1; i++){
-	   		     nodeListData.addRow([i, keyword[z], index+1, 1, '#b082f9']);
+	   		     nodeListData.addRow([i, keyword[z], index+1, 3, 'DarkSlateGray']);
 	   		     xx.push(i);
 	             z += 1;
 	      }
 	   	  init += y;
      });// for each
           
-	// alert(JSON.stringify(xx));
-     
 	
 /* [4] Task 키워드의 각 컨텐츠 : 3단계 child 노드 */         
 
     /* 3단계 child 노드의 value를 담을 배열 선언 */
     var array = [];
-//    var due = [];
 
-    array2 = array;
+//    array2 = array;
 
     $(t_list).each(function(index, item) {  
     	 array.push(m_list[index]);
@@ -147,47 +143,43 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
          array.push(item.taskStatus);
          array.push(item.startDate);
          array.push(item.dueDate);
-//       due.push(item.dueDate.substr(0, 10));
          array.push(item.totalTime.toString());
          array.push(item.doneTime.toString());
          
     });// for each
     
 
-    /* sysdate : 보류 */    
-/*  
-    var today = new Date();
-    var dd = today.getDate();
-    var mm = today.getMonth()+1; //January is 0!
-    var yyyy = today.getFullYear();
-
-    if(dd<10) {
-        dd = '0'+dd
-    } 
-
-    if(mm<10) {
-        mm = '0'+mm
-    } 
-
-    today = yyyy + '-' + mm + '-' + dd;
-*/
-    
   	for(var i = 0, q = j+1; i < array.length; i++, q++){
-  		 nodeListData.addRow([q, array[i], xx[i], 1, '#a4b83c']);
-	  	   /* 우선순위가 HIGH인 노드의 color는 red로 변경한다 */
+  		 nodeListData.addRow([q, array[i], xx[i], 3, 'black']);
+	  	  
   		   if(nodeListData.getValue(q, 1) == 'HIGH'){
+	  	     	nodeListData.setValue(q, 4, '#000080');
+	  	   }
+  		   if(nodeListData.getValue(q, 1) == 'NORMAL'){
+	  	     	nodeListData.setValue(q, 4, '#0000ff');
+	  	   }
+  		   if(nodeListData.getValue(q, 1) == 'LOW'){
+	  	     	nodeListData.setValue(q, 4, '#6666ff');
+	  	   }
+  		   if(nodeListData.getValue(q, 1) == 'COMPLETE'){
 	  	     	nodeListData.setValue(q, 4, 'red');
 	  	   }
-	  	   
+  		   if(nodeListData.getValue(q, 1) == 'PROGRESS'){
+	  	     	nodeListData.setValue(q, 4, 'green');
+	  	   }
+  		   if(nodeListData.getValue(q, 1) == 'NEW'){
+	  	     	nodeListData.setValue(q, 4, 'orange');
+	  	   }
   	}
-  	
+	  	   
     options = {
 	    colors: ['black', 'black', 'black'],
 	    wordtree: {
 	      format: 'explicit',
-	      type: 'suffix',
+	      type: 'suffix'
 	    },
 	      fontName: 'nanumgothic'
+	      // backgroundColor: 'MintCream'
     };
     
  
@@ -204,33 +196,21 @@ function drawSimpleNodeChart(p_name, t_list, m_list) {
 } 
 /* end : WBS 트리 생성 */
 
-/*=========================================================================================================================*/
-
-/* 
-<!-- Convert the SVG to PDF and download it -->
-var click="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg'})";
-$('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
- */
-
-
+/*=======================================================================================================================================*/
 
 
 /* WBS 트리 삭제하기 */	
    function deleteWbs(){
-	 var reply = confirm("진짜 삭제? 데이터가 삭제되진 않음. 트리만 안보임");
+	 var reply = confirm("Delete Current WBS?");
 	 if(reply) drawSimpleNodeChart(null, 0, 0); 
-	 // wordtree.clearChart();
-	 
-	 // var num = nodeListData.getNumberOfRows();
-	 // nodeListData.removeRows(0, num);
-	 // wordtree.draw(nodeListData, options);
    } 
-
+	 
 
 /* WBS 트리 정보 불러오기 */	
     
-    var mlist_key = "";
-	var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 변수 선언.  
+var mlist_key = "";
+var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 변수 선언.  
+
 	function getWbs(projectNo){
 	
 		p_no = projectNo;
@@ -241,7 +221,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		  		data: {"projectNo" : projectNo},
 		  		datatype: "json",
 		  		success: function(result) {
-                    alert("success에 들어옴");	
+                    alert("Draw WBS");	
                     
                     $("#wbsBox").removeAttr("style");
                     
@@ -251,14 +231,14 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		  			
                     drawSimpleNodeChart(p_name, t_list, m_list);
                     memberForKey(p_name, t_list, m_list); 
-                    
-                    // whoIsBest(t_list);
 				} // success
 		});
 	}
+                    
       
 /* 랭킹 테스트 */
-    function whoIsBest(t_list){
+/*    
+  function whoIsBest(t_list){
 	   
 	   var NoArray = []; 
 
@@ -267,7 +247,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
               NoArray.push(t_list[i].memberNo);
            }
        }
-       alert(NoArray); // 3,5,2 	    
+       // alert(NoArray); // 3,5,2 	    
        
        var objArray = [];
        for(var i=0; i < NoArray.length; i++){
@@ -276,11 +256,11 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		         rate : 0,
 		         count : 0
 	        }
-            alert(obj.m_no); //
+          //  alert(obj.m_no); 
             objArray.push(obj);
 	   }
 
-       alert(objArray[0].m_no); // 3
+    //   alert(objArray[0].m_no); // 3
        
        for(var i=0; i<t_list.length; i++){
     	   var doneTime = t_list[i].doneTime.toFixed(2);
@@ -294,23 +274,16 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
       		   }
       	   }
        }
-      			   
-     //  alert(objArray[0].m_no); // 3
-     //  alert(objArray[0].rate); // 300
-     //  alert(objArray[0].count); // 5
        
        var avgArray = [];
        for(var i=0; i<objArray.length; i++){
     	   avgArray.push(objArray[i].rate/objArray[i].count);
        }
      //  alert(avgArray[0]); // 60
-       
-          
-	   
     }//function 
-	
-	
-	 
+ */
+
+ 
 /* contains 메소드 추가 */
 	Array.prototype.contains = function(element) {
 		for (var i = 0; i < this.length; i++) {
@@ -333,17 +306,16 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
             }        	
             array.push(m_list[i]);
          }
-		// alert(array);        
          
 		 var data = "<option value='origin'>-Select Keyword-</option>"
 		          + "<optgroup label='Priority'>"
-                  +	"<option value='HIGH'>High</option>"
-                  + "<option value='NORMAL'>Normal</option>" 
-		          + "<option value='LOW'>Low</option></optgroup>"
+                  +	"<option value='HIGH' style='background: #0000e6'>High</option>"
+                  + "<option value='NORMAL' style='background: #6666ff'>Normal</option>" 
+		          + "<option value='LOW' style='background: #ccccff'>Low</option></optgroup>"
 		          + "<optgroup label='Status'>"
-		          + "<option value='ING'>ING</option>"
-		          + "<option value='DONE'>DONE</option>"
-		          + "<option value='PLAN'>PLAN</option></optgroup>"
+		          + "<option value='NEW' style='background: #fff4b3'>New</option>"
+		          + "<option value='PROGRESS' style='background: #b3ffb3'>Progress</option>"
+		          + "<option value='COMPLETE' style='background: #ffb3b3'>Complete</option></optgroup>"
 		          + "<optgroup label='%DONE'>"
 		          + "<option value=0>0%</option>"
 		          + "<option value=20>20%</option>"
@@ -364,9 +336,8 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		 $("#selectError").trigger("liszt:updated");
 		 
 		 keyAction(p_name, t_list, m_list);
-		 
     }
-		
+		 
 		
 /* Key 이벤트 : key 에 해당하는 Task로만 트리 시각화  */
     function keyAction(p_name, t_list, m_list){
@@ -377,11 +348,11 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	         var keyTask = []; 
 	         var keyMember = [];
              
-	         alert(key);
+	         // alert(key);
              
              /* 전체 Task 보기(original) */
              if("origin" == key){
-            	 alert("오리진"); 
+            	// alert("오리진"); 
             	 drawSimpleNodeChart(p_name, t_list, m_list); 
             	 
              } else {
@@ -410,19 +381,11 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
             		 
                  drawSimpleNodeChart(p_name, keyTask, keyMember);
              }
-            	 
-            	 
-            	 
-             
     	});
      }	   
-             
+            	 
 	
 /* WBS 노드 정보 불러오기 */ 
- 
-
-
-  
   
 	function getWbsInfo() {
 
@@ -430,19 +393,18 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	    var item = selectedNode.word;
     	
         if(proname == item){
-	        	  alert("proname 클릭");
+	        	  // alert("proname 클릭");
 	        	  getAllTaskInfo(taskList, memberList); // all
 	    }
-
     	
       	var selectTask = "";
       	var selectMember = "";
+
       	for(var i=0; i<taskList.length; i++){
         	   if(taskList[i].taskName == item){
             	 selectTask = taskList[i];
             	 selectMember = memberList[i];
 			       getTaskInfo(selectTask, selectMember); 
-			     //  $('.table table-striped table-bordered bootstrap-datatable datatable').trigger("liszt:updated");
 			       break;
         	   }
         }
@@ -452,7 +414,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 /* projectName 클릭시, 프로젝트의 전체 taskList 가져오기 */	
 	function getAllTaskInfo(taskList, memberList){
         
-	    alert("getALLLLL");
+	    // alert("getALLLLL");
 	    
 	    $("#taskBox").removeAttr("style");
 	    
@@ -474,22 +436,21 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		     		          + "</td><td class='center' id='dueDate'>" + item.dueDate
 		     		          + "</td><td class='center' id='totalTime'>" + item.totalTime
 		     		          + "</td><td class='center' id='doneTime'>" + item.doneTime 
-		     		          + "</td><td><a class='btn btn-success' href=''#''>"
-		     		          + "<i class='halflings-icon white zoom-in' onclick='taskForm()''></i></a>"
-		     		          + "<a class='btn btn-info' href='#'>"
-		     		          + "<i class='halflings-icon white edit' onclick='editTask()'></i></a>"
-		     		          + "<a class='btn btn-primary' href='#'>"
-		     		          + "<i class='icon-save' onclick='updateTask()'></i></a>"
-		     		          + "<a class='btn btn-danger' href='#'>"
-		     		          + "<i class='halflings-icon white trash' onclick='deleteTask()'></i></a>"
+		     		          + "</td><td><a class='btn btn-success' href='/planbe/task/taskForm'>"
+		     		          + "<i class='halflings-icon white zoom-in'></i></a>"
+		     		          + "<a class='btn btn-info' onclick='editTask()'>"
+		     		          + "<i class='halflings-icon white edit'></i></a>"
+		     		          + "<a class='btn btn-primary' onclick='updateTask()'>"
+		     		          + "<i class='icon-save'></i></a>"
+		     		          + "<a class='btn btn-danger' onclick='deleteTask()'>"
+		     		          + "<i class='halflings-icon white trash'></i></a>"
 		     		          + "</td></tr>"
 		     		          + "<input type='hidden' id ='taskNo' value=" + item.taskNo + ">");
 		}); 
 			
 	}
-	
-	
-	
+
+/*=======================================================================================================================================*/
     	
 /* 개별 TaskInfo 가져오기 */
 	function getTaskInfo(selectTask, selectMember){
@@ -506,14 +467,14 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	     		          + "</td><td class='center' id='dueDate'>" + selectTask.dueDate
 	     		          + "</td><td class='center' id='totalTime'>" + selectTask.totalTime
 	     		          + "</td><td class='center' id='doneTime'>" + selectTask.doneTime 
-	     		          + "</td><td><a class='btn btn-success' href=''#''>"
-	     		          + "<i class='halflings-icon white zoom-in' onclick='taskForm()''></i></a>"
-	     		          + "<a class='btn btn-info' href='#'>"
-	     		          + "<i class='halflings-icon white edit' onclick='editTask()'></i></a>"
-	     		          + "<a class='btn btn-primary' href='#'>"
-	     		          + "<i class='icon-save' onclick='updateTask()'></i></a>"
-	     		          + "<a class='btn btn-danger' href='#'>"
-	     		          + "<i class='halflings-icon white trash' onclick='deleteTask()'></i></a>"
+	     		          + "</td><td><a class='btn btn-success' href='/planbe/task/taskForm'>"
+	     		          + "<i class='halflings-icon white zoom-in'></i></a>"
+	     		          + "<a class='btn btn-info' onclick='editTask()'>"
+	     		          + "<i class='halflings-icon white edit'></i></a>"
+	     		          + "<a class='btn btn-primary' onclick='updateTask()'>"
+	     		          + "<i class='icon-save'></i></a>"
+	     		          + "<a class='btn btn-danger' onclick='deleteTask()'>"
+	     		          + "<i class='halflings-icon white trash' ></i></a>"
 	     		          + "</td></tr>"
 	     		          + "<input type='hidden' id ='taskNo' value=" + selectTask.taskNo + ">");
 	     
@@ -522,7 +483,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 
 /* TaskInfo 수정하기 */
 	function editTask(){
-		alert("edit");
+		alert("You Can Edit Task Info");
 		$(".center").prop("contenteditable", true);
 	}
 	
@@ -553,9 +514,9 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	  			   "doneTime": doneTime},
 	  			 
 	  		success: function(result) {
-                alert("success에 들어옴");	
-                if(result) alert("수정 완료");
-                else("수정 실패");
+                // alert("success에 들어옴");	
+                if(result) alert("UPDATE Complete");
+                else("UPDATE Error");
                
                 $(".center").prop("contenteditable", false);
                 getWbs(p_no);
@@ -566,7 +527,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 	  			
 /* Task 삭제하기 */
 	function deleteTask(){
-		var reply = confirm("정말 Task 삭제?");
+		var reply = confirm("Delete Task?");
 		if(reply){
 			$.ajax({
 		  		url: "/planbe/wbs/deleteTask",
@@ -574,9 +535,9 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		  		data: {"taskNo": $("#taskNo").val()}, 
 		  			 
 		  		success: function(result) {
-	                alert("success에 들어옴");	
-	                if(result) alert("삭제 완료");
-	                else("삭제 실패");
+	                // alert("success에 들어옴");	
+	                if(result) alert("DELETE Complete");
+	                else("DELETE Error");
 	                
 	                $(".T_INFO").empty();
 	                getWbs(p_no);
@@ -585,7 +546,8 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 		}
 	}
 		
-		
+/*=======================================================================================================================================*/		
+
 /* UserInfo 페이지로 이동	 */	
 	function memberForm(){
 		location.href="/planbe/member/memberForm"; 	
@@ -593,33 +555,24 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
   
 /* Task 페이지로 이동 */
     function taskForm(){
-	 alert("테스크 폼 ");
-	    location.href="/planbe/task/taskForm"; // 왜 안가지? 
+	  // alert("Task Page");
+	    location.href="/planbe/task/taskForm"; 
     }
-
 	
 /* Gantt : gantt 페이지로 이동 */	
 	function showGantt(){
 		location.href="/planbe/gantt/ganttForm?projectNo=" + p_no; 
 	}
 
+/*=======================================================================================================================================*/    
 
-/* TEST */  
- // alert(nodeListData.getColumnLabel(0)); // id 
- // alert(nodeListData.getColumnProperties(0));   // [object, Object]
- // alert(nodeListData.getProperties(0, 0));      // [object, Object] 
- // alert(nodeListData.getRowProperties(0));      //  
- // alert(nodeListData.getValue(0, 0));           // 0
- // alert(nodeListData.getNumberOfColumns());     // 5 
- 
- 
 /* Send Mail 테스트 */
+ /* 
    function sendMail(){
 	   location.href="/planbe/mail/mailList";  
    }
-
+ */
  
-	
 </script>
 
 <body>
@@ -651,7 +604,7 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a>
+					<a href="/planbe/">Main</a>
 					<i class="icon-angle-right"></i> 
 				</li>
 				<li>
@@ -750,12 +703,14 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 <!-- WBS 삭제 / Gantt 링크 버튼   -->                                  
              
                <div id="JSFiddle">
-                          <div id="wordtree_explicit" style="width: 850px; height: 600px;"></div>	
+                          <div id="wordtree_explicit" style="width: 940px; height: 600px;"></div>	
                </div>
-							    <button class="btn btn-small btn-danger" onclick="deleteWbs()">Delete WBS</button>
-							    <button class="btn btn-small btn-warning" onclick="showGantt()">Show Gantt</button>
-							    <button class="btn btn-small btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg', filename:'WBS'})">Download</button>
-					            <button class="btn btn-small btn-warning" onclick="sendMail()">Mail Test btn</button>
+                                <div style="text-align: center;">
+							    <button class="btn btn-large btn-warning" onclick="deleteWbs()">Delete WBS</button>
+							    <button class="btn btn-large btn-danger" onclick="showGantt()">Show Gantt</button>
+							    <button class="btn btn-large btn-info" onclick="return xepOnline.Formatter.Format('JSFiddle', {render:'download', srctype:'svg', filename:'WBS'})">Download</button>
+                                </div> 							   
+					         
 						  </div> <!-- content -->
 			      </div>
 			  </div>
@@ -794,27 +749,13 @@ $('#bbbttt').append('<button onclick="'+ click +'">PDF</button>');
 			
 					  </table>     
 
-<!-- 				         
-							<a class="btn btn-success" href="#">
-Task 페이지로 이동	    <i class="halflings-icon white zoom-in" onclick="taskForm()"></i>  
-							</a>
-							<a class="btn btn-info" href="#">
-TaskInfo 수정		    <i class="halflings-icon white edit" onclick="editTask()"></i>  
-							</a>
-							<a class="btn btn-danger" href="#">
-Task 삭제			    <i class="halflings-icon white trash" onclick="deleteTask()"></i> 
-							</a>
-수정된 TaskInfo Update							
-                            <button class="btn btn-small btn-primary" onclick="updateWbs()">SAVE</button>
--->
-
 					</div>
 				</div><!--/span-->
 			</div><!--/row-->
 <!-- end: Task List 박스 -->		
+
+<!--=================================================================================================================================  -->
 	
-				
-				
 				<!-- 키워드 리스트 : 라벨 필요할까봐 남겨둠 -->			
 				<div class="box span2">
 					<div class="box-header">

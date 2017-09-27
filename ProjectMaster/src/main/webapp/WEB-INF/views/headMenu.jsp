@@ -39,20 +39,30 @@ function mail()
 			var m_list = result.mailList;
 			var u_name = result.userName; 
 			
+			var badge = '<span class="badge red">' + m_list.length +'</span>';  
+			$("#mail_badge").append(badge);
+			
+			var data1 = '<li class="dropdown-menu-title"><span>You have'+" "+ m_list.length +" "+'messages</span><a href="#refresh"><i class="icon-repeat"></i></a></li>';
+			$("#MAIL").append(data1);
+			
 			$(m_list).each(function(index, item)
 			{
-				var addRow = '<li class="bg-black">';
+				var addRow = '<li>';
+				addRow += '<a href ="#">';
 				addRow += '<span class="header">';
 				addRow += '<span class="from">'+u_name[index]+'</span>';
 				addRow += '<span class="time">'+item.sendDate+'</span>';
 				addRow += '</span>';
 				addRow += '<span class="message">'+item.mailContent+'</span>';
+				addRow += '</a>';
                 addRow += '</li>';
 				
-				$("#mail").append(addRow);
+				$("#MAIL").append(addRow);
 			})
-			$("#mail").trigger("liszt:updated");
+			
+			$("#MAIL").trigger("liszt:updated");
 		},
+		
 		error: function()
 		{
 			alert("협업하자~ 다투지말고~");
@@ -71,7 +81,12 @@ function history()
   		type: "post",
   		datatype: "json",
   		success: function(result) {
+  		
+  	    var badge = '<span class="badge red">' + result.length +'</span>';  
+	    $("#history_badge").append(badge);
   			
+  		var data = '<li class="dropdown-menu-title"><span>You have'+" "+ result.length +" "+'notifications</span><a href="#refresh"><i class="icon-repeat"></i></a></li>';	
+  		$("#history").append(data);
   		
   		$(result).each(function(index, item){
 			var addRow = '<li>';
@@ -81,7 +96,7 @@ function history()
 			addRow += '</span>';
 			addRow += '<span class = "message">';
 			addRow += item.logContent;
-			addRow += '</span>';
+			addRow += '</span><br>';
 			addRow += '<span class = "time">'+item.logTime+'</span>';
 			addRow += '</a>';
 			addRow += '</li>';
@@ -105,11 +120,15 @@ function history()
 		  		type: "post",
 		  		datatype: "json",
 		  		success: function(result) {
-		  			var taskList = result.taskList;
+		  			
+		  			
+		  		    var taskList = result.taskList;
 		  			var taskCount = result.taskCount;
 		  			
-		  			newMessage(taskList);
-		  			$("#taskprogress_title").append("<span>You have "+taskCount+" tasks in progress</span>");
+
+		  		    // newMessage(taskList);
+		  			
+		  		    $("#taskprogress_title").append("<span>You have "+taskCount+" tasks in progress</span>");
 		  			 YouhavetoDoTasks(taskList);
 		  			 progress();
 		  		
@@ -118,6 +137,7 @@ function history()
 		})
 	}
 
+/* 
 function newMessage(taskList){
 	var count = 0;
 	var addRow = null;
@@ -129,13 +149,21 @@ function newMessage(taskList){
 	})
 	$("#taskprogress_badge").append(addRow);	
 }
-
+ */
+ 
  	function YouhavetoDoTasks(taskList){
+	 
+
+		var badge = '<span class="badge red">' + taskList.length +'</span>';  
+	    $("#task_badge").append(badge);
+	 
+	 
  	 var color = ["taskProgress progressSlim red","taskProgress progressSlim green",
 				"taskProgress progressSlim yellow",
 				"taskProgress progressSlim greenLight",
 				"taskProgress progressSlim orange"]
-		$(taskList).each(function(index,item){
+		
+ 	   $(taskList).each(function(index,item){
 		var	addTask = '<li>'
 			addTask += '<a href="#"><span class="header">';
 			addTask += '<span class="title">'+item.taskName+'</span>';
@@ -168,6 +196,8 @@ function newMessage(taskList){
 			}
  	}
  	
+ 	
+ 	/* 
  	function mailtwo(){
  		jQuery(document).ready(function($){
  			
@@ -183,14 +213,13 @@ function newMessage(taskList){
  			
  		});	
  	}
+ 	 */
+ 	
 </script>
 <body>
 
 <p >
 </p>
-
-
-
 
 <!-- start: Header -->
   
@@ -206,45 +235,36 @@ function newMessage(taskList){
 				<a class="brand" href="/planbe/"><span>PROOO</span></a>
 								
 								
-								
-								
-								
 				<!-- start: Header Menu -->
 				<div class="nav-no-collapse header-nav">
 					<ul class="nav pull-right" >
 					
-					
-					
-					
-					
 						<li class="dropdown hidden-phone">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#" >
+							<a class="btn dropdown-toggle" id = "history_badge" data-toggle="dropdown" href="#" >
 								<i class="icon-bell"></i>
+								<!-- 
 								<span class="badge red">
 								7 </span>
+								 -->
 							</a>
 							
 							
 							<ul class="dropdown-menu notifications">
-								<li class="dropdown-menu-title">
+								<!-- <li class="dropdown-menu-title">
  									<span>You have 11 notifications</span>
 									<a href="#refresh"><i class="icon-repeat"></i></a>
-								</li>	
+								</li>	 -->
                             	<div id="history"></div>
                                 <li>
                             		<a class="dropdown-menu-sub-footer" href = "#">View all historys</a>
 								</li>	
 							</ul>
-							
-							
 						</li>
-						
-						
 						
 						
 						<!-- start: Notifications Dropdown -->
 						<li class="dropdown hidden-phone">
-							<a class="btn dropdown-toggle" id = "taskprogress_badge" data-toggle="dropdown" href="#">
+							<a class="btn dropdown-toggle" id = "task_badge" data-toggle="dropdown" href="#">
 								<i class="icon-calendar"></i>
 								
 <!-- 뉴 알람 5개   -->												
@@ -260,34 +280,27 @@ function newMessage(taskList){
 								</li>	
 							</ul>
 						</li>
-						
-						
-						
-						
-								
-						
-						
-						
-						
 						<!-- end: Notifications Dropdown -->
-						<!-- start: Message Dropdown -->
+						
+						
+						
+<!-- start: Message Dropdown -->
+
 						<li class="dropdown hidden-phone">
-							<a class="btn dropdown-toggle" data-toggle="dropdown" href="#">
+							<a class="btn dropdown-toggle" id = "mail_badge" data-toggle="dropdown" href="#">
 								<i class="icon-envelope"></i>
-								<span class="badge red">
-								4 </span>
 							</a>
-							<ul class="dropdown-menu messages">
-								<li class="dropdown-menu-title">
- 									<span>You have 9 messages</span>
-									<a href="#refresh"><i class="icon-repeat"></i></a>
-								</li>	
-								<div id="mail"></div>
+							
+							<ul class="dropdown-menu messages" >
+								<div id="MAIL"></div>
+							
 								<li>
                             		<a class="dropdown-menu-sub-footer">View all messages</a>
 								</li>	
 							</ul>
-						</li>
+						</li>						
+<!-- end: Message Dropdown -->								
+						
 						
 						<!-- start: User Dropdown -->
 						<li class="dropdown">
