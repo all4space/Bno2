@@ -140,9 +140,9 @@ function setUserInfo(){
 							</div>
 							<div class="clearfix"></div>
                             
-		                         <label><input id = "cto" type="radio" name="authority" value="cto" disabled="disabled"/> CTO</label>
-		                         <label><input id = "Manager" type="radio" name="authority" value="manager" disabled="disabled"/> Manager</label>
-		                         <label><input id = "Member" type="radio" name="authority" value="member" disabled="disabled"/> Member</label>
+		                         <label><input id = "cto" type="radio" name="authority" value="cto" disabled="disabled" style = "color : #646464;"/> CTO</label>
+		                         <label><input id = "Manager" type="radio" name="authority" value="manager" disabled="disabled" style = "color : #646464;"/> Manager</label>
+		                         <label><input id = "Member" type="radio" name="authority" value="member" disabled="disabled" style = "color : #646464;"/> Member</label>
 								
 							<div class="button-join">	
 							    <center>
