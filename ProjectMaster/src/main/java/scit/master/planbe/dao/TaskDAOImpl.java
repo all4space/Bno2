@@ -23,7 +23,7 @@ public class TaskDAOImpl implements TaskDAO{
 	
 	//업무 생성하기
 	@Override
-	public void Insert(TaskVO taskVo,UsersVO userVO) {
+	public void Insert(TaskVO taskVo,int userno) {
 		
 		Map<String,Object>map=new HashMap<>();
 		
@@ -37,7 +37,7 @@ public class TaskDAOImpl implements TaskDAO{
 		map.put("taskduedate", taskVo.getDueDate());
 		map.put("totaltime", taskVo.getTotalTime());
 		map.put("donetime", taskVo.getDoneTime());		
-		map.put("userno",userVO.getUserNo());
+		map.put("userno",userno);
 		
 		
 		

@@ -12,8 +12,8 @@
     ,TASK_SEQ.nextval
     ,#{taskname}
     ,#{taskcontent}
-    ,#{taskpriority}
-    ,#{taskstatus}
+    ,upper(#{taskpriority})
+    ,upper(#{taskstatus})
     ,#{taskstartdate}
     ,#{taskduedate}
     ,#{totaltime}
