@@ -17,7 +17,7 @@ public class UsersVO {
 		this.userName = userName;
 		this.userPwd = userPwd;
 		this.groupName = groupName;
-		Authority = authority;
+		this.Authority = authority;
 	}
 
 	public int getUserNo() {
@@ -65,7 +65,7 @@ public class UsersVO {
 	}
 
 	public void setAuthority(String authority) {
-		Authority = authority;
+		this.Authority = authority;
 	}
 
 	@Override

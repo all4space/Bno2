@@ -74,7 +74,13 @@
 					<a href="index.jsp">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
-				<li><a href="#">Task</a></li>
+				<i class="icon-edit"></i>
+				<li><a href="#">Project</a>
+				<i class="icon-angle-right"></i>
+				</li>
+				<i class="icon-bar-chart"></i>
+				<li><a href="#">Project Details</a>
+				</li>
 			</ul>
 
 		<!-- admin이 아닌 경우 -->

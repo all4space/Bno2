@@ -137,7 +137,28 @@
 		})
 	}
 	
-function history()  // historyList
+	function timeLine()
+	{
+		alert("ㅌ타임라인");
+		$.ajax
+		({
+			url: "/planbe/history/timeLine",
+			type: "post",
+			dataType: "json",
+			success: function(result)
+			{
+				alert("timeLine Start");
+				
+				
+				
+			},
+			error : function()
+			{
+				alert("timelist ! error !");
+			}
+		})
+	}
+function historyList()  
 {
 	alert("대기타봐");
 	$.ajax
@@ -388,15 +409,42 @@ function history()  // historyList
 					</div>
 				
 				
+						<table class="table table-bordered table-striped">
+							<tr>
+								<td>Star Rating</td>
+								<td>
+									<span class="rating">
+				                        <span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span><span class="star"></span>
+				                    </span>
+								</td>
+							</tr>
+							<tr>
+								<td>Popover</td>
+								<td>
+									<a href="#" class="btn btn-danger" data-rel="popover" data-content="And here's some amazing content. It's very engaging. right?" title="A Title">Hover for popover</a>
+								</td>
+							</tr>
+							<tr>
+								<td>Dialog</td>
+								<td>
+									<a href="#" class="btn btn-info btn-setting">Click for dialog</a>
+								</td>
+							</tr>
+							<tr>
+								<td>Tooltip</td>
+								<td>
+									<a href="#" title="Tooltip, you can change the position." data-rel="tooltip" class="btn btn-warning">Hover for tooltip</a>
+								</td>
+							</tr>
+						</table>
 				
-				<div class="row-fluid">	
-					<div class="box-content">
-						
-				<p>Picture</p>
 				
-				<p>${userVo.userName}</p>
+						<a class="quick-button-small span1">
+							<i class="icon-beaker" onclick = "ProjectList()"></i>
+							<p>Projects</p>
+						</a>
 						<a href = "/planbe/task/taskForm" class="quick-button-small span1">
-							<i class="icon-beaker"></i>
+							<i class="icon-barcode"></i>
 							<p>Task</p>
 						</a>
 						<a href = "/planbe/plan/planForm" class="quick-button-small span1">
@@ -408,23 +456,104 @@ function history()  // historyList
 							<i class="icon-envelope"></i>
 							<p>E-mail</p>
 						</a>
+							<a class="quick-button-small span1">
+							<i class="icon-dashboard" onclick = "historyList()"></i>
+							<p>History</p>
+						</a>
+						<a class="quick-button-small span1">
+							<i class="icon-thumbs-up" onclick = "timeLine()"></i>
+							<p>TimeLine</p>
+						</a>
 						
 						<div class="clearfix"></div>
 					</div>	
-					<div class="box-content">
-						<p class="center">
-							<button class="btn btn-primary" onclick = "userInfo()"><i class=" halflings-icon user"></i> General</button>
-							<button class="btn btn-primary" onclick = "history()"><i class="halflings-icon time"></i> Activity</button>
-							<button class="btn btn-primary" onclick = "ProjectList()"><i class="halflings-icon file"></i> Project</button>
-						</p>
-					</div>
 			</div><!--/row-->
 		</div>
 		</div>
 		
 					<!-- //고고뗴 -->
+					
+					
 					<div id = "test">
 			</div>
+			
+							<div class="row-fluid">
+				
+				
+				<div class="span5 noMarginLeft">
+					
+					<div class="dark">
+					
+					<h1>Timeline</h1>
+					
+					<div class="timeline">
+						
+					    <div class="timeslot">
+					    	
+							<div class="task">
+					    		<span>
+									<span class="type">appointment</span>
+									<span class="details">
+										Dennis Ji at Bootstrap Metro Dashboard HQ
+									</span>
+									<span>
+										remaining time
+										<span class="remaining">
+											3h 38m 15s
+										</span>	
+									</span> 
+								</span>
+								<div class="arrow"></div>
+							</div>							
+							<div class="icon">
+								<i class="icon-map-marker"></i>
+							</div>
+							<div class="time">
+								3:43 PM
+							</div>	
+								
+					    </div>
+					
+						<div class="clearfix"></div>
+						
+						<div class="timeslot alt">
+					    	
+							<div class="task">
+					    		<span>
+									<span class="type">phone call</span>
+									<span class="details">
+										Dennis Ji
+									</span>
+									<span>
+										remaining time
+										<span class="remaining">
+											3h 38m 15s
+										</span>	
+									</span>
+								</span>
+								<div class="arrow"></div>
+							</div>
+							<div class="icon">
+								<i class="icon-phone"></i>
+							</div>
+							<div class="time">
+								3:43 PM
+							</div>	
+								
+					    </div>
+					
+					
+					
+					
+						
+					    
+					</div>
+				</div>
+				
+				</div>	
+						
+			</div>
+			
 	<!-- start: JavaScript-->
 
 		<script src="/planbe/resources/bootstrap/js/jquery-1.9.1.min.js"></script>

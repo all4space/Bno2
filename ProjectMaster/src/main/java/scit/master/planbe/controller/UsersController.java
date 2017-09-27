@@ -148,9 +148,7 @@ public class UsersController {
 	@RequestMapping(value = "userInfo", method = RequestMethod.GET)
 	public String userInfo(int userNo, Model model)
 	{
-		
 		model.addAttribute("userVo", service.getUserInfo(userNo));
-		
 		
 		return "userInfoForm";
 	}

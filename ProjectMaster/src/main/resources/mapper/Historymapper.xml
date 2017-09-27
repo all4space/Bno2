@@ -31,7 +31,9 @@
 </select>
 
 <select id = "getHistory" parameterType = "int" resultType = "HistoryVO">
-	select h.projectno, h.logtime, h.logcontent  from history h, member m where m.projectno = h.projectno and m.userno = #{userno} order by h.logtime desc
+<![CDATA[
+	select h.projectno, h.logtime, h.logcontent  from history h, member m where rownum <= 7 and m.projectno = h.projectno and m.userno = #{userno} order by h.logtime desc
+ ]]>
 </select>	
 
 
