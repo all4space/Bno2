@@ -133,7 +133,7 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="/planbe/">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<i class="icon-edit"></i>
@@ -146,6 +146,7 @@
 					<div class="box-header" data-original-title>
 						<h2><i class="halflings-icon white list-alt"></i><span class="break"></span>Project List</h2>
 					</div>
+					
 					<div class="box-content">
 						<table class="table table-striped table-bordered bootstrap-datatable datatable">
 						  <thead>

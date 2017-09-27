@@ -215,23 +215,21 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a>
+					<a href="/planbe/">Main</a>
 					<i class="icon-angle-right"></i> 
 				</li>
 				<li>
 					<i class="icon-edit"></i>
-					<a href="#">Project</a>
+					<a href="#">Project Add</a>
 				</li>
 			</ul>
 			
 			<div class="row-fluid sortable">
 				<div class="box span12">
 					<div class="box-header" data-original-title>
-						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Project</h2>
+						<h2><i class="halflings-icon white edit"></i><span class="break"></span>Project Add</h2>
 						<div class="box-icon">
-							<a href="#" class="btn-setting"><i class="halflings-icon white wrench"></i></a>
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
-							<a href="#" class="btn-close"><i class="halflings-icon white remove"></i></a>
 						</div>
 					</div>
 					<div class="box-content">
@@ -245,7 +243,6 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 								<input type="text" class="span6 typeahead" id="projectName" name ="projectName"  data-provide="typeahead" data-items="4" data-source='["Alabama","Alaska","Arizona","Arkansas","California","Colorado","Connecticut","Delaware","Florida","Georgia","Hawaii","Idaho","Illinois","Indiana","Iowa","Kansas","Kentucky","Louisiana","Maine","Maryland","Massachusetts","Michigan","Minnesota","Mississippi","Missouri","Montana","Nebraska","Nevada","New Hampshire","New Jersey","New Mexico","New York","North Dakota","North Carolina","Ohio","Oklahoma","Oregon","Pennsylvania","Rhode Island","South Carolina","South Dakota","Tennessee","Texas","Utah","Vermont","Virginia","Washington","West Virginia","Wisconsin","Wyoming"]'>
 								<!-- 자동완성 데이터 넣을거 있는지. 추후 사용가능 -->
 								
-								<p class="help-block">Start typing to activate auto complete!</p>
 							  </div>
 						  </div>
 							<div class="control-group">
