@@ -123,7 +123,7 @@ function member(project)
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="main.jsp">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Task</a></li>
@@ -258,7 +258,7 @@ function member(project)
                                 <span class="glyphicon glyphicon-plus"></span> 
                                                         
                             <a href="/planbe/task/taskForm/"><button type="button" class="btn btn-default preview-cancel-button">
-                                <span class="glyphicon glyphicon-plus"></span> cancel
+                                <span class="glyphicon glyphicon-plus"></span> Task List
                             </button></a>
                             
                         </div>

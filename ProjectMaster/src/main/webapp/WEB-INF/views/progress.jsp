@@ -44,7 +44,12 @@
 	
 <!-- select box 선택 값 가져오기 -->
 <script>
+
+
+
 function change(number){
+	
+	
 	
 	var value=number.value;
 	
@@ -59,6 +64,7 @@ function change(number){
 	}
 	
 }
+
 
 </script>
 	<!-- select box 선택 값 가져오기 -->
@@ -92,7 +98,7 @@ function change(number){
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="main.jsp">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Task</a></li>
@@ -534,4 +540,8 @@ function change(number){
 	<!-- end: JavaScript-->
 	
 </body>
+
+
+
+
 </html>

@@ -180,7 +180,7 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="main.jsp">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Plan</a></li>

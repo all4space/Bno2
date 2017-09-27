@@ -44,6 +44,21 @@
 	<link rel="shortcut icon" href="/planbe/resources/bootstrap/img/favicon.ico">
 	<!-- end: Favicon -->
 	
+	<script type="text/javascript">
+	
+	
+	function GoProgress(){
+		
+		location.href="/planbe/task/progressForm";
+		
+		
+	}
+	
+
+	
+	</script>
+	
+	
 </head>
 
 <body>
@@ -75,7 +90,7 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="main.jsp">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Task</a></li>
@@ -101,7 +116,7 @@
 				<div class="pull-right">
                 	<a href="/planbe/task/newTaskForm/"><button type="button" class="btn btn-small btn-primary" value="new" >new</button></a>
 					<input type="button" class="btn btn-small btn-success" value="Excel" id="excel"/>
-						<a href="/planbe/task/progressForm/"><button type="button" class="btn btn-small btn-danger">progress</button></a>
+					<input type="button" class="btn btn-small btn-danger" value="progress" onclick="GoProgress()"/>
                 </div>
               
             					
