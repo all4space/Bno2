@@ -7,7 +7,9 @@ import scit.master.planbe.VO.PlanVO;
 public interface PlanDAO {
 	
 	
+	
 	    
+	
 	   
 		
 	public void insertPlan(PlanVO planVO); //일정 생성하기
