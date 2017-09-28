@@ -43,9 +43,62 @@
 
 <style type="text/css">@import url(// fonts.googleapis.com/earlyaccess/nanumgothic.css);</style>
 
+<style type="text/css" >
+
+.wrap-loading{ /*화면 전체를 어둡게 합니다.*/
+
+    z-index: 8;
+    
+    position: relative;
+
+    left:0;
+
+    right:0;
+
+    top:0;
+
+    bottom:0;
+
+    background: rgba(0,0,0,0.2); /*not in ie */
+
+    filter: progid:DXImageTransform.Microsoft.Gradient(startColorstr='#20000000', endColorstr='#20000000');    /* ie */
+
+    
+
+}
+
+    .wrap-loading div{ /*로딩 이미지*/
+        
+        z-index: 8;
+
+        position: relative;
+
+        top:50%;
+
+        left:50%;
+
+        margin-left: -21px;
+
+        margin-top: -21px;
+
+    }
+
+    .display-none{ /*감추기*/
+
+        display:none;
+
+    }
+
+        
+
+</style>
+
 </head>
 
 <script>
+
+
+
 
 /* Gantt와 연동 */
  
@@ -232,6 +285,15 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
                     drawSimpleNodeChart(p_name, t_list, m_list);
                     memberForKey(p_name, t_list, m_list); 
 				} // success
+				 
+				 ,beforeSend:function(){
+				 //       (이미지 보여주기 처리)
+				        $('.wrap-loading').removeClass('display-none');
+				 }
+				 ,complete:function(){
+				 //       (이미지 감추기 처리)
+				        $('.wrap-loading').addClass('display-none');
+				 }
 		});
 	}
                     
@@ -596,7 +658,8 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
 				</div>
 			</noscript>
-			
+		
+
 			<!-- start: Content -->
 			<div id="content" class="span10">
 			
@@ -615,6 +678,7 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 			
 	
 <!-- ========================================================================================================================== -->
+	
 								
 <!-- start : 프로젝트 리스트  -->			
 	<div class="row-fluid sortable">	
@@ -670,10 +734,10 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 			</div><!--/row-->
 <!-- end : 프로젝트 리스트  -->		    			
 				
-							
+		
 								
 <!-- start: WBS 트리 박스 -->	
-             <div class="row-fluid sortable">			   
+             <div class="row-fluid sortable">	
 	             <div class="box span12">
 							
 							<div class="box-header" />
@@ -696,15 +760,20 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 							</div>
 <!-- end : 키워드 드롭다운 -->		
 
+<!-- 
 
+                    <div class="wrap-loading display-none">		   
+					  <div><img src="/planbe/resources/img/loadingCat.gif" /></div>
+			        </div>
 
-
-
+  -->
 <!-- WBS 삭제 / Gantt 링크 버튼   -->                                  
              
                <div id="JSFiddle">
-                          <div id="wordtree_explicit" style="width: 1200px; height: 600px;"></div>	
-               </div>
+                          <div id="wordtree_explicit" style="width: 1200px; height: 600px;">
+                          </div>	
+               </div><!-- PDF -->
+                          
                                 <div style="text-align: center;">
 							    <button class="btn btn-large btn-warning" onclick="deleteWbs()">Delete WBS</button>
 							    <button class="btn btn-large btn-danger" onclick="showGantt()">Show Gantt</button>
@@ -753,7 +822,6 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 				</div><!--/span-->
 			</div><!--/row-->
 <!-- end: Task List 박스 -->		
-
 <!--=================================================================================================================================  -->
 	
 				<!-- 키워드 리스트 : 라벨 필요할까봐 남겨둠 -->			
@@ -909,6 +977,8 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 	</div>
 	
 	<div class="clearfix"></div>
+	
+	   
 	
 	<footer>
 		
