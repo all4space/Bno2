@@ -107,7 +107,7 @@
 				</li>
 				<i class="icon-edit"></i>
 				<li><a href="#">Project</a></li>
-				<c:if test = "${users.authority eq 'cto' || users.authority eq 'Manager'}">
+				<c:if test = "${users.authority eq 'cto' || users.authority eq 'manager'}">
 				<a id = "projectadd" href = "projectForm"><button class="btn btn-small btn-primary">Project ADD</button></a>
 				</c:if>
 			</ul>
@@ -132,10 +132,10 @@
 						  <tbody>
 						  <c:forEach items = "${projectList}" var = "vo" varStatus="status">
 							<tr>
-								<td style="font-weight: bold">${vo.projectName}</button></a></td> 
-								<td>${vo.projectContent}</td>
-								<td>${vo.startDate}</td>
-								<td>${vo.dueDate}</td>
+								<td class = "center" style="font-weight: bold">${vo.projectName}</td> 
+								<td class = "center">${vo.projectContent}</td>
+								<td class = "center">${vo.startDate}</td>
+								<td class = "center">${vo.dueDate}</td>
 								<c:choose>
 									<c:when test = "${vo.projectStatus eq 'PROGRESS'}">
 										<td class="center">
@@ -153,7 +153,7 @@
 										</td>
 									</c:when>
 								</c:choose>
-								<c:choose>
+								<c:choose>	
 								<c:when test = "${users.authority eq 'cto'}">
 								<td class="center">
 										<a class="btn btn-info" href="/planbe/project/projectUpdateForm?projectNo=${vo.projectNo}">
