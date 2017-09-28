@@ -41,4 +41,9 @@ public class HistoryDAOImpl implements HistoryDAO {
 		HistoryMapper mapper = Sqlsession.getMapper(HistoryMapper.class);
 		return mapper.getHistory(userNo);
 	}
+	@Override
+	public ArrayList<HistoryVO> getProjectHistory(ArrayList<Integer> pno) {
+		HistoryMapper mapper = Sqlsession.getMapper(HistoryMapper.class);
+		return mapper.getProjectHistory(pno);
+	}
 }

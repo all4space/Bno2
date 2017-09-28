@@ -111,9 +111,6 @@
 									<a class="btn btn-info" href="#">
 										<i class="halflings-icon white edit"></i>  
 									</a>
-									<a class="btn btn-danger" href="/planbe/member/delete">
-										<i class="halflings-icon white trash"></i> 
-									</a>
 							</td>
 						  </tr>
 						  </c:forEach>

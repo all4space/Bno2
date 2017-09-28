@@ -6,7 +6,7 @@ import scit.master.planbe.VO.PlanVO;
 
 public interface PlanMapper {
 	
-	d
+	
 	
 	public void insertPlan(PlanVO planVO); 	// 일정 생성하기
 	

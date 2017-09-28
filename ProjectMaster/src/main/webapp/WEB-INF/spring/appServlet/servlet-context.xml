@@ -2,6 +2,7 @@
 <beans:beans xmlns="http://www.springframework.org/schema/mvc"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xmlns:beans="http://www.springframework.org/schema/beans"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
 	xmlns:context="http://www.springframework.org/schema/context"
 	xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
@@ -23,6 +24,27 @@
 	
 	<context:component-scan base-package="scit.master.planbe" />
 	
-	
+	<beans:bean id="MemberInterceptor"
+		class="scit.master.planbe.interceptor.MemberInterceptor" />
+	<beans:bean id="LoginInterceptor"
+		class="scit.master.planbe.interceptor.LoginInterceptor" />
+		
+		
+	<mvc:interceptors>
+		<mvc:interceptor>
+			<mvc:mapping path="/static/**"/>
+			<beans:ref bean="MemberInterceptor"/>
+		</mvc:interceptor>
+		<mvc:interceptor>
+			<mvc:mapping path="/project/**"/>
+			<mvc:mapping path="/task/**"/>
+			<mvc:mapping path="/gantt/**"/>
+			<mvc:mapping path="/wbs/**"/>
+			<mvc:mapping path="/static/**"/>
+			<mvc:mapping path="/member/**"/>
+			<mvc:mapping path="/mail/**"/>
+			<beans:ref bean="LoginInterceptor" />
+		</mvc:interceptor>
+	</mvc:interceptors>
 	
 </beans:beans>

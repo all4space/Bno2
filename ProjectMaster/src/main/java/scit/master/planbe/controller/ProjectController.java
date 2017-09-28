@@ -49,22 +49,31 @@ public class ProjectController {
 	public ModelAndView projectList(HttpSession session)
 	{
 		String userId = (String) session.getAttribute("loginId");
-	
-		ModelAndView mov = new ModelAndView("/projectList");
-		
-		ArrayList<ProjectVO> project = service.getProjectList(usersService.getUserNo(userId));
-		ArrayList<MemberVO> memberVo = memberService.getFavorite(usersService.getUserNo(userId));
-		
-		int userNo = usersService.getUserNo(userId);
-		
-		System.out.println("projectList" + usersService.getUserInfo(userNo).toString());
-		
-		mov.addObject("userNo",userNo);
-		mov.addObject("users", usersService.getUserInfo(userNo));
-		mov.addObject("projectList", project);
-		mov.addObject("member", memberVo);
-		
-		return mov;
+		   
+	      ModelAndView mov = new ModelAndView("/projectList");
+	      ArrayList<ProjectVO> project = new ArrayList<>();
+	      
+	      ArrayList<MemberVO> memberVo = memberService.getFavorite(usersService.getUserNo(userId));
+	      
+	      int userNo = usersService.getUserNo(userId);
+	      
+	      UsersVO users = usersService.getUserInfo(userNo);
+	      
+	      if(users.getAuthority().equals("cto"))
+	      {
+	         project = service.getCtoProjectList(users.getGroupName());
+	      }
+	      else
+	      {
+	         project = service.getProjectList(usersService.getUserNo(userId));
+	      }
+	      
+	      mov.addObject("userNo",userNo);
+	      mov.addObject("users", usersService.getUserInfo(userNo));
+	      mov.addObject("projectList", project);
+	      mov.addObject("member", memberVo);
+	      
+	      return mov;
 	}
 	
 	//프로젝트 삭제

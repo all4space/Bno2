@@ -43,41 +43,154 @@
 	
 		
 </head>
+<style>
+.icon_set a .quick-button metro span2{
+	display : inline-block;
+	text-align: center;
+	margin-right : 20px;
+	margin-left : 20px;
+	width: 300px;
+}
+.icon_set a .quick-button metro span2:hover,
+.icon_set a .quick-button metro span2:focus,
+.icon_set a .quick-button metro span2:active{
+background-color: #fc9476;
+border-color: #fc9476;
+}
 
+.title{
+	font-weight: bold;
+	font-size: medium;
+}
+
+.title,
+.content{
+	color: black;
+}
+img{
+	width: 300%;
+}
+
+td{
+	padding-right: 15px;
+	padding-left: 15px;
+}
+
+td i,
+td span{
+	text-align: center;
+	color: white;
+}
+td i :hover,
+td i :focus,
+td i :active,
+td span :hover,
+td span :focus,
+td span :actvie{
+	background-color: #fc9476;
+	border-color: #fc9476;
+}
+</style>
 <body>
-
 <!-- Head Menu -->
 	<div>
 	<%@include file="headMenu.jsp"%>
     </div>
 	
 		<div class="container-fluid-full">
-		<div class="row-fluid">
+		<div class="row-fluid" style="margin-right: 0%; width: 100%;">
 		
-<!-- Side Menu -->
-	<div>
-     <%@include file="sideMenu.jsp"%>
-    </div>		
-			
-			<noscript>
-				<div class="alert alert-block span10">
-					<h4 class="alert-heading">Warning!</h4>
-					<p>You need to have <a href="http://en.wikipedia.org/wiki/JavaScript" target="_blank">JavaScript</a> enabled to use this site.</p>
-				</div>
-			</noscript>
-			
 			<!-- start: Content -->
-			<div id="content" class="span10">
+			<div id="content" class="span4" style="width: 100%;padding: 20px; margin: 0px;	margin-left: 0% !important; background: url('/planbe/resources/bootstrap/img/배경.jpg');">
 			
 			
-			<ul class="breadcrumb">
-				<li>
+			<ul class="breadcrumb" style="background: rgba(255,255,255,0.5);">
+				
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
-				</li>
+					<a href="index.jsp" style="color: white;">Main</a> 
+				
 			</ul>
-
-			<div class="row-fluid">
+			
+			<div><h1 style="font: 200;font-weight: bold;color: rgba(255,255,255,0.7);">Our Project of Team Name is Project Atsume !</h1></div>
+			<div class="row-fluid" style = "float:left; width : 40%; margin : 0;">	
+			<div>
+					<div class="icon_set">
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);" href="/planbe/project/projectForm">
+							<img src = "/planbe/resources/bootstrap/img/project.png">
+							<p class="title" style="text-align: center; color: #fc9476; background:rgba(0,0,0,0.7); ">Project</p>
+							<p class="content" style="text-align: center;">프로젝트 시작<br>생성,추가,삭제<br>가능합니다.<br>Start!</p>
+						</a>
+					</div>
+					<div class="icon_set">				
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);" href="/planbe/member/memberForm">
+							<img src ="/planbe/resources/bootstrap/img/member.png">
+							<p class="title" style="text-align: center; color: #fc9476; background:rgba(0,0,0,0.7);">member</p>
+							<p class="content" style="text-align: center;">멤버 초대<br>프로젝트의<br>구성원을 추가<br>해보세요!</p>
+						</a>
+					</div>
+					<div class="icon_set">
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);">
+							<img src = "/planbe/resources/bootstrap/img/task.png" href="/planbe/task/taskForm">
+							<p class="title" style="text-align: center; color: #fc9476; background:rgba(0,0,0,0.7);">task</p>
+							<p class="content" style="text-align: center;">팀원 업무 분배<br>업무들을<br>멤버 별로 할당<br>할 수 있어요.</p>
+						</a>
+					</div>
+					<div class="clearfix" style="width:50%;"></div>
+			</div><!--uppder Icons  1줄 -->
+			
+			<div>
+					<div class="icon_set">
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);">
+							<img src = "/planbe/resources/bootstrap/img/calendar.png" href="/planbe/plan/planForm">
+							<p class="title" style="text-align: center; color: #fc9476;background:rgba(0,0,0,0.7);">calendar</p>
+							<p class="content" style="text-align: center;">일정 관리<br>프로젝트<br>개인 둘다 OK<br>모두 관리해요!</p>
+						</a>
+					</div>				
+					<div class="icon_set">				
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);">
+							<img src ="/planbe/resources/bootstrap/img/static.png" href="/planbe/static/staticForm">
+							<p class="title" style="text-align: center; color: #fc9476;background:rgba(0,0,0,0.7);">static</p>
+							<p class="content" style="text-align: center;">통계 분석<br>프로젝트의<br>진행률,효율도<br>제공합니다.</p>
+						</a>
+						</div>
+					<div class="icon_set">				
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);">
+							<img src = "/planbe/resources/bootstrap/img/mail.png" href="/planbe/mail/mailForm">
+							<p class="title" style="text-align: center; color: #fc9476; background:rgba(0,0,0,0.7);">mail</p>
+							<p class="content" style="text-align: center;">멤버간 메일<br>할 말은 메일<br>상단에서<br>알람 확인 !</p>
+						</a>
+					</div>
+				<div class="clearfix" style="width:452px;"></div>
+			</div> <!--Under Icons  -->
+			</div>		<!-- row  -->	
+			
+			
+<!-- 왼쪽 --> <div class="row-fluid" style="float:right;width : 50%; text-align: center;">
+				<label style="font: 100;font-weight: bold;color: rgba(255,255,255,0.7);">Gantt와 WBS는 연동이 가능합니다. <br>WBS에서 보던 프로젝트를 Gantt로 볼 수 있어요!</label>
+				<div class ="two_chart">
+					<div class="icon_set">				
+						<a class="quick-button metro span4" style="background: rgba(255,255,255,0.7);" href="/planbe/gantt/ganttForm">
+							<img src = "/planbe/resources/bootstrap/img/gantt.png">
+							<p class="title" style="text-align: center; color: #fc9476; background-color:rgba(0,0,0,0.7);">Gantt</p>
+							<p class="content" style="text-align: center;">프로젝트 별<Br> Gantt Chart 확인이 가능합니다.</p>
+						</a>
+					</div>
+					<div class ="icon_set">
+							<p></p>
+							<img class = "span4" src = "/planbe/resources/bootstrap/img/마루마루.PNG" style="width: 30%; background: rgba(0,0,0,0.2);">
+					</div>
+					<div class="icon_set">				
+						<a class="quick-button metro span4" style="float: right; background: rgba(255,255,255,0.7);" href="/planbe/wbs/wbsForm">
+							<img src = "/planbe/resources/bootstrap/img/wbs (2).png">
+							<p class="title" style="text-align: center; color: #fc9476; background:rgba(0,0,0,0.7);">WBS</p>
+							<p class="content" style="text-align: center;">프로젝트 별 <Br>WBS Chart 확인이 가능합니다.</p>
+						</a>
+					</div> 
+				</div><!-- Gantt Wbs 묶은 div  -->
+			<div class="clearfix"></div>
+			</div><!-- row  -->
+		</div><!-- content  -->
+<!-- 			<div class="row-fluid">
 				
 				<div class="span3 statbox purple" onTablet="span6" onDesktop="span3">
 					<div class="boxchart">5,6,7,2,0,4,2,4,8,2,3,3,2</div>
@@ -126,35 +239,35 @@
 
                     <ul class="unstyled">
                         
-                        <li><span class="sparkLineStats3"></span> 
+                        <span class="sparkLineStats3"></span> 
                             Pageviews: 
                             <span class="number">781</span>
-                        </li>
-                        <li><span class="sparkLineStats4"></span>
+                        
+                        <span class="sparkLineStats4"></span>
                             Pages / Visit: 
                             <span class="number">2,19</span>
-                        </li>
-                        <li><span class="sparkLineStats5"></span>
+                        
+                        <span class="sparkLineStats5"></span>
                             Avg. Visit Duration: 
                             <span class="number">00:02:58</span>
-                        </li>
-                        <li><span class="sparkLineStats6"></span>
+                        
+                        <span class="sparkLineStats6"></span>
                             Bounce Rate: <span class="number">59,83%</span>
-                        </li>
-                        <li><span class="sparkLineStats7"></span>
+                        
+                        <span class="sparkLineStats7"></span>
                             % New Visits: 
                             <span class="number">70,79%</span>
-                        </li>
-                        <li><span class="sparkLineStats8"></span>
+                        
+                        <span class="sparkLineStats8"></span>
                             % Returning Visitor: 
                             <span class="number">29,21%</span>
-                        </li>
+                        
 
                     </ul>
 					
 					<div class="clearfix"></div>
 
-                </div><!-- End .sparkStats -->
+                </div>End .sparkStats
 
 			</div>
 			
@@ -317,7 +430,7 @@
 					
 					</div>
 					
-				</div><!--/span-->
+				</div>/span
 				
 				<div class="widget span3 red" onTablet="span6" onDesktop="span3">
 					
@@ -374,65 +487,65 @@
 					</div>
 					<div class="box-content">
 						<ul class="dashboard-list metro">
-							<li>
+							
 								<a href="#">
 									<i class="icon-arrow-up green"></i>                               
 									<strong>92</strong>
 									New Comments                                    
 								</a>
-							</li>
-						  <li>
+							
+						  
 							<a href="#">
 							  <i class="icon-arrow-down red"></i>
 							  <strong>15</strong>
 							  New Registrations
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-minus blue"></i>
 							  <strong>36</strong>
 							  New Articles                                    
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-comment yellow"></i>
 							  <strong>45</strong>
 							  User reviews                                    
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-arrow-up green"></i>                               
 							  <strong>112</strong>
 							  New Comments                                    
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-arrow-down red"></i>
 							  <strong>31</strong>
 							  New Registrations
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-minus blue"></i>
 							  <strong>93</strong>
 							  New Articles                                    
 							</a>
-						  </li>
-						  <li>
+						  
+						  
 							<a href="#">
 							  <i class="icon-comment yellow"></i>
 							  <strong>256</strong>
 							  User reviews                                    
 							</a>
-						  </li>
+						  
 						</ul>
 					</div>
-				</div><!--/span-->
+				</div>/span
 				
 				<div class="box black span4" onTablet="span6" onDesktop="span4">
 					<div class="box-header">
@@ -451,7 +564,7 @@
 								<strong>Name:</strong> Dennis Ji<br>
 								<strong>Since:</strong> Jul 25, 2012 11:09<br>
 								<strong>Status:</strong> Approved             
-							</li>
+							
 							<li class="yellow">
 								<a href="#">
 									<img class="avatar" alt="Dennis Ji" src="/planbe/resources/bootstrap/img/avatar.jpg">
@@ -459,7 +572,7 @@
 								<strong>Name:</strong> Dennis Ji<br>
 								<strong>Since:</strong> Jul 25, 2012 11:09<br>
 								<strong>Status:</strong> Pending                                
-							</li>
+							
 							<li class="red">
 								<a href="#">
 									<img class="avatar" alt="Dennis Ji" src="/planbe/resources/bootstrap/img/avatar.jpg">
@@ -467,7 +580,7 @@
 								<strong>Name:</strong> Dennis Ji<br>
 								<strong>Since:</strong> Jul 25, 2012 11:09<br>
 								<strong>Status:</strong> Banned                                  
-							</li>
+							
 							<li class="blue">
 								<a href="#">
 									<img class="avatar" alt="Dennis Ji" src="/planbe/resources/bootstrap/img/avatar.jpg">
@@ -475,10 +588,10 @@
 								<strong>Name:</strong> Dennis Ji<br>
 								<strong>Since:</strong> Jul 25, 2012 11:09<br>
 								<strong>Status:</strong> Updated                                 
-							</li>
+							
 						</ul>
 					</div>
-				</div><!--/span-->
+				</div>/span
 				
 				<div class="box black span4 noMargin" onTablet="span12" onDesktop="span4">
 					<div class="box-header">
@@ -496,42 +609,42 @@
 									<a class="action icon-check-empty" href="#"></a>	
 									Windows Phone 8 App 
 									<strong>today</strong>
-								</li>
+								
 								<li class="red">
 									<a class="action icon-check-empty" href="#"></a>
 									New frontend layout
 									<strong>today</strong>
-								</li>
+								
 								<li class="yellow">
 									<a class="action icon-check-empty" href="#"></a>
 									Hire developers
 									<strong>tommorow</strong>
-								</li>
+								
 								<li class="yellow">
 									<a class="action icon-check-empty" href="#"></a>
 									Windows Phone 8 App
 									<strong>tommorow</strong>
-								</li>
+								
 								<li class="green">
 									<a class="action icon-check-empty" href="#"></a>
 									New frontend layout
 									<strong>this week</strong>
-								</li>
+								
 								<li class="green">
 									<a class="action icon-check-empty" href="#"></a>
 									Hire developers
 									<strong>this week</strong>
-								</li>
+								
 								<li class="blue">
 									<a class="action icon-check-empty" href="#"></a>
 									New frontend layout
 									<strong>this month</strong>
-								</li>
+								
 								<li class="blue">
 									<a class="action icon-check-empty" href="#"></a>
 									Hire developers
 									<strong>this month</strong>
-								</li>
+								
 							</ul>
 						</div>	
 					</div>
@@ -701,17 +814,13 @@
 				
 				<div class="clearfix"></div>
 								
-			</div><!--/row-->
+			</div>/row -->
 			
-       
-
-	</div><!--/.fluid-container-->
-	
-			<!-- end: Content -->
-		</div><!--/#content.span10-->
-		</div><!--/fluid-row-->
-		
-	<div class="modal hide fade" id="myModal">
+	<!--fluid-container-->
+	</div><!-- end: Content -->
+ 		</div><!-- content.span10 -->
+		<!-- fluid-row -->
+	<!-- <div class="modal hide fade" id="myModal">
 		<div class="modal-header">
 			<button type="button" class="close" data-dismiss="modal">Ã</button>
 			<h3>Settings</h3>
@@ -728,14 +837,39 @@
 	<div class="common-modal modal fade" id="common-Modal1" tabindex="-1" role="dialog" aria-hidden="true">
 		<div class="modal-content">
 			<ul class="list-inline item-details">
-				<li><a href="http://themifycloud.com">Admin templates</a></li>
-				<li><a href="http://themescloud.org">Bootstrap themes</a></li>
+				<a href="http://themifycloud.com">Admin templates</a>
+				<a href="http://themescloud.org">Bootstrap themes</a>
 			</ul>
 		</div>
-	</div>
-	
-	<div class="clearfix"></div>
-	
+	</div> -->
+ 	<!-- <div class="clearfix"></div> --> 
+<footer>
+			<div id="sidebar-bottom" class="span2" style="width: auto;">
+				<div class="nav-collapse sidebar-nav">
+					<table class="nav nav-tabs nav-stacked main-menu">
+					<tr>
+<!-- Main 메뉴 -->		<td><a href="/planbe/"><i class="icon-home"></i><span class="hidden-tablet"> Main</span></a></td>	
+<!-- Project 메뉴 -->   <td><a href="/planbe/project/projectList"><i class="icon-edit"></i><span class="hidden-tablet"> Project</span></a></td>
+<!-- Task 메뉴 -->	  <td><a href="/planbe/task/taskForm"><i class="icon-tasks"></i><span class="hidden-tablet"> Task</span></a></td>
+<!-- Gantt 메뉴 -->	<td><a href="/planbe/gantt/ganttForm"><i class="icon-align-left"></i><span class="hidden-tablet"> Gantt</span></a></td>
+<!-- WBS 메뉴 -->	<td><a href="/planbe/wbs/wbsForm"><i class="icon-sitemap"></i><span class="hidden-tablet"> WBS</span></a></td>	
+<!-- Plan 메뉴 -->	<td><a href="/planbe/plan/planForm"><i class="icon-calendar"></i><span class="hidden-tablet"> Plan</span></a></td>
+<!-- Mail 메뉴 -->	<td><a href="/planbe/mail/mailList"><i class="icon-envelope"></i><span class="hidden-tablet"> Mail</span></a></td>
+<!-- Member 메뉴 -->	<td> <a href="/planbe/member/memberForm"><i class="icon-user"></i><span class="hidden-tablet"> Member</span></a></td>
+<!-- Statistic 메뉴 --><td><a href="/planbe/static/staticForm"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Statistic</span></a></td>
+					<!-- <a href="/planbe/tasks"><i class="halflings-icon time"></i><span class="hidden-tablet"> history</span></a> -->
+<!-- Login 메뉴 -->	<td><c:if test="${userName == null}">
+						<a href="/planbe/users/loginForm"><i class="icon-lock"></i><span class="hidden-tablet"> Login</span></a>
+					    </c:if>
+<!-- Logout 메뉴 -->		<c:if test="${userName != null}">
+					    <a href="/planbe/users/logout"><i class="halflings-icon off white"></i><span class="hidden-tablet"> Logout</span></a>
+					    </c:if>
+					</td>
+					</tr>
+					</table>
+				</div>
+			</div>	
+</footer>
 	<footer>
 
 		<p>
@@ -765,10 +899,14 @@
 		<script src='/planbe/resources/bootstrap/js/jquery.dataTables.min.js'></script>
 
 		<script src="/planbe/resources/bootstrap/js/excanvas.js"></script>
-	<script src="/planbe/resources/bootstrap/js/jquery.flot.js"></script>
-	<script src="/planbe/resources/bootstrap/js/jquery.flot.pie.js"></script>
-	<script src="/planbe/resources/bootstrap/js/jquery.flot.stack.js"></script>
-	<script src="/planbe/resources/bootstrap/js/jquery.flot.resize.min.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/jquery.flot.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/jquery.flot.pie.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/jquery.flot.stack.js"></script>
+		
+		<script src="/planbe/resources/bootstrap/js/jquery.flot.resize.min.js"></script>
 	
 		<script src="/planbe/resources/bootstrap/js/jquery.chosen.min.js"></script>
 	

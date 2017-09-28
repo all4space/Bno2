@@ -89,5 +89,10 @@
 <select id = "getProjectName" parameterType = "int" resultType = "string">
    select projectName from project where projectNo=#{projectNo}
 </select>
+
+<select id = "getCtoProjectList" parameterType = "string" resultType = "ProjectVO">
+	select projectNo, userno, projectname, projectcontent, projectstatus, to_char(startdate, 'yyyy-mm-dd') as startDate, to_char(duedate, 'yyyy-mm-dd') as dueDate from project where userno in (select userno from users where groupname = #{groupname})
+</select>
+
  
 </mapper>

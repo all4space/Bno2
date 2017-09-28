@@ -147,7 +147,7 @@ function setUserInfo(){
 							<div class="button-join">	
 							    <center>
 								<button type="submit" class="btn btn-modify" id="modify">Modify</button>
-								<button class="btn btn-backToCancel" onclick = "location.href='/planbe/'">cancel</button>
+								<button class="btn btn-backToCancel" onclick = "location.href='/planbe/project/projectList'">cancel</button>
 							    </center>
 							</div>
 					</form>

@@ -770,7 +770,7 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 <!-- WBS 삭제 / Gantt 링크 버튼   -->                                  
              
                <div id="JSFiddle">
-                          <div id="wordtree_explicit" style="width: 1200px; height: 600px;">
+                          <div id="wordtree_explicit" style="width: 1100px; height: 600px;">
                           </div>	
                </div><!-- PDF -->
                           

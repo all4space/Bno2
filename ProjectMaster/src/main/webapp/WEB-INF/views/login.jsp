@@ -40,8 +40,32 @@
 	<!-- end: Favicon -->
 	
 			<style type="text/css">
-			body { background: url(/planbe/resources/bootstrap/img/bg-login.jpg) !important; 
+			img.bg{
+				/*브라우저의 크기에 맞게 전체 화면에 맞춘다.  */
+				min-height: 100%;
+				min-width: 1024px;
+				/*크기를 화면 전체로 지정 해준다.  */
+				width: 100%;
+				height: auto;
+				/* 스크롤 해도 배경이미지 고정 */
+				position: fixed;
+				/* absoulute;로하면 배경도 스크롤도 되지만 부자연 스러워짐 */
+				top: 0;
+				left: 0;
+			}				
+			@media screen and (max-width: 1024px){
+			/* 그림을 브라우저의 중앙에 맞춘다. -512는
+			1024의 반값으로 중앙 정렬을 위한 것이다.  */
+				img.bg{
+				left:50%;
+				margin-left: -512px;
+				}
+			
 			}
+			div.container-fluid-full{
+				position: relative;
+			}
+
 		    </style>
 		
 		
@@ -49,43 +73,44 @@
 </head>
 
 <body>
+<img class = "bg" src ="/planbe/resources/bootstrap/img/그림1 (3).PNG" alt=""/>
 		<div class="container-fluid-full">
 		<div class="row-fluid">
 					
-			<div class="row-fluid">
-				<div class="login-box">
-					<div class="icons">
+			<div class="row-fluid" style = "margin-top:6.5cm; position: relative;">
+				<div class="login-box2" >
+<!-- 					<div class="icons">
 						<a href="/planbe/"><i class="halflings-icon home"></i></a>
 						<a href="#"><i class="halflings-icon cog"></i></a>
 					</div>
-					<h2>Login to your account</h2>
+					<h2>Login to your account</h2> -->
 					<form class="form-horizontal" action="login" method="post">
-						<fieldset>
+						<fieldset style = "background-color: rgba(255,0,0,0);">
 							
 							<div class="input-prepend" title="UserId">
 								<span class="add-on"><i class="halflings-icon user"></i></span>
-								<input class="input-large span10" name="userId" id="userId" type="text" placeholder="type userId"/>
+								<input class="input-large span10" name="userId" id="userId" type="text" placeholder="type userId" style="background-color: rgba(0,0,0,0.5);"/>
 							</div>
 							<div class="clearfix"></div>
 
 							<div class="input-prepend" title="Password">
 								<span class="add-on"><i class="halflings-icon lock"></i></span>
-								<input class="input-large span10" name="userPwd" id="password" type="password" placeholder="type password"/>
+								<input class="input-large span10" name="userPwd" id="password" type="password" placeholder="type password" style="background-color: rgba(0,0,0,0.5);"/>
 							</div>
 							<div class="clearfix"></div>
 							
-							<label class="remember" for="remember"><input type="checkbox" id="remember" />Remember me</label>
+							<!-- <label class="remember" for="remember"><input type="checkbox" id="remember" />Remember me</label> -->
 
 							<div class="button-login">	
-								<button type="submit" class="btn btn-primary">Login</button>
+								<button type="submit" class="btn btn-primary"  style = "background-color: #fc9476; border-color: #fc9476;">Login</button>
 								<a href="/planbe/users/joinForm"><button type="button" class="btn btn-join">Join</button></a>
 							</div>
 							<div class="clearfix"></div>
 					</form>
 					<hr>
-					<h3>탈퇴?</h3>
-					<p>
-						No problem, <a href="/planbe/users/deleteForm">click here</a> to 탈퇴
+					<h3 style = "color: white;">탈퇴?</h3>
+					<p style = "color: white;">
+						No problem, <a href="/planbe/users/deleteForm" style = "color: #fc9476;" >click here</a> to 탈퇴
 					</p>	
 				</div><!--/span-->
 			</div><!--/row-->

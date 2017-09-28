@@ -43,7 +43,7 @@ public class TaskDAOImpl implements TaskDAO{
 		
 		
 		Taskmapper mapper = Sqlsession.getMapper(Taskmapper.class);
-		System.out.println(taskVo);
+		/*System.out.println(taskVo);*/
 		 mapper.Insert(map);
 		 
 	

@@ -275,7 +275,7 @@
       
    <form  action="/planbe/task/updateTask" method="POST" name="form">	     
      <div class="container">
-	<div class="row">
+	<div class="row" style="margin-left: 3%;">
         <div class="col-sm-12">
             <legend><h1>${Authority} ${loginId}님의 UpdateTask</h1></legend>  
         </div>

@@ -1,4 +1,4 @@
-package scit.master.planbe.VO;
+package scit.master.planbe.interceptor;
 
 public class PageNavigator {
 	private int countPerPage; // 한 페이지에 보여질 게시글 수

@@ -36,5 +36,14 @@
  ]]>
 </select>	
 
+		<!-- 
+<select id="getProjectHistory" resultType="HistoryVO">
+	select rownum, d1.* from (select projectNo,historyNo , to_char(logtime,'yyyy-mm-dd HH:MM:SS')as logTime, logContent,userNo from history where projectno in
+	<foreach collection="list" item="list" open="(" separator="," close=")" index="index">
+		#{list.projectNo}
+	</foreach>
+	order by logtime desc) d1 where rownum <=5
+</select>
+ -->
 
 </mapper>

@@ -137,7 +137,7 @@ function drawChart(GanttList, date) {
                     drawButton(projectNo);
                     drawTaskList(GanttList,UserNameList);
 				}, // success,
-		  		error: function() {	alert("통신 에------라!");	}
+		  	/* 	error: function() {	alert("통신 에------라!");	} */
 		})
 	}
 	
@@ -171,9 +171,7 @@ function drawTaskList(GanttList,UserNameList){
 					break;
 		}// for 문
 	})// for-each
-	$(".table table-striped table-bordered bootstrap-datatable datatable").trigger("display");
 }
-
 
 function checkList(taskNo){
 	var answer = confirm("Really do you want modify or remove at the task?");
@@ -216,12 +214,12 @@ function checkList(taskNo){
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a>
+					<a href="/planbe/">Main</a>
 					<i class="icon-angle-right"></i> 
 				</li>
 				<li>
 					<i class="icon-list-alt"></i>
-					<a href="#">Gantt</a>
+					<a href="/planbe/gantt/ganttForm">Gantt</a>
 				</li>
 			</ul>
 			
@@ -315,7 +313,7 @@ function checkList(taskNo){
 							<a href="#" class="btn-minimize"><i class="halflings-icon white chevron-up"></i></a>
 						</div>
 					</div>
-					<div class="box-content" style = "display: none">
+					<div class="box-content" id = "box-task"style = "display: none">
 						<table class="table table-bordered table-striped table-condensed">
 						  <thead>
 							  <tr>

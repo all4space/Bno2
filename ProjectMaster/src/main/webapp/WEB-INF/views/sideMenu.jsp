@@ -29,6 +29,7 @@
 <!-- Mail 메뉴 -->		<li><a href="/planbe/mail/mailList"><i class="icon-envelope"></i><span class="hidden-tablet"> Mail</span></a></li>
 <!-- Member 메뉴 -->	    <li><a href="/planbe/member/memberForm"><i class="icon-user"></i><span class="hidden-tablet"> Member</span></a></li>
 <!-- Statistic 메뉴 -->	<li><a href="/planbe/static/staticForm"><i class="icon-bar-chart"></i><span class="hidden-tablet"> Statistic</span></a></li>
+						<!-- <li><a href="/planbe/tasks"><i class="halflings-icon time"></i><span class="hidden-tablet"> history</span></a></li> -->
 <!-- Login 메뉴 -->		<c:if test="${userName == null}">
 						<li><a href="/planbe/users/loginForm"><i class="icon-lock"></i><span class="hidden-tablet"> Login</span></a></li>
 					    </c:if>

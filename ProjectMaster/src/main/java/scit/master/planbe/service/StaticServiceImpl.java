@@ -27,7 +27,7 @@ public class StaticServiceImpl implements StaticService{
 	@Override
 	public ArrayList<TaskVO> taskProgressOfDisease(ArrayList<Integer> pnoList) {
 		ArrayList<TaskVO> task = dao.taskProgressOfDisease(pnoList);
-		System.out.println("group?" + task);
+		/*System.out.println("group?" + task);*/
 /*		int totaltime = 0;
 		int donetime = 0;
 		int count = 0; // 프로젝트 별로 저장하기 위해 index 따로 생성

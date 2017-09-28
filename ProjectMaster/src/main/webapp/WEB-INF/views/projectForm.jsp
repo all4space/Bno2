@@ -118,7 +118,7 @@
  */
  function managerSelect(manager)
  {
-	alert(manager.value);
+	/* alert(manager.value); */
 	$.ajax
 	({
 		url :"/planbe/project/groupMemberList",
@@ -140,11 +140,11 @@
 			$("#groupMemberList").trigger("liszt:updated");
 		},
 		
-		error : function()
+	/* 	error : function()
 		{
 			alert("응 안되");
 		}
-		
+		 */
 		
 	})
  }
@@ -325,7 +325,6 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 
 			</div><!--/row-->
 
-    
 
 	</div><!--/.fluid-container-->
 	
@@ -349,10 +348,10 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 	
 	<div class="clearfix"></div>
 	
-    <footer>
+	<footer>
 
 		<p>
-			<span style="text-align:left;float:left">&copy; 2017 <a href="/planbe/ourTeam" alt="Bootstrap_Metro_Dashboard">SCIT MASTER 33rd CLASS B TEAM 2 </a></span>
+			<span style="text-align:left;float:left">&copy; 2013 <a href="http://themifycloud.com/downloads/janux-free-responsive-admin-dashboard-template/" alt="Bootstrap_Metro_Dashboard">JANUX Responsive Dashboard</a></span>
 			
 		</p>
 

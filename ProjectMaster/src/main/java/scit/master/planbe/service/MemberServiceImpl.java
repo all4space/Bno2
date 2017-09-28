@@ -8,14 +8,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import scit.master.planbe.VO.MemberVO;
-import scit.master.planbe.dao.MemberDAOImpl;
+import scit.master.planbe.dao.MemberDAO;
 
 
 @Service
 public class MemberServiceImpl implements MemberService{
 
 	@Autowired
-	MemberDAOImpl dao;
+	MemberDAO dao;
 	
 	@Override
 	public void ManagerAdd(MemberVO memberVo) {
@@ -46,6 +46,7 @@ public class MemberServiceImpl implements MemberService{
 
 	@Override
 	public ArrayList<Integer> getProjectNo(String userId) {
+		/*System.out.println("service : "+ userId);*/
 		return dao.getProjectNo(userId);
 	}
 	@Override

@@ -82,5 +82,9 @@ public class ProjectServiceImpl implements ProjectService{
 	public String getprojectName(int projectNo) {
 		return dao.getProjectName(projectNo);
 	}
+	@Override
+	public ArrayList<ProjectVO> getCtoProjectList(String groupName) {
+		return dao.getCtoProjectList(groupName);
+	}
 
 }

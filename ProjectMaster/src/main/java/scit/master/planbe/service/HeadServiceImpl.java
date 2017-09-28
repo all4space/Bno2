@@ -16,7 +16,7 @@ public class HeadServiceImpl implements HeadService{
 
 	@Override
 	public ArrayList<TaskVO> getTask(int userNo) {
-		System.out.println("service : "+ userNo);
+		/*System.out.println("service : "+ userNo);*/
 		return dao.getList(null, null, null, userNo, 0, 5); 
 	}
 

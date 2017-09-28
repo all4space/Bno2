@@ -47,7 +47,7 @@
 	{
  
 	//그룹 매니저 리스트
-	alert("groupManagerList function In" + obj.value);
+	/* alert("groupManagerList function In" + obj.value); */
 	$.ajax
 	({
 		url: "/planbe/project/groupManagerList",
@@ -72,18 +72,18 @@
 			$("#groupManagerList").trigger("liszt:updated");
 			
 		},
-		error : function()
+	/* 	error : function()
 		{
 			alert("에러뭐든");
-		}
+		} */
 	})
 }
 
 //그룹 멤버리스트
 function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select ver
 {
-	alert("groupMemberList function In" + manager.value);
-	alert()
+/* 	alert("groupMemberList function In" + manager.value);
+	alert() */
 	
 	$.ajax
 	({
@@ -108,10 +108,10 @@ function managerSelect(manager) //그룹이름에 따른 멤버 리스트 select
 			$("#groupMemberList").trigger("liszt:updated");
 			
 		},
-		error : function()
+		/* error : function()
 		{
 		alert("에러뭐든");
-	}
+	} */
 })
 }
 

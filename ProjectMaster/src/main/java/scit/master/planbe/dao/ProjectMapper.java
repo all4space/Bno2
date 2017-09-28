@@ -34,4 +34,5 @@ public interface ProjectMapper {
 	public String getGroupName(String userId);
 	public void projectUpdate(ProjectVO projectList);
 	public String getProjectName(int projectNo);
+	public ArrayList<ProjectVO> getCtoProjectList(String groupName);
 }

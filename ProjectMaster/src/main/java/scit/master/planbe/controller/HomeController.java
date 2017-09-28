@@ -1,7 +1,5 @@
 package scit.master.planbe.controller;
 
-import java.text.DateFormat;
-import java.util.Date;
 import java.util.Locale;
 
 import org.slf4j.Logger;
@@ -20,13 +18,21 @@ public class HomeController {
 	private static final Logger logger = LoggerFactory.getLogger(HomeController.class);
 	
 	@RequestMapping(value = "/", method = RequestMethod.GET)
-	public String home(Locale locale, Model model) {
-		return "index";
+	public String home() {
+		return "redirect:/users/loginForm";
 	}
 	
 	@RequestMapping(value = "ourTeam", method = RequestMethod.GET)
 	public String ourTeam() {
 		return "ourTeam";
 	}
-	
+	@RequestMapping(value = "/index", method = RequestMethod.GET)
+	public String index() {
+		return "index";
+	}
+/*	
+	@RequestMapping(value = "tasks", method = RequestMethod.GET)
+	public String tasks() {
+		return "redirect:/project/projectHistoryList";
+	}*/
 }

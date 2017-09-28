@@ -17,11 +17,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import scit.master.planbe.VO.HistoryVO;
 import scit.master.planbe.VO.MemberVO;
-import scit.master.planbe.VO.PageNavigator;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
 import scit.master.planbe.dao.UsersDAOImpl;
+import scit.master.planbe.interceptor.PageNavigator;
 import scit.master.planbe.service.HistoryServiceImpl;
 import scit.master.planbe.service.MemberServiceImpl;
 import scit.master.planbe.service.ProjectServiceImpl;
@@ -65,7 +65,7 @@ public class TaskController {
 		model.addAttribute("taskList",task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage())); 
 		model.addAttribute("result", navi);
 		
-		System.out.println(task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage()));
+		/*System.out.println(task.getList(searchtype,searchword,target,userno,navi.getStartRecord(),navi.getCountPerPage()));*/
 		return "taskForm";				
 	}
 	
@@ -144,7 +144,7 @@ public class TaskController {
 		public String updateTask(TaskVO taskVo,Model model, HttpSession session) {
 			String code = "b";
 			
-			System.out.println("taskUpdate : " + taskVo.toString());
+		/*	System.out.println("taskUpdate : " + taskVo.toString());*/
 			
 				
 			String userName =(String)session.getAttribute("loginId");
@@ -154,7 +154,7 @@ public class TaskController {
 			history.setUserNo(dao.getUserNo((String)session.getAttribute("loginId"))); // 유저넘버 히스토리 VO에 저장
 		
 			
-			System.out.println("왜 널이야" + history.getProjectNo());
+			/*System.out.println("왜 널이야" + history.getProjectNo());*/
 			//System.out.println(projectDao.getProjectName(history.getProjectNo()));
 			
 			
@@ -169,8 +169,8 @@ public class TaskController {
 			content += " 변경사항 : ";
 		
 			
-			System.out.println("1111111" + taskVo.getTaskName());
-			System.out.println("2222222" + vo.getTaskName());
+			/*System.out.println("1111111" + taskVo.getTaskName());
+			System.out.println("2222222" + vo.getTaskName());*/
 			
 				if(!(taskVo.getTaskName().equals(vo.getTaskName())))
 				{
@@ -234,8 +234,8 @@ public class TaskController {
 			
 			
 	
-			System.out.println(content); // CONTENT 값 확인 
-			
+		/*	System.out.println(content); // CONTENT 값 확인 
+*/			
 			history.setLogContent(content); //CONTENT값 VO에 세팅
 			
 			
@@ -257,7 +257,7 @@ public class TaskController {
 			
 			task.deleteTask(taskVo);
 				
-			System.out.println("new TaksVo : "+taskVo.toString());
+			/*System.out.println("new TaksVo : "+taskVo.toString());*/
 			
 			String userName =(String)session.getAttribute("loginId");
 			
@@ -300,13 +300,13 @@ public class TaskController {
 			int userno = (int) session.getAttribute("userno");	
 			
 			
-			System.out.println("selectTaskNo : "+ taskNo);
+			/*System.out.println("selectTaskNo : "+ taskNo);*/
 			if (taskNo > 0) {
 			 model.addAttribute("searchProgress", task.searchTask(searchtype, searchword,userno,taskNo));
 			}
 			if (taskNo == 0) {
 			model.addAttribute("totalList",task.getTotalList(userno));
-			System.out.println(task.getTotalList(userno));
+			/*System.out.println(task.getTotalList(userno));*/
 			}
 			
 			model.addAttribute("allList",task.getTotalList(userno));
@@ -324,7 +324,7 @@ public class TaskController {
 				
 				users.add(dao.getUserInfo(member.get(i).getUserNo()));
 			}
-			System.out.println("고고와 난데쓰까"+users.toString());
+			/*System.out.println("고고와 난데쓰까"+users.toString());*/
 			
 			
 			
@@ -342,8 +342,8 @@ public class TaskController {
 			content += taskName + "TASK를";
 			content += historyService.getCdContent(history) + "햇엉"; // 저장될 문자열 작성 CONTENT
 			
-			System.out.println(content); // CONTENT 값 확인 
-			
+			/*System.out.println(content); // CONTENT 값 확인 
+*/			
 			history.setLogContent(content); //CONTENT값 VO에 세팅
 			historyService.addHistory(history); //history 디비에 히스토리정보 저장
 		}

@@ -16,5 +16,5 @@ public interface HistoryDAO {
 
 	public ArrayList<HistoryVO> getHistory(int userNo);
 	
-		
+	public ArrayList<HistoryVO> getProjectHistory(ArrayList<Integer> pno);	
 }

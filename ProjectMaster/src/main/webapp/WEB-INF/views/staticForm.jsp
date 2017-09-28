@@ -72,7 +72,7 @@ $(function(){
 			  		setEfficiency(projectList, percent);
 			  		circle_progess();
 				}, // success
-		  		error: function() {	alert("통신 에------라!");	}
+		  		/* error: function() {	alert("통신 에------라!");	} */
 			})
 	} 
 	
@@ -194,14 +194,14 @@ $(function(){
 	function progressOfTask(projectNo){
 		
 			
-		 alert("task 진입 :" + projectNo.value ); 
+		 /* alert("task 진입 :" + projectNo.value ); */ 
 		$.ajax({
 	  		url: "/planbe/static/getTaskList",
 	  		type : "post",
 	  		data : { "projectNo" : projectNo.value },
 	  		datatype: "json",
 	  		success: function(result) {
-	  			alert("progress result 성공!");
+	  			/* alert("progress result 성공!"); */
 	  			var taskList = result.taskList;
 	  			var usersNamelist = result.usersNamelist;
 	  			var efficienty = result.taskEfficienty;
@@ -214,7 +214,7 @@ $(function(){
 	  			makeEfficienty(efficienty);
 	  			chart();
 			}, // success
-	  		error: function() {	alert("통신 에------라!");	}
+	  	/* 	error: function() {	alert("통신 에------라!");	} */
 		})
 		
 		/* 진행률 그래프 그리는 펑션  */
@@ -229,9 +229,9 @@ $(function(){
 						done = 100;
 					}
 					var doneper = Math.round(done);
-					
+					if(item.taskStatus =='COMPLETE' || item.taskStatus == 'complete' || item.taskStatus == 'Complete'){doneper = 100;}
 					if(doneper > 50){ // 그래프가 1:1 이라서...
-						var difference = doneper - 50;
+						var difference = doneper-50;
 						var addDone = 50 - difference;
 					}else{addDone = 50;}
 					
@@ -330,9 +330,9 @@ $(function(){
        
        for(var i=0; i<t_list.length; i++){
     	   console.log("시간" + t_list[i].doneTime +"과"+ t_list[i].totalTime);
-    	   var doneTime = t_list[i].doneTime.toFixed(2);
-      	   var totalTime = t_list[i].totalTime.toFixed(2); 
-      	   var rat = (doneTime/totalTime).toFixed(2)*100;
+    	   var doneTime = t_list[i].doneTime;
+      	   var totalTime = t_list[i].totalTime;/*.toFixed(2)  */ 
+      	   var rat = (doneTime/totalTime)*100;
       	   var rate = Math.round(rat);
            
       	   for(var j=0; j<objArray.length; j++){
@@ -351,11 +351,13 @@ $(function(){
 	$(objArray).each(function(index,item){
 		var donePer = null;
 		if(item.rate >= 100){
-			donePer = item.rate / item.count ;
+			var done = item.rate / item.count ;
+			donePer = Math.round(done);
 		}else{
-			donePer = item.rate;
+			var done = item.rate;
+			donePer = Math.round(done);
 		}
-		var oneBar = '<div class="singleBar" style = "margin: 10px 10px 10px 10px">';
+		var oneBar = '<div class="singleBar" style = "margin: 20px 20px 20px 20px; width:15%;">';
 			oneBar += '<div class="bar">';
 			oneBar += '<div class="value">';
 			oneBar += '<span>'+donePer+'%</span>';
@@ -363,7 +365,6 @@ $(function(){
 			oneBar += '</div>';
 			oneBar += '<div class="title">'+item.m_name+'</div>';
 			oneBar += '</div>';
-			oneBar += '<div></div>';
 		$("#Progress").append(oneBar);
 	})	
 	
@@ -374,20 +375,21 @@ $(function(){
     	$(efficienty).each(function(index,item){
     		var x= howlong(item.dueDate,item.startDate);
     		var y= howlong(item.taskPriority,item.startDate);
+    		if(y == 0 ){ y = 1 ;}
     		var per = x/y * 100;
     		var percent = Math.round(per);
     		console.log("우왕 : "+ x + " // " + y + " // " + percent);
+
     		
-    		var oneBar = '<div class="singleBar" style = "margin: 10px 10px 10px 10px">';
-			oneBar += '<div class="bar">';
-			oneBar += '<div class="value">';
-			oneBar += '<span>'+percent+'%</span>';
-			oneBar += '</div>';
-			oneBar += '</div>';
-			oneBar += '<div class="title">'+item.taskName+'<br>'+item.taskContent+'</div>';
-			oneBar += '</div>';
-			oneBar += '<div></div>';
-    	
+    		var oneBar = '<div class="singleBar" style = "margin: 10px 10px 10px 10px; width:70px;">';
+    			oneBar += '<div class="bar">';
+    			oneBar += '<div class="value">';
+    			oneBar += '<span>'+percent+'%</span>';
+    			oneBar += '</div></div>';
+    			oneBar += '<div class="title" style="width:70px;">'+item.taskName+'<br>'+item.taskContent+'</div>';
+    			oneBar += '</div>';
+/*     		}
+    		 */
     	$("#efficienty_chart").append(oneBar);
     	})
     }
@@ -423,10 +425,10 @@ $(function(){
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Main</a> 
+					<a href="/planbe/project/projectList">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
-				<li><a href="#">Statistic</a></li>
+				<li><a href="/planbe/static/staticForm">Statistic</a></li>
 			</ul>
 
 			<div class="row-fluid">																				<!-- 전체 효율 -->
@@ -468,7 +470,7 @@ $(function(){
 					</div> -->
 <!-- 팀원의 업무 진행도-->	<div class="box-content">
 							<div class="widget blue span5" onTablet="span6" onDesktop="span5">
-									<h2><span class="glyphicons globe"><i></i></span> Job efficiency ranking by member</h2>
+									<h2><span class="glyphicons globe"><i></i></span> 멤버별 업무 효율도 </h2><!--Job efficiency ranking by member  -->
 										<hr>
 										<div class="content">
 											<div id = "Progress" class="verticalChart">

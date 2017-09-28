@@ -43,6 +43,8 @@ public class MemberDAOImpl implements MemberDAO {
 
 	@Override
 	public ArrayList<Integer> getProjectNo(String userId) {
+		System.out.println("다오다오 안들어와?");
+		System.out.println("dao : "+userId );
 		MemberMapper mapper = Sqlsession.getMapper(MemberMapper.class);
 		return mapper.getProjectNo(userId);
 	}

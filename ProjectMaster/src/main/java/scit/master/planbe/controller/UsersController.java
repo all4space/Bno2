@@ -60,7 +60,7 @@ public class UsersController {
 		service.login(vo, session);
 		
 		String content = vo.getUserId() + "님이 로그인 했어용.";
-		System.out.println(content);
+		/*System.out.println(content);*/
 		
 		history.setUserNo(service.getUserNo(vo.getUserId()));
 		history.setCodeNo(CODE);
@@ -69,7 +69,7 @@ public class UsersController {
 		history.setCdSelect("login");
 		historyService.addHistory(history); //history 디비에 히스토리정보 저장
 
-		return "redirect:/";
+		return "redirect:/project/projectList";
 	}
 	
 	// 회원 가입 양식 불러오기 
@@ -84,7 +84,7 @@ public class UsersController {
 		service.join(vo);
 		
 		String content = vo.getUserId() + "님이 회원이되셨습니다. 축하해주세용~.";
-		System.out.println(content);
+		/*System.out.println(content);*/
 
 		history.setUserNo(service.getUserNo(vo.getUserId()));
 		
@@ -116,7 +116,7 @@ public class UsersController {
 	public String logout(HttpSession session) {
         
         String content = session.getAttribute("loginId") + "님이 로그아웃 했어용.";
-		System.out.println(content);
+		/*System.out.println(content);*/
 
 		history.setUserNo(service.getUserNo((String)session.getAttribute("loginId")));
 		
@@ -127,7 +127,7 @@ public class UsersController {
 		history.setCdSelect("login");
 		historyService.addHistory(history); //history 디비에 히스토리정보 저장
         
-		return "redirect:/";
+		return "redirect:/users/loginForm";
 	}
      
 	// 회원 탈퇴 양식 불러오기
@@ -206,8 +206,8 @@ public class UsersController {
 	@RequestMapping(value = "modify", method = RequestMethod.POST)
 	public String modify(UsersVO vo) {
 		
-		System.out.println("service : " + vo.toString());
+		/*System.out.println("service : " + vo.toString());*/
 		service.modify(vo);
-		return "redirect:/";
+		return "index";
 	}
 }

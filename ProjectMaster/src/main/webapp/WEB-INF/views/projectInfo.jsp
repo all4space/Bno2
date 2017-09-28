@@ -153,9 +153,9 @@
 			 success:function(result){
 				 drawBarColors(result);				
 			 }, 
-			 error : function(e){
+			/*  error : function(e){
 				 alert(JSON.stringify(e))
-			 }
+			 } */
 			 
 		 });
 		 

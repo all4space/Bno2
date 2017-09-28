@@ -246,7 +246,7 @@ function change(number){
          			  
          			  
          		  },
-         		  error:function(){alert("에러 발생")}
+         		  /* error:function(){alert("에러 발생")} */
          	 		 });
                  
     		

@@ -217,10 +217,6 @@ function newMessage(taskList){
  	
 </script>
 <body>
-
-<p >
-</p>
-
 <!-- start: Header -->
   
 
@@ -232,7 +228,7 @@ function newMessage(taskList){
 					<span class="icon-bar"></span>
 					<span class="icon-bar"></span>
 				</a>
-				<a class="brand" href="/planbe/"><span>PROOO</span></a>
+				<a class="brand" href="/planbe/project/projectList"><img src="/planbe/resources/bootstrap/img/아이콘.jpg" style="width: 1cm;"><span>Project AtsuMe</span></a>
 								
 								
 				<!-- start: Header Menu -->
