@@ -27,12 +27,9 @@ import scit.master.planbe.service.UsersServiceImpl;
 @RequestMapping("/project")
 @Controller
 public class ProjectController {
-	
-	
 	private int CODENO = 1;
 	
 	HistoryVO history = new HistoryVO();
-	
 	MemberVO memberVo = new MemberVO();
 	
 	@Autowired
@@ -46,6 +43,29 @@ public class ProjectController {
 	
 	@Autowired
 	HistoryServiceImpl historyService;
+	
+	// ProjectList 
+	@RequestMapping(value = "projectList", method = RequestMethod.GET)
+	public ModelAndView projectList(HttpSession session)
+	{
+		String userId = (String) session.getAttribute("loginId");
+	
+		ModelAndView mov = new ModelAndView("/projectList");
+		
+		ArrayList<ProjectVO> project = service.getProjectList(usersService.getUserNo(userId));
+		ArrayList<MemberVO> memberVo = memberService.getFavorite(usersService.getUserNo(userId));
+		
+		int userNo = usersService.getUserNo(userId);
+		
+		System.out.println("projectList" + usersService.getUserInfo(userNo).toString());
+		
+		mov.addObject("userNo",userNo);
+		mov.addObject("users", usersService.getUserInfo(userNo));
+		mov.addObject("projectList", project);
+		mov.addObject("member", memberVo);
+		
+		return mov;
+	}
 	
 	//프로젝트 삭제
 	@RequestMapping(value = "projectDelete", method = RequestMethod.GET)
@@ -73,50 +93,6 @@ public class ProjectController {
 	      return service.groupMemberList(uvo);
 	   }
 	
-	// PorjectList화면가기 전에 List 불러와야해
-	@RequestMapping(value = "projectList", method = RequestMethod.GET)
-	public ModelAndView projectList(HttpSession session)
-	{
-		String userId = (String) session.getAttribute("loginId");
-
-		System.out.println(usersService.getUserNo(userId));
-	
-		ModelAndView mov = new ModelAndView("/projectList");
-		mov.addObject("userNo",usersService.getUserNo(userId));
-		ArrayList<ProjectVO> project = service.getProjectList(usersService.getUserNo(userId));
-		
-		ArrayList<MemberVO> memberVo = memberService.getFavorite(usersService.getUserNo(userId));
-		
-		
-		
-		System.out.println("집에 가라 ㅋㅋㅋㅋ" + project.toString());
-		
-/*		for(int i = 0; i < project.size(); i++)
-		{
-			String startDate = project.get(i).getStartDate();
-			String dueDate = project.get(i).getDueDate();
-			
-			System.out.println(startDate.substring(0, 10));
-			System.out.println(dueDate.substring(0, 10));
-
-			project.get(i).setStartDate(startDate);
-			project.set(i, project.get(i));
-			
-			System.out.println(project.get(i).getStartDate());
-			
-			project.get(i).setDueDate(dueDate);
-			project.set(i, project.get(i));
-			
-			System.out.println(project.get(i).getDueDate());
-			
-		}*/
-		
-		mov.addObject("projectList", project);
-		mov.addObject("member", memberVo);
-		System.out.println("mov? " + mov.toString());
-		
-		return mov;
-	}
 	
 	   // group MemberList
 	   @RequestMapping(value = "projectForm", method = RequestMethod.GET)
@@ -130,14 +106,6 @@ public class ProjectController {
 	      
 	      return mov;
 	   }
-	
-	// group Member List 불러오기 ajax;
-	/*@RequestMapping(value = "groupManagerList", method = RequestMethod.POST)
-	@ResponseBody
-	public ArrayList<UsersVO> groupManagerList(String groupName) {
-		
-		return service.groupManagerList(groupName);
-	}*/
 	
 	@RequestMapping(value = "projectAdd", method = RequestMethod.POST)
 	public String projectAdd(Model model, HttpSession session, UsersVO userVo, 
