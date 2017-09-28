@@ -231,7 +231,7 @@ function deleteMail(){
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="index.jsp">Home</a> 
+					<a href="/planbe/">Home</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Mail</a></li>

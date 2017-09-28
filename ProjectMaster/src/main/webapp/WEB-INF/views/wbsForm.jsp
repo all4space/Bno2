@@ -688,7 +688,7 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 	                        <div class="box-content"  id="wbsBox" style = "display: none" />
 
 <!-- start : 키워드 드롭다운 -->
-							<div class="control-group" style="float: right;"/>
+							<div class="control-group"/>
 									<div class="controls">
 									  <select id="selectError" data-rel="chosen">
 									  </select>
@@ -703,7 +703,7 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 <!-- WBS 삭제 / Gantt 링크 버튼   -->                                  
              
                <div id="JSFiddle">
-                          <div id="wordtree_explicit" style="width: 940px; height: 600px;"></div>	
+                          <div id="wordtree_explicit" style="width: 1200px; height: 600px;"></div>	
                </div>
                                 <div style="text-align: center;">
 							    <button class="btn btn-large btn-warning" onclick="deleteWbs()">Delete WBS</button>
@@ -757,6 +757,7 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 <!--=================================================================================================================================  -->
 	
 				<!-- 키워드 리스트 : 라벨 필요할까봐 남겨둠 -->			
+		<!-- 	
 				<div class="box span2">
 					<div class="box-header">
 						<h2><i class="halflings-icon white eye-open"></i><span class="break"></span>Labels</h2>
@@ -804,10 +805,13 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 							</tbody>
 						  </table>
 					</div>
-				</div><!--/span-->
+				</div>/span
+				
+				 -->
 <!-- 키워드 리스트 -->						
 							
-<!-- 필요한 버튼 쓰려고 남겨둠 -->					
+<!-- 필요한 버튼 쓰려고 남겨둠 -->		
+		<!-- 	
 				<div class="box span6">
 					<div class="box-header">
 						<h2><i class="halflings-icon white list"></i><span class="break"></span>Buttons</h2>
@@ -877,11 +881,11 @@ var p_no = ""; // Task 수정, 삭제시 projectNo 공유하기 위해 멤버 �
 						</p>
 						
 					</div>
-				</div><!--/span-->
+				</div>/span
 				
-			</div><!--/row-->
+			</div>/row
 			
-
+ -->
 
 
 	</div><!--/.fluid-container-->
