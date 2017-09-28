@@ -1,5 +1,9 @@
 package scit.master.planbe.service;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.OutputStream;
 import java.util.ArrayList;
@@ -13,22 +17,24 @@ import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.poi.sl.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.xssf.streaming.SXSSFSheet;
 import org.apache.poi.xssf.streaming.SXSSFWorkbook;
+import org.apache.poi.xssf.usermodel.XSSFCell;
+import org.apache.poi.xssf.usermodel.XSSFRow;
+import org.apache.poi.xssf.usermodel.XSSFSheet;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
-
-
 
 import scit.master.planbe.VO.MemberVO;
 import scit.master.planbe.VO.ProjectVO;
 import scit.master.planbe.VO.TaskVO;
 import scit.master.planbe.VO.UsersVO;
 import scit.master.planbe.dao.TaskDAOImpl;
+import scit.master.planbe.dao.Taskmapper;
 import scit.master.planbe.dao.UsersDAOImpl;
 
 @Service
@@ -125,8 +131,9 @@ public class TaskServiceImpl implements TaskService{
 	@Override
 	@Transactional
 	public void excelList(HttpServletResponse response, String searchtype, String searchword, int userno, String target, int startRecord, int countPerPage) {
-	
+		ArrayList<TaskVO> tasklist = new ArrayList<>();
 		SqlSession sqlsession = sqlSessionFactory.openSession();
+		Taskmapper mapper = sqlsession.getMapper(Taskmapper.class);
 		
 		SXSSFWorkbook wb=new SXSSFWorkbook();
 		SXSSFSheet sheet = wb.createSheet();
@@ -138,45 +145,88 @@ public class TaskServiceImpl implements TaskService{
 		map.put("target", target);
 		map.put("userno", userno);
 		
-	
-		
 		try {
-		sqlsession.select("getTotalList", userno, new ResultHandler<TaskVO>(){
+		sqlsession.select("getTotalList", map, new ResultHandler<TaskVO>(){
 			
 			@Override
 			public void handleResult(ResultContext<? extends TaskVO> resultContext) {
 				
+				
 				TaskVO task = resultContext.getResultObject();
-				    Row row =  sheet.createRow(resultContext.getResultCount() - 1);
+
+					
+			
+				    Row row =  sheet.createRow(0);
 			    	Cell cell = null;
 			    	
-			    		        			    	
+
 			    	cell = row.createCell(0);
-			    	cell.setCellValue(task.getProjectNo());
-			        cell = row.createCell(1);
-			        cell.setCellValue(task.getMemberNo());
-			        cell = row.createCell(2);
-			        cell.setCellValue(task.getTaskNo());
-			        cell = row.createCell(3);
-			        cell.setCellValue(task.getTaskName());
-			        cell = row.createCell(4);
-			        cell.setCellValue(task.getTaskContent());
-			        cell = row.createCell(5);
-			        cell.setCellValue(task.getTaskPriority());
-			        cell = row.createCell(6);
-			        cell.setCellValue(task.getTaskStatus());
-			        cell = row.createCell(7);
-			        cell.setCellValue(task.getStartDate());
-			        cell = row.createCell(8);
-			        cell.setCellValue(task.getDueDate());
-			        cell = row.createCell(9);
-			        cell.setCellValue(task.getTotalTime());
-			        cell = row.createCell(10);
-			        cell.setCellValue(task.getDoneTime());
+			    					cell = row.createCell(0);
+			    			    	cell.setCellValue("프로젝트 	NO");
+			    			        cell = row.createCell(1);
+			    			        cell.setCellValue("멤버 NO");
+			    			        cell = row.createCell(2);
+			    			        cell.setCellValue("업무 NO");
+			    			        cell = row.createCell(3);
+			    			        cell.setCellValue("업무 이름");
+			    			        cell = row.createCell(4);
+			    			        cell.setCellValue("업무 내용");
+			    			        cell = row.createCell(5);
+			    			        cell.setCellValue("업무 중요도");
+			    			        cell = row.createCell(6);
+			    			        cell.setCellValue("업무 상태");
+			    			        cell = row.createCell(7);
+			    			        cell.setCellValue("업무 시작 날짜");
+			    			        cell = row.createCell(8);
+			    			        cell.setCellValue("업무 종료 날짜");
+			    			        cell = row.createCell(9);
+			    			        cell.setCellValue("업무 총 시간");
+			    			        cell = row.createCell(10);
+			    			        cell.setCellValue("업무 소요 시간");
+			    			        
+			   ;
+			   tasklist.add(task);
+			   
+			   
+			   System.out.println(tasklist.get(tasklist.size()-1));
+			   System.out.println(tasklist.size());
+			  
+			   row = sheet.createRow(tasklist.size());
+			   	
+			   cell = row.createCell(0);
+		    	cell.setCellValue(task.getProjectNo());
+		        cell = row.createCell(1);
+		        cell.setCellValue(task.getMemberNo());
+		        cell = row.createCell(2);
+		        cell.setCellValue(task.getTaskNo());
+		        cell = row.createCell(3);
+		        cell.setCellValue(task.getTaskName());
+		        cell = row.createCell(4);
+		        cell.setCellValue(task.getTaskContent());
+		        cell = row.createCell(5);
+		        cell.setCellValue(task.getTaskPriority());
+		        cell = row.createCell(6);
+		        cell.setCellValue(task.getTaskStatus());
+		        cell = row.createCell(7);
+		        cell.setCellValue(task.getStartDate());
+		        cell = row.createCell(8);
+		        cell.setCellValue(task.getDueDate());
+		        cell = row.createCell(9);
+		        cell.setCellValue(task.getTotalTime());
+		        cell = row.createCell(10);
+		        cell.setCellValue(task.getDoneTime());
+	
+			   
+			   
+			
+		
+			    	
 				
 		        
 			}
 		
+		
+
 		});
 		
 		response.setHeader("Set-Cookie", "fileDownload=true; path=/");
@@ -195,6 +245,10 @@ public class TaskServiceImpl implements TaskService{
 		
 		
 	}
+
+		
+		
+	
 
 	
 	// 프로젝트 넘버 가져오기
