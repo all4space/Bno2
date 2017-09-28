@@ -74,11 +74,11 @@
 						and u.userno=#{userno} 
 	   						and t.taskpriority LIKE '%'||#{target}||'%'
 	 </when>
-	  <when test="userno != null">
- 	 	 t join member m on t.memberno=m.memberno
-			join users u on m.userno = u.userno
-					and u.userno=#{userno}
-	 </when>
+	   <when test="userno != null and userno ==2">
+	 	 		t join member m on t.memberno=m.memberno 
+					join (select userno from users where groupname='Bclass') u on m.userno = u.userno
+						
+	 		</when>
 	 
 		 
 	</choose>
@@ -159,10 +159,15 @@
 						and u.userno=#{userno}
 	   		 				and t.taskpriority LIKE '%'||#{target}||'%'
 	 		</when>
-	 		 <when test="userno != null">
+	 		 <when test="userno != null and userno !='2'">
 	 	 		t join member m on t.memberno=m.memberno 
 					join users u on m.userno = u.userno
 						and u.userno=#{userno}
+	 		</when>
+	 		 <when test="userno != null and userno =='2'">
+	 	 		t join member m on t.memberno=m.memberno 
+					join (select userno from users where groupname='Bclass') u on m.userno = u.userno
+						
 	 		</when>
 		</choose>	
 </select>
@@ -186,8 +191,7 @@
 <select id="getTotalList" parameterType="map" resultType="TaskVO">
 
 	select * from task t join member m on t.memberno=m.memberno 
-			      join users u on m.userno = u.userno
-					and u.userno=#{userno}
+			      join (select userno from users where groupname='Bclass') u on m.userno = u.userno			
 					  order by t.taskno asc
 
 </select>
