@@ -75,7 +75,7 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="main.jsp">Main</a> 
+					<a href="/planbe">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Task</a></li>
@@ -239,7 +239,7 @@
                               <span class="glyphicon glyphicon-plus"></span> 
                                                                                
                             <a href="/planbe/task/taskForm/"><button type="button" class="btn btn-default preview-cancel-button">
-                                <span class="glyphicon glyphicon-plus"></span> cancel
+                                <span class="glyphicon glyphicon-plus"></span> TaskList
                             </button></a>
                             
                         </div>
@@ -424,7 +424,7 @@
                               <span class="glyphicon glyphicon-plus"></span> 
                                                                                
                             <a href="/planbe/task/taskForm/"><button type="button" class="btn btn-default preview-cancel-button">
-                                <span class="glyphicon glyphicon-plus"></span> cancel
+                                <span class="glyphicon glyphicon-plus"></span> TaskList
                             </button></a>
                             
                         </div>

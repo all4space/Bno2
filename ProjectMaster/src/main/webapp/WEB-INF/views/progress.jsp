@@ -50,6 +50,7 @@
 function change(number){
 	
 	
+	window.onload=function(){alert("Task를 선택해 주세요")}
 	
 	var value=number.value;
 	
@@ -98,7 +99,7 @@ function change(number){
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="main.jsp">Main</a> 
+					<a href="/planbe">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Task</a></li>

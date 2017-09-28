@@ -79,8 +79,8 @@
   	function updatePlan(){
   		
   		if (confirm("수정하시겠습니까?")) {
-			document.form.action="/planbe/plan/updatePlan"
-			document.form.submit();
+			document.gogo.action="/planbe/plan/updatePlan";
+			document.gogo.submit();
 		}		
   		
   	}
@@ -97,7 +97,14 @@
   		var content = $("#description").val();
   		
   	
-  		
+  		var startDate1 = startDate.split("-");
+		var dueDate1 = dueDate.split("-");
+		
+		var startDate2=startDate1[0]+startDate1[1]+startDate1[2];
+		var dueDate2=dueDate1[0]+dueDate1[1]+dueDate1[2];
+		
+		var intStartDate =parseInt(startDate2);
+		var intDueDate = parseInt(dueDate2);
   		
   		
 	
@@ -116,6 +123,9 @@
 			return false;
 		}else if (endDate == "") {
 			alert("종료 날짜를 입력하세요");
+			return false;
+		}else if (intStartDate > intDueDate ) {
+			alert("종료 날짜를 다시 입력하세요");
 			return false;
 		}else if (content == "") {
 			alert("내용을 입력하세요");
@@ -180,7 +190,7 @@
 			<ul class="breadcrumb">
 				<li>
 					<i class="icon-home"></i>
-					<a href="main.jsp">Main</a> 
+					<a href="/planbe">Main</a> 
 					<i class="icon-angle-right"></i>
 				</li>
 				<li><a href="#">Plan</a></li>
