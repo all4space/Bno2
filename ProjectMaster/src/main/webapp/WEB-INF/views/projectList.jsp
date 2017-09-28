@@ -107,7 +107,9 @@
 				</li>
 				<i class="icon-edit"></i>
 				<li><a href="#">Project</a></li>
+				<c:if test = "${users.authority eq 'cto' || users.authority eq 'Manager'}">
 				<a id = "projectadd" href = "projectForm"><button class="btn btn-small btn-primary">Project ADD</button></a>
+				</c:if>
 			</ul>
 			<div class="row-fluid sortable">		
 				<div class="box span12">
