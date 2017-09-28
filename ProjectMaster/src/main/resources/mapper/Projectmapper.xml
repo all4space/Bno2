@@ -89,5 +89,5 @@
 <select id = "getProjectName" parameterType = "int" resultType = "string">
    select projectName from project where projectNo=#{projectNo}
 </select>
-
+ 
 </mapper>
